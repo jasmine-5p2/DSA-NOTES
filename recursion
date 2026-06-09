@@ -1,0 +1,700 @@
+# Recursion — Complete Revision Notes (Java)
+
+Recursion is a technique where a function calls itself to solve smaller versions of the same problem.
+
+---
+
+# 1. Definition
+
+A method that calls itself is called a **recursive method**.
+
+```java
+void recurse() {
+    recurse();
+}
+```
+
+⚠️ This will run forever and cause a StackOverflowError because there is no stopping condition.
+
+---
+
+# 2. Two Important Parts of Recursion
+
+Every recursive solution must have:
+
+### 1. Base Case
+Condition that stops recursion.
+
+### 2. Recursive Call
+Function calls itself with a smaller problem.
+
+```java
+void fun(int n) {
+
+    // Base Case
+    if(n == 0)
+        return;
+
+    // Recursive Call
+    fun(n - 1);
+}
+```
+
+---
+
+# 3. How Recursion Works
+
+Example:
+
+```java
+fun(3);
+```
+
+Code:
+
+```java
+void fun(int n) {
+    if(n == 0)
+        return;
+
+    System.out.println(n);
+    fun(n - 1);
+}
+```
+
+Execution:
+
+```
+fun(3)
+│
+├── print 3
+│
+└── fun(2)
+      │
+      ├── print 2
+      │
+      └── fun(1)
+            │
+            ├── print 1
+            │
+            └── fun(0)
+                    return
+```
+
+Output:
+
+```
+3
+2
+1
+```
+
+---
+
+# 4. Recursive Tree Symbol
+
+Recursive calls are often represented as:
+
+```
+fun(3)
+│
+├── fun(2)
+│     │
+│     └── fun(1)
+│            │
+│            └── fun(0)
+```
+
+Think:
+
+```
+Problem
+↓
+Smaller Problem
+↓
+Smaller Problem
+↓
+Base Case
+```
+
+---
+
+# 5. Stack Memory in Recursion
+
+Recursion uses the Call Stack.
+
+Example:
+
+```java
+fun(3);
+```
+
+Stack:
+
+```
+Top
+-------
+fun(0)
+fun(1)
+fun(2)
+fun(3)
+-------
+Bottom
+```
+
+After reaching base case:
+
+```
+fun(0) removed
+fun(1) removed
+fun(2) removed
+fun(3) removed
+```
+
+This process is called:
+
+### Stack Unwinding
+
+---
+
+# 6. Print 1 to N
+
+```java
+static void print(int n) {
+
+    if(n == 0)
+        return;
+
+    print(n - 1);
+
+    System.out.println(n);
+}
+```
+
+Input:
+
+```
+3
+```
+
+Output:
+
+```
+1
+2
+3
+```
+
+---
+
+# 7. Print N to 1
+
+```java
+static void print(int n) {
+
+    if(n == 0)
+        return;
+
+    System.out.println(n);
+
+    print(n - 1);
+}
+```
+
+Output:
+
+```
+3
+2
+1
+```
+
+---
+
+# 8. Factorial Using Recursion
+
+Formula:
+
+```
+n! = n × (n-1)!
+```
+
+Example:
+
+```
+5! = 5×4×3×2×1
+```
+
+Code:
+
+```java
+static int factorial(int n) {
+
+    if(n == 0)
+        return 1;
+
+    return n * factorial(n - 1);
+}
+```
+
+Execution:
+
+```
+factorial(5)
+=
+5 × factorial(4)
+
+=
+5 × 4 × factorial(3)
+
+=
+5 × 4 × 3 × factorial(2)
+
+=
+5 × 4 × 3 × 2 × factorial(1)
+
+=
+5 × 4 × 3 × 2 × 1
+
+=
+120
+```
+
+Output:
+
+```
+120
+```
+
+---
+
+# 9. Sum of First N Numbers
+
+Formula:
+
+```
+1 + 2 + 3 + ... + n
+```
+
+Code:
+
+```java
+static int sum(int n) {
+
+    if(n == 0)
+        return 0;
+
+    return n + sum(n - 1);
+}
+```
+
+Example:
+
+```
+sum(4)
+
+=
+4 + sum(3)
+
+=
+4 + 3 + sum(2)
+
+=
+4 + 3 + 2 + sum(1)
+
+=
+4 + 3 + 2 + 1
+
+=
+10
+```
+
+---
+
+# 10. Fibonacci Using Recursion
+
+Series:
+
+```
+0 1 1 2 3 5 8 13 ...
+```
+
+Formula:
+
+```
+fib(n)
+=
+fib(n-1) + fib(n-2)
+```
+
+Code:
+
+```java
+static int fib(int n) {
+
+    if(n <= 1)
+        return n;
+
+    return fib(n - 1) + fib(n - 2);
+}
+```
+
+Example:
+
+```
+fib(5)
+
+=
+fib(4) + fib(3)
+
+=
+5
+```
+
+Output:
+
+```
+5
+```
+
+---
+
+# 11. Power Calculation
+
+Find:
+
+```
+2^5
+```
+
+Code:
+
+```java
+static int power(int a, int b) {
+
+    if(b == 0)
+        return 1;
+
+    return a * power(a, b - 1);
+}
+```
+
+Output:
+
+```
+32
+```
+
+---
+
+# 12. Reverse Array Using Recursion
+
+```java
+static void reverse(int[] arr, int start, int end) {
+
+    if(start >= end)
+        return;
+
+    int temp = arr[start];
+    arr[start] = arr[end];
+    arr[end] = temp;
+
+    reverse(arr, start + 1, end - 1);
+}
+```
+
+---
+
+# 13. Check Palindrome
+
+Example:
+
+```
+MADAM
+```
+
+Code:
+
+```java
+static boolean palindrome(String s, int i, int j) {
+
+    if(i >= j)
+        return true;
+
+    if(s.charAt(i) != s.charAt(j))
+        return false;
+
+    return palindrome(s, i + 1, j - 1);
+}
+```
+
+Output:
+
+```
+true
+```
+
+---
+
+# 14. Recurrence Relation
+
+A mathematical expression representing recursion.
+
+Example:
+
+```
+T(n)
+=
+T(n-1) + O(1)
+```
+
+Means:
+
+```
+One recursive call
++
+Constant work
+```
+
+Result:
+
+```
+O(n)
+```
+
+---
+
+# 15. Tail Recursion
+
+Recursive call is the last statement.
+
+```java
+static void fun(int n) {
+
+    if(n == 0)
+        return;
+
+    fun(n - 1);
+}
+```
+
+✔ Easier to optimize
+
+---
+
+# 16. Non-Tail Recursion
+
+Work remains after recursive call.
+
+```java
+static void fun(int n) {
+
+    if(n == 0)
+        return;
+
+    fun(n - 1);
+
+    System.out.println(n);
+}
+```
+
+---
+
+# 17. Direct Recursion
+
+Function calls itself.
+
+```java
+fun()
+{
+    fun();
+}
+```
+
+---
+
+# 18. Indirect Recursion
+
+Functions call each other.
+
+```java
+void A() {
+    B();
+}
+
+void B() {
+    A();
+}
+```
+
+---
+
+# 19. Why StackOverflowError Happens
+
+Occurs when recursion never reaches base case.
+
+Example:
+
+```java
+void fun() {
+    fun();
+}
+```
+
+Result:
+
+```
+StackOverflowError
+```
+
+---
+
+# 20. Time Complexity Patterns
+
+| Recursion Type | Complexity |
+|---------------|------------|
+| One recursive call | O(n) |
+| Fibonacci recursion | O(2ⁿ) |
+| Binary Search recursion | O(log n) |
+| Merge Sort recursion | O(n log n) |
+| Tower of Hanoi | O(2ⁿ) |
+
+---
+
+# 21. Most Important Recursion Problems
+
+### Easy
+
+- Print 1 to N
+- Print N to 1
+- Sum of N numbers
+- Factorial
+- Power
+- Fibonacci
+
+### Medium
+
+- Reverse Array
+- Palindrome Check
+- Binary Search
+- Subsequence Generation
+
+### Hard
+
+- N Queens
+- Sudoku Solver
+- Rat in Maze
+- Backtracking Problems
+
+---
+
+# 22. Recursion vs Iteration
+
+| Recursion | Iteration |
+|------------|------------|
+| Uses Call Stack | Uses Loops |
+| Easier to write | Usually faster |
+| More memory | Less memory |
+| Elegant for trees | Good for simple repetition |
+
+---
+
+# 23. Recursion Cheat Sheet
+
+### Base Case
+
+```java
+if(condition)
+    return;
+```
+
+### Factorial
+
+```java
+return n * factorial(n - 1);
+```
+
+### Sum
+
+```java
+return n + sum(n - 1);
+```
+
+### Fibonacci
+
+```java
+return fib(n - 1) + fib(n - 2);
+```
+
+### Power
+
+```java
+return a * power(a, b - 1);
+```
+
+### Reverse Array
+
+```java
+reverse(arr, start + 1, end - 1);
+```
+
+### Palindrome
+
+```java
+return palindrome(s, i + 1, j - 1);
+```
+
+---
+
+# 24. Golden Rules of Recursion
+
+✅ Every recursion needs a Base Case
+
+✅ Move toward the Base Case
+
+✅ Smaller problem in each call
+
+✅ Think in terms of function faith
+
+✅ Draw recursion trees for understanding
+
+✅ Watch stack growth
+
+✅ Dry run before coding
+
+---
+
+# 25. Quick Interview Revision
+
+### Recursion Formula
+
+```
+Base Case
++
+Recursive Call
+```
+
+### Flow
+
+```
+Call
+↓
+Call
+↓
+Call
+↓
+Base Case
+↓
+Return
+↓
+Return
+↓
+Return
+```
+
+### Key Idea
+
+```
+A recursive function solves a problem
+by solving a smaller version of itself.
+```
