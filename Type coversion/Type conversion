@@ -1,0 +1,214 @@
+# Typecasting (Java) — Quick Revision Notes
+
+Typecasting is the process of converting one data type into another using the cast operator:
+
+```java
+(datatype)
+```
+
+---
+
+# Syntax
+
+```java
+datatype variable = (datatype) value;
+```
+
+Example:
+
+```java
+double x = 10.75;
+int y = (int)x;
+```
+
+Output:
+
+```text
+10
+```
+
+---
+
+# Why Typecasting?
+
+When converting a larger data type into a smaller data type, Java requires explicit conversion.
+
+```java
+double → int
+long → int
+int → short
+int → byte
+```
+
+Without casting:
+
+```java
+double x = 10.5;
+int y = x;   // Error
+```
+
+With casting:
+
+```java
+int y = (int)x;
+```
+
+---
+
+# Common Examples
+
+## double → int
+
+```java
+double a = 99.99;
+int b = (int)a;
+
+System.out.println(b);
+```
+
+Output:
+
+```text
+99
+```
+
+---
+
+## int → char
+
+```java
+int x = 65;
+char ch = (char)x;
+
+System.out.println(ch);
+```
+
+Output:
+
+```text
+A
+```
+
+---
+
+## char → int
+
+```java
+char ch = 'A';
+int x = (int)ch;
+
+System.out.println(x);
+```
+
+Output:
+
+```text
+65
+```
+
+---
+
+## long → int
+
+```java
+long num = 1000L;
+int x = (int)num;
+```
+
+---
+
+## float → int
+
+```java
+float f = 25.9f;
+int x = (int)f;
+
+System.out.println(x);
+```
+
+Output:
+
+```text
+25
+```
+
+---
+
+# Typecasting Chart
+
+| From | To | Casting Required |
+|--------|--------|----------------|
+| double | float | ✅ Yes |
+| float | long | ✅ Yes |
+| long | int | ✅ Yes |
+| int | short | ✅ Yes |
+| short | byte | ✅ Yes |
+| int | char | ✅ Yes |
+
+---
+
+# Important Points
+
+### Decimal values are truncated
+
+```java
+double x = 7.99;
+int y = (int)x;
+```
+
+Output:
+
+```text
+7
+```
+
+---
+
+### Data loss may occur
+
+```java
+int x = 130;
+byte b = (byte)x;
+
+System.out.println(b);
+```
+
+Output:
+
+```text
+-126
+```
+
+Reason: byte range is -128 to 127.
+
+---
+
+# Interview Cheat Code
+
+```text
+Typecasting = Manual Conversion
+
+Syntax:
+(datatype)value
+
+Used for:
+Bigger Data Type → Smaller Data Type
+
+Examples:
+double → int
+long → int
+int → short
+int → byte
+
+May cause:
+✓ Decimal Loss
+✓ Data Loss
+```
+
+---
+
+# One-Line Revision
+
+```text
+Typecasting is the explicit conversion of a larger data type into a smaller data type using (datatype).
+```
