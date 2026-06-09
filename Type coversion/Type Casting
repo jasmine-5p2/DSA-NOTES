@@ -1,0 +1,209 @@
+# Type Conversion (Java) — Quick Revision Notes
+
+Type Conversion means converting one data type into another.
+
+---
+
+# 1. Implicit Type Conversion (Widening)
+
+Java automatically converts a smaller data type into a larger data type.
+
+## Example
+
+```java
+int a = 10;
+double b = a;   // int → double
+
+System.out.println(b);
+```
+
+### Output
+
+```text
+10.0
+```
+
+### Memory Flow
+
+```text
+int (4 bytes) → double (8 bytes)
+```
+
+✅ No data loss occurs.
+
+---
+
+# 2. Explicit Type Conversion (Casting / Narrowing)
+
+Java requires manual conversion when converting a larger type into a smaller type.
+
+## Example
+
+```java
+double a = 10.75;
+int b = (int) a;
+
+System.out.println(b);
+```
+
+### Output
+
+```text
+10
+```
+
+### Memory Flow
+
+```text
+double (8 bytes) → int (4 bytes)
+```
+
+⚠ Decimal part is lost.
+
+---
+
+# 3. Common Type Conversion Examples
+
+## int → long
+
+```java
+int a = 100;
+long b = a;
+```
+
+---
+
+## int → double
+
+```java
+int a = 50;
+double b = a;
+```
+
+---
+
+## double → int
+
+```java
+double a = 25.99;
+int b = (int) a;
+
+System.out.println(b);
+```
+
+### Output
+
+```text
+25
+```
+
+---
+
+## char → int (ASCII Value)
+
+```java
+char ch = 'A';
+int x = ch;
+
+System.out.println(x);
+```
+
+### Output
+
+```text
+65
+```
+
+---
+
+## int → char
+
+```java
+int x = 65;
+char ch = (char) x;
+
+System.out.println(ch);
+```
+
+### Output
+
+```text
+A
+```
+
+---
+
+# Type Conversion Chart
+
+| Conversion | Type | Casting Required? | Example |
+|------------|------|------------------|---------|
+| byte → short | Widening | ❌ No | `short s = b;` |
+| short → int | Widening | ❌ No | `int x = s;` |
+| int → long | Widening | ❌ No | `long l = x;` |
+| long → float | Widening | ❌ No | `float f = l;` |
+| float → double | Widening | ❌ No | `double d = f;` |
+| char → int | Widening | ❌ No | `int x = 'A';` |
+| double → float | Narrowing | ✅ Yes | `float f = (float)d;` |
+| float → long | Narrowing | ✅ Yes | `long l = (long)f;` |
+| long → int | Narrowing | ✅ Yes | `int x = (int)l;` |
+| int → short | Narrowing | ✅ Yes | `short s = (short)x;` |
+| int → byte | Narrowing | ✅ Yes | `byte b = (byte)x;` |
+| int → char | Narrowing | ✅ Yes | `char c = (char)x;` |
+
+---
+
+# Widening Order
+
+```text
+byte → short → int → long → float → double
+                 ↘
+                  char
+```
+
+---
+
+# Interview Cheat Code
+
+```text
+Smaller → Bigger  = Automatic (Widening)
+
+Bigger → Smaller = Casting Required (Narrowing)
+
+Widening = Safe
+
+Narrowing = Possible Data Loss
+```
+
+---
+
+# Quick Examples
+
+```java
+int a = 10;
+double b = a;          // Widening
+```
+
+```java
+double x = 10.99;
+int y = (int)x;        // Narrowing
+```
+
+```java
+char ch = 'A';
+int ascii = ch;        // 65
+```
+
+```java
+int num = 65;
+char letter = (char)num; // A
+```
+
+---
+
+# One-Line Revision
+
+```text
+Automatic Conversion → Widening
+
+Manual Conversion using (datatype) → Narrowing
+```
