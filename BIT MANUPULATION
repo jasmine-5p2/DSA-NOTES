@@ -1,6 +1,212 @@
 # Bit Manipulation Cheat Sheet (Must Remember)
 
+# Left Shift (`<<`) and Right Shift (`>>`) in Java
+
+Bitwise shift operators move bits left or right.
+
+---
+
+# 1. Left Shift (`<<`)
+
+Shifts all bits to the left.
+
+## Formula
+
+```java
+n << k = n * (2^k)
+```
+
+---
+
+## Example
+
+```java
+int n = 5;
+
+System.out.println(n << 1);
+```
+
+### Binary Representation
+
+```text
+5 = 00000101
+
+5 << 1
+= 00001010
+= 10
+```
+
+### Output
+
+```text
+10
+```
+
+---
+
+## More Examples
+
+```java
+5 << 1 = 10
+5 << 2 = 20
+5 << 3 = 40
+```
+
+---
+
+# 2. Right Shift (`>>`)
+
+Shifts all bits to the right.
+
+## Formula
+
+```java
+n >> k = n / (2^k)
+```
+
+> Integer division is performed.
+
+---
+
+## Example
+
+```java
+int n = 20;
+
+System.out.println(n >> 1);
+```
+
+### Binary Representation
+
+```text
+20 = 00010100
+
+20 >> 1
+= 00001010
+= 10
+```
+
+### Output
+
+```text
+10
+```
+
+---
+
+## More Examples
+
+```java
+20 >> 1 = 10
+20 >> 2 = 5
+20 >> 3 = 2
+```
+
+---
+
+# Visualization
+
+```text
+5 = 00000101
+
+Left Shift (<< 1)
+
+00000101
+00001010 = 10
+
+--------------------------------
+
+Right Shift (>> 1)
+
+00000101
+00000010 = 2
+```
+
+---
+
+# Quick Cheat Sheet
+
+| Operation | Meaning | Result |
+|------------|------------|------------|
+| `n << 1` | Multiply by 2 | `n × 2` |
+| `n << 2` | Multiply by 4 | `n × 4` |
+| `n << k` | Multiply by 2ᵏ | `n × 2^k` |
+| `n >> 1` | Divide by 2 | `n / 2` |
+| `n >> 2` | Divide by 4 | `n / 4` |
+| `n >> k` | Divide by 2ᵏ | `n / 2^k` |
+
+---
+
+# Java Program
+
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        int n = 5;
+
+        System.out.println(n << 1); // 10
+        System.out.println(n << 2); // 20
+
+        System.out.println(20 >> 1); // 10
+        System.out.println(20 >> 2); // 5
+    }
+}
+```
+
+---
+
+# Time Complexity
+
+```text
+Left Shift  (<<) : O(1)
+Right Shift (>>) : O(1)
+```
+
+Both operations are constant-time bit manipulations.
+
+---
+
+# Interview Tips
+
+✅ `n << k` → Fast multiplication by `2^k`
+
+✅ `n >> k` → Fast division by `2^k`
+
+✅ Used frequently in Bit Manipulation problems
+
+✅ Both operations take `O(1)` time
+
+✅ Useful for optimization in DSA and Competitive Programming
+
+---
+
+# Examples to Remember
+
+```java
+5 << 1 = 10
+5 << 2 = 20
+5 << 3 = 40
+
+20 >> 1 = 10
+20 >> 2 = 5
+20 >> 3 = 2
+```
+
+---
+
+# One-Line Revision
+
+```text
+Left Shift  (<<) → Multiply by 2^k
+Right Shift (>>) → Divide by 2^k
+```
+
 ## Binary Powers of 2
+
+ 16  8  4  2  
+ 0   0  0  0
 
 | Decimal | Binary |
 |----------|----------|
