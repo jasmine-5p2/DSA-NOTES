@@ -130,7 +130,9 @@ String str = "Java,Python,C++";
 String[] arr = str.split(",");
 ```
 
----
+  String a  = "jas,jas";
+      String b[] = a.split(",");
+      System.out.println(Arrays.toString(b));
 
 ## 14. str.isEmpty()
 **Definition:** Checks whether the string is empty (length = 0).
