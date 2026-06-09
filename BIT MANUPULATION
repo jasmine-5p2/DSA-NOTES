@@ -1,3 +1,59 @@
+# Bit Manipulation Notes — Index
+
+1. Introduction to Bit Manipulation
+
+2. Binary Number System
+
+3. Left Shift (`<<`)
+
+4. Right Shift (`>>`)
+
+5. Binary Powers of Two
+
+6. Bit Mask
+
+7. Bitwise Operators Overview
+
+8. Bitwise Operators Cheat Sheet
+
+9. Check k-th Bit
+
+10. Set k-th Bit
+
+11. Clear k-th Bit
+
+12. Toggle k-th Bit
+
+13. Invert All Bits (`~`)
+
+14. Four Most Important Bit Operations
+
+15. XOR Fundamentals
+
+16. XOR Properties
+
+17. XOR Applications
+
+18. Power of Two
+
+19. Rightmost Set Bit Removal
+
+20. Brian Kernighan Algorithm
+
+21. Counting Set Bits
+
+22. Useful Java Built-in Methods
+
+23. LeetCode Bit Manipulation Patterns
+
+24. Common Interview Tricks
+
+25. Time Complexities Cheat Sheet
+
+26. Ultimate Revision Sheet
+
+27. One-Minute Interview Revision
+
 # Bit Manipulation Cheat Sheet (Must Remember)
 
 # Left Shift (`<<`) and Right Shift (`>>`) in Java
