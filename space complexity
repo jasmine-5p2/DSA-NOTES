@@ -1,0 +1,774 @@
+# Space Complexity — Complete DSA Revision Notes
+
+---
+
+# 1. What is Space Complexity?
+
+**Space Complexity** is the total amount of memory required by an algorithm to execute completely.
+
+It measures how memory usage grows as the input size (**n**) increases.
+
+### Definition
+
+> Space Complexity = Input Space + Auxiliary Space
+
+Where:
+
+- **Input Space** → Memory required to store input data.
+- **Auxiliary Space** → Extra memory used by the algorithm.
+
+---
+
+# Why is Space Complexity Important?
+
+In real-world applications:
+
+- Mobile devices have limited memory.
+- Embedded systems have strict memory constraints.
+- Large datasets may not fit into memory.
+- Efficient algorithms save resources.
+
+In interviews:
+
+- Companies test whether you can optimize memory usage.
+- Some problems prioritize low memory over execution speed.
+
+---
+
+# 2. Components of Space Complexity
+
+## Input Space
+
+Memory required to store the input itself.
+
+Example:
+
+```java
+int[] arr = new int[n];
+```
+
+Input Space = O(n)
+
+---
+
+## Auxiliary Space
+
+Extra memory used apart from input.
+
+Example:
+
+```java
+int sum = 0;
+```
+
+Auxiliary Space = O(1)
+
+---
+
+## Total Space Complexity
+
+Formula:
+
+Space Complexity = Input Space + Auxiliary Space
+
+Example:
+
+```java
+int[] arr = new int[n];
+int sum = 0;
+```
+
+Input Space = O(n)
+
+Auxiliary Space = O(1)
+
+Total Space = O(n)
+
+---
+
+# 3. Common Space Complexities
+
+---
+
+# O(1) — Constant Space
+
+## Definition
+
+Memory usage remains constant regardless of input size.
+
+## Example
+
+```java
+int sum = 0;
+
+for(int i = 0; i < n; i++) {
+    sum += i;
+}
+```
+
+## Explanation
+
+Only one variable is used.
+
+Memory does not grow with n.
+
+## Space Complexity
+
+O(1)
+
+---
+
+# O(log n) — Logarithmic Space
+
+## Definition
+
+Memory grows logarithmically.
+
+Usually occurs in recursive divide-and-conquer algorithms.
+
+## Example
+
+Binary Search (Recursive)
+
+```java
+int binarySearch(int[] arr, int low, int high, int target) {
+    if(low > high) return -1;
+
+    int mid = low + (high - low)/2;
+
+    if(arr[mid] == target)
+        return mid;
+
+    if(arr[mid] > target)
+        return binarySearch(arr, low, mid - 1, target);
+
+    return binarySearch(arr, mid + 1, high, target);
+}
+```
+
+## Explanation
+
+Each recursive call halves the search space.
+
+Recursion depth:
+
+log₂(n)
+
+## Space Complexity
+
+O(log n)
+
+---
+
+# O(n) — Linear Space
+
+## Definition
+
+Memory grows proportionally with input size.
+
+## Example
+
+```java
+int[] temp = new int[n];
+```
+
+## Explanation
+
+Array size increases with n.
+
+## Space Complexity
+
+O(n)
+
+---
+
+# O(n log n)
+
+## Definition
+
+Memory grows proportional to n log n.
+
+Less common but appears in some advanced algorithms.
+
+## Example
+
+Recursive tree structures storing log n levels with n data.
+
+## Space Complexity
+
+O(n log n)
+
+---
+
+# O(n²) — Quadratic Space
+
+## Definition
+
+Memory grows as square of input size.
+
+## Example
+
+```java
+int[][] matrix = new int[n][n];
+```
+
+## Explanation
+
+Matrix contains:
+
+n × n elements
+
+## Space Complexity
+
+O(n²)
+
+---
+
+# O(2ⁿ) — Exponential Space
+
+## Definition
+
+Memory doubles with every increase in input size.
+
+## Example
+
+Generating all subsets and storing them.
+
+```java
+List<List<Integer>> subsets;
+```
+
+Total subsets:
+
+2ⁿ
+
+## Space Complexity
+
+O(2ⁿ)
+
+---
+
+# O(n!) — Factorial Space
+
+## Definition
+
+Occurs when storing all permutations.
+
+## Example
+
+```java
+List<List<Integer>> permutations;
+```
+
+Total permutations:
+
+n!
+
+## Space Complexity
+
+O(n!)
+
+---
+
+# 4. How Loops Affect Space Complexity
+
+Important:
+
+### Loops Usually Affect Time, Not Space
+
+Example
+
+```java
+for(int i = 0; i < n; i++) {
+    System.out.println(i);
+}
+```
+
+Space Complexity:
+
+O(1)
+
+Reason:
+
+Only variable i exists.
+
+---
+
+Nested Loops
+
+```java
+for(int i = 0; i < n; i++) {
+    for(int j = 0; j < n; j++) {
+        System.out.println(i + " " + j);
+    }
+}
+```
+
+Time = O(n²)
+
+Space = O(1)
+
+---
+
+# Interview Shortcut
+
+Loops increase Time Complexity.
+
+Extra arrays increase Space Complexity.
+
+---
+
+# 5. How Recursion Affects Space Complexity
+
+Every recursive call creates a new stack frame.
+
+Each frame stores:
+
+- Parameters
+- Local variables
+- Return address
+
+---
+
+Example
+
+```java
+void fun(int n) {
+    if(n == 0)
+        return;
+
+    fun(n - 1);
+}
+```
+
+Call Stack:
+
+fun(5)
+↓
+fun(4)
+↓
+fun(3)
+↓
+fun(2)
+↓
+fun(1)
+↓
+fun(0)
+
+Depth = n
+
+Space Complexity = O(n)
+
+---
+
+# Recursion Stack Diagram
+
+For n = 4
+
+Top of Stack
+
+fun(0)
+fun(1)
+fun(2)
+fun(3)
+fun(4)
+
+Bottom of Stack
+
+Total Frames = 5
+
+Space = O(n)
+
+---
+
+# 6. Iterative vs Recursive
+
+## Iterative
+
+```java
+for(int i = 0; i < n; i++) {
+
+}
+```
+
+Space = O(1)
+
+---
+
+## Recursive
+
+```java
+void fun(int n) {
+    if(n == 0)
+        return;
+
+    fun(n - 1);
+}
+```
+
+Space = O(n)
+
+---
+
+# 7. Important Algorithm Examples
+
+---
+
+# Binary Search
+
+## Iterative
+
+```java
+while(low <= high) {
+
+}
+```
+
+Space = O(1)
+
+---
+
+## Recursive
+
+```java
+binarySearch(...)
+```
+
+Depth = log n
+
+Space = O(log n)
+
+---
+
+# Merge Sort
+
+```java
+mergeSort(arr);
+```
+
+Uses temporary arrays.
+
+Extra Array = n
+
+Space = O(n)
+
+---
+
+# DFS
+
+Recursive DFS
+
+```java
+dfs(node);
+```
+
+Stack Depth = V
+
+Space = O(V)
+
+---
+
+# BFS
+
+```java
+Queue<Integer> queue;
+```
+
+Queue may store all vertices.
+
+Space = O(V)
+
+---
+
+# 8. Space Complexity of Common Data Structures
+
+| Data Structure | Space Complexity |
+|---------------|------------------|
+| Array | O(n) |
+| String | O(n) |
+| Linked List | O(n) |
+| Stack | O(n) |
+| Queue | O(n) |
+| HashMap | O(n) |
+| HashSet | O(n) |
+| Tree | O(n) |
+| Graph (Adjacency Matrix) | O(V²) |
+| Graph (Adjacency List) | O(V + E) |
+
+---
+
+# 9. Time Complexity vs Space Complexity
+
+| Time Complexity | Space Complexity |
+|---------------|----------------|
+| Measures execution time | Measures memory usage |
+| Affected by loops | Affected by storage |
+| O(n²) common in nested loops | O(n²) common in matrices |
+| Focuses on speed | Focuses on memory |
+
+---
+
+# Input Space vs Auxiliary Space
+
+| Input Space | Auxiliary Space |
+|------------|----------------|
+| Stores input | Extra memory |
+| Usually unavoidable | Can often be optimized |
+| Example: array | Example: temp array |
+
+---
+
+# 10. Common Interview Questions
+
+## Why Binary Search Uses O(1) Space?
+
+Iterative Binary Search uses only:
+
+- low
+- high
+- mid
+
+No extra storage.
+
+Space = O(1)
+
+---
+
+## Why Merge Sort Uses O(n) Extra Space?
+
+Temporary arrays are created during merge.
+
+Extra memory = n
+
+Space = O(n)
+
+---
+
+## Why Recursion Causes StackOverflowError?
+
+Too many recursive calls fill the call stack.
+
+Example:
+
+```java
+fun(1000000);
+```
+
+Stack becomes full.
+
+---
+
+## Iterative vs Recursive Space
+
+| Approach | Space |
+|-----------|--------|
+| Iterative | O(1) |
+| Recursive | Depends on recursion depth |
+
+---
+
+# 11. Common Mistakes
+
+❌ Counting loop iterations as space.
+
+❌ Ignoring recursion stack.
+
+❌ Ignoring temporary arrays.
+
+❌ Confusing Time Complexity with Space Complexity.
+
+❌ Counting input space as auxiliary space.
+
+❌ Forgetting queue/stack memory in BFS/DFS.
+
+---
+
+# 12. Quick Revision Sheet
+
+| Pattern | Space Complexity |
+|----------|----------------|
+| Few variables only | O(1) |
+| Recursive Binary Search | O(log n) |
+| Array of size n | O(n) |
+| Linked List | O(n) |
+| Queue storing n items | O(n) |
+| Matrix n×n | O(n²) |
+| DFS Recursion Depth n | O(n) |
+| All Subsets | O(2ⁿ) |
+| All Permutations | O(n!) |
+
+---
+
+# 13. Memory Tricks & Interview Shortcuts
+
+### Trick 1
+
+Variables only
+
+```java
+int a, b, c;
+```
+
+Space = O(1)
+
+---
+
+### Trick 2
+
+Array of size n
+
+```java
+int[] arr = new int[n];
+```
+
+Space = O(n)
+
+---
+
+### Trick 3
+
+Matrix
+
+```java
+int[][] matrix = new int[n][n];
+```
+
+Space = O(n²)
+
+---
+
+### Trick 4
+
+Recursion
+
+Space = Recursion Depth
+
+---
+
+### Trick 5
+
+Queue / Stack
+
+Maximum stored elements = Space Complexity
+
+---
+
+# 14. How to Calculate Space Complexity Step-by-Step
+
+## Step 1
+
+Count Input Storage
+
+Example:
+
+```java
+int[] arr = new int[n];
+```
+
+Input = O(n)
+
+---
+
+## Step 2
+
+Count Extra Variables
+
+```java
+int sum = 0;
+```
+
+Auxiliary = O(1)
+
+---
+
+## Step 3
+
+Count Extra Arrays
+
+```java
+int[] temp = new int[n];
+```
+
+Auxiliary = O(n)
+
+---
+
+## Step 4
+
+Check Recursion Depth
+
+```java
+fun(n);
+```
+
+Depth = n
+
+Auxiliary = O(n)
+
+---
+
+## Formula
+
+Space Complexity
+
+= Input Space + Auxiliary Space
+
+---
+
+# 15. DSA Interview Cheat Sheet
+
+| Scenario | Space Complexity |
+|----------|----------------|
+| Few Variables | O(1) |
+| Binary Search Iterative | O(1) |
+| Binary Search Recursive | O(log n) |
+| Array | O(n) |
+| Linked List | O(n) |
+| HashMap | O(n) |
+| HashSet | O(n) |
+| Queue | O(n) |
+| Stack | O(n) |
+| DFS Recursive | O(V) |
+| BFS | O(V) |
+| Matrix | O(n²) |
+| Merge Sort | O(n) |
+| Subsets | O(2ⁿ) |
+| Permutations | O(n!) |
+
+---
+
+# Golden Rules
+
+✅ Loops usually affect Time Complexity, not Space Complexity.
+
+✅ Arrays, Lists, Queues, Stacks increase Space Complexity.
+
+✅ Recursion consumes stack memory.
+
+✅ Space Complexity depends on extra memory used.
+
+✅ Always check recursion depth.
+
+✅ Interview Formula:
+
+Space Complexity = Input Space + Auxiliary Space
+
+---
+
+# Final 30-Second Revision
+
+- Variables → O(1)
+- Array → O(n)
+- Matrix → O(n²)
+- Recursive Depth n → O(n)
+- Binary Search Recursion → O(log n)
+- Merge Sort → O(n)
+- BFS Queue → O(V)
+- DFS Stack → O(V)
+- Subsets → O(2ⁿ)
+- Permutations → O(n!)
+
+Remember:
+
+**Loops increase Time Complexity.**
+**Extra memory increases Space Complexity.**
