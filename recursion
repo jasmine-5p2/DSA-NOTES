@@ -2,6 +2,17 @@
 
 Recursion is a technique where a function calls itself to solve smaller versions of the same problem.
 
+30-Second Revision
+Function calling itself = Recursion
+Must have Base Case
+Uses Call Stack
+Factorial → n * fact(n-1)
+Sum → n + sum(n-1)
+Fibonacci → fib(n-1) + fib(n-2)
+Binary Search → O(log n)
+Recursion Tree helps visualize calls
+No Base Case → StackOverflowError
+Formula = Base Case + Recursive Call
 ---
 
 # 1. Definition
