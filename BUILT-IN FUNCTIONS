@@ -1,0 +1,1859 @@
+# Java String Functions Quick Notes
+
+## 1. str.length()
+**Definition:** Returns the number of characters in the string.
+
+```java
+String str = "Hello";
+System.out.println(str.length()); // 5
+```
+
+---
+
+## 2. str.charAt(i)
+**Definition:** Returns the character at the specified index.
+
+```java
+String str = "Hello";
+System.out.println(str.charAt(1)); // e
+```
+
+---
+
+## 3. str.substring(start)
+**Definition:** Returns a new string from the given index to the end.
+
+```java
+String str = "Hello";
+System.out.println(str.substring(2)); // llo
+```
+
+---
+
+## 4. str.substring(start, end)
+**Definition:** Returns characters from start index to end-1 index.
+
+```java
+String str = "Hello";
+System.out.println(str.substring(1, 4)); // ell
+```
+
+---
+
+## 5. str.indexOf("text")
+**Definition:** Returns the index of the first occurrence of the given text.
+
+```java
+String str = "Hello";
+System.out.println(str.indexOf("ll")); // 2
+```
+
+---
+
+## 6. str.contains("text")
+**Definition:** Checks whether the string contains the given text.
+
+```java
+String str = "Hello";
+System.out.println(str.contains("ell")); // true
+```
+
+---
+
+## 7. str.equals(str2)
+**Definition:** Compares two strings for exact equality (case-sensitive).
+
+```java
+String a = "Hello";
+String b = "Hello";
+System.out.println(a.equals(b)); // true
+```
+
+---
+
+## 8. str.equalsIgnoreCase(str2)
+**Definition:** Compares two strings while ignoring case differences.
+
+```java
+String a = "HELLO";
+String b = "hello";
+System.out.println(a.equalsIgnoreCase(b)); // true
+```
+
+---
+
+## 9. str.toLowerCase()
+**Definition:** Converts all characters to lowercase.
+
+```java
+String str = "HELLO";
+System.out.println(str.toLowerCase()); // hello
+```
+
+---
+
+## 10. str.toUpperCase()
+**Definition:** Converts all characters to uppercase.
+
+```java
+String str = "hello";
+System.out.println(str.toUpperCase()); // HELLO
+```
+
+---
+
+## 11. str.trim()
+**Definition:** Removes leading and trailing spaces.
+
+```java
+String str = "  Hello  ";
+System.out.println(str.trim()); // Hello
+```
+
+---
+
+## 12. str.replace()
+**Definition:** Replaces specified characters or text with new values.
+
+```java
+String str = "Hello";
+System.out.println(str.replace("l", "x")); // Hexxo
+```
+
+---
+
+## 13. str.split()
+**Definition:** Splits a string into an array based on a delimiter.
+
+```java
+String str = "Java,Python,C++";
+String[] arr = str.split(",");
+```
+
+---
+
+## 14. str.isEmpty()
+**Definition:** Checks whether the string is empty (length = 0).
+
+```java
+String str = "";
+System.out.println(str.isEmpty()); // true
+```
+
+---
+
+# Most Used in DSA
+
+```java
+str.length()
+str.charAt(i)
+str.substring()
+str.indexOf()
+str.equals()
+str.contains()
+str.toLowerCase()
+str.toUpperCase()
+str.split()
+```
+
+These are the String methods most frequently used in coding interviews and DSA problems.
+
+
+
+
+# Java Math Class – Quick Revision Notes
+
+## 1. `Math.abs(x)`
+
+Returns the **absolute value** (positive value).
+
+```java
+System.out.println(Math.abs(-10)); // 10
+System.out.println(Math.abs(5));   // 5
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## 2. `Math.max(a, b)`
+
+Returns the **larger** of two values.
+
+```java
+System.out.println(Math.max(10, 20)); // 20
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## 3. `Math.min(a, b)`
+
+Returns the **smaller** of two values.
+
+```java
+System.out.println(Math.min(10, 20)); // 10
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## 4. `Math.sqrt(x)`
+
+Returns the **square root** of a number.
+
+```java
+System.out.println(Math.sqrt(25)); // 5.0
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## 5. `Math.pow(a, b)`
+
+Returns **a raised to power b**.
+
+```java
+System.out.println(Math.pow(2, 3)); // 8.0
+System.out.println(Math.pow(5, 2)); // 25.0
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## 6. `Math.ceil(x)`
+
+Rounds **up** to the nearest integer.
+
+```java
+System.out.println(Math.ceil(4.1)); // 5.0
+System.out.println(Math.ceil(4.9)); // 5.0
+```
+
+| Number | Result |
+|---------|---------|
+| 4.1 | 5.0 |
+| 4.9 | 5.0 |
+| 5.0 | 5.0 |
+
+**Time Complexity:** O(1)
+
+---
+
+## 7. `Math.floor(x)`
+
+Rounds **down** to the nearest integer.
+
+```java
+System.out.println(Math.floor(4.9)); // 4.0
+System.out.println(Math.floor(4.1)); // 4.0
+```
+
+| Number | Result |
+|---------|---------|
+| 4.9 | 4.0 |
+| 4.1 | 4.0 |
+| 5.0 | 5.0 |
+
+**Time Complexity:** O(1)
+
+---
+
+## 8. `Math.round(x)`
+
+Rounds to the **nearest integer**.
+
+```java
+System.out.println(Math.round(4.4)); // 4
+System.out.println(Math.round(4.5)); // 5
+System.out.println(Math.round(4.8)); // 5
+```
+
+### Trick
+
+- Decimal < 0.5 → Down
+- Decimal ≥ 0.5 → Up
+
+| Number | Result |
+|---------|---------|
+| 4.4 | 4 |
+| 4.5 | 5 |
+| 4.8 | 5 |
+
+**Time Complexity:** O(1)
+
+---
+
+## 9. `Math.random()`
+
+Generates a random number between **0.0 and 1.0**.
+
+```java
+System.out.println(Math.random());
+```
+
+Possible output:
+
+```java
+0.2345
+0.8761
+0.0192
+```
+
+### Generate Random Integer
+
+#### 0 to 9
+
+```java
+int num = (int)(Math.random() * 10);
+```
+
+#### 1 to 10
+
+```java
+int num = (int)(Math.random() * 10) + 1;
+```
+
+#### L to R
+
+```java
+int num = (int)(Math.random() * (R - L + 1)) + L;
+```
+
+Example:
+
+```java
+int num = (int)(Math.random() * (100 - 1 + 1)) + 1;
+```
+
+Generates numbers from **1 to 100**.
+
+---
+
+## Understanding `Math.random()`
+
+`Math.random()` returns a decimal value:
+
+```java
+0.0 <= value < 1.0
+```
+
+Examples:
+
+```java
+0.15
+0.72
+0.38
+0.99
+```
+
+### Why Doesn't It Always Return 0?
+
+Because it does **not** return only `0` or `1`.
+
+Example:
+
+```java
+0.15 * 10 = 1.5
+0.72 * 10 = 7.2
+0.99 * 10 = 9.9
+```
+
+### What Does `(int)` Do?
+
+```java
+(int)(Math.random() * 10)
+```
+
+Removes the decimal part:
+
+```java
+1.5 -> 1
+7.2 -> 7
+9.9 -> 9
+```
+
+### Visualization
+
+```text
+Math.random()
+      ↓
+0.0000 ---------------- 0.9999
+
+× 10
+      ↓
+0.0000 ---------------- 9.9999
+
+(int)
+      ↓
+0,1,2,3,4,5,6,7,8,9
+```
+
+### Interview Tip
+
+```java
+(int)(Math.random() * n)
+```
+
+Generates:
+
+```java
+0 to n - 1
+```
+
+Examples:
+
+```java
+(int)(Math.random() * 5)    // 0 to 4
+(int)(Math.random() * 10)   // 0 to 9
+(int)(Math.random() * 100)  // 0 to 99
+```
+
+---
+
+# Interview Quick Sheet
+
+| Function | Purpose |
+|----------|---------|
+| `Math.abs(x)` | Absolute value |
+| `Math.max(a,b)` | Larger value |
+| `Math.min(a,b)` | Smaller value |
+| `Math.sqrt(x)` | Square root |
+| `Math.pow(a,b)` | a^b |
+| `Math.ceil(x)` | Round up |
+| `Math.floor(x)` | Round down |
+| `Math.round(x)` | Nearest integer |
+| `Math.random()` | Random number (0.0–1.0) |
+
+---
+
+## Most Asked DSA Uses
+
+```java
+Math.max(a, b)      // DP, Arrays
+Math.min(a, b)      // DP, Greedy
+Math.abs(a - b)     // Distance problems
+Math.sqrt(n)        // Prime checking
+Math.pow(a, b)      // Mathematics
+Math.random()       // Randomized algorithms
+```
+
+---
+
+## Key Takeaways
+
+- `Math.random()` returns a decimal between `0.0` and `1.0`.
+- Multiplying changes the range.
+- `(int)` removes the decimal part.
+- `(int)(Math.random() * n)` generates numbers from `0` to `n - 1`.
+- To generate numbers in a custom range:
+
+```java
+(int)(Math.random() * (R - L + 1)) + L
+```
+
+- All common `Math` methods are treated as **O(1)** in DSA and coding interviews.
+
+
+
+# Java Collections Utility Methods – Quick Revision Notes
+
+The `Collections` class provides useful utility methods for working with Java Collections like `ArrayList`, `LinkedList`, etc.
+
+```java
+import java.util.Collections;
+```
+
+---
+
+## 1. `Collections.sort(list)`
+
+Sorts the list in **ascending order**.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(30);
+list.add(10);
+list.add(20);
+
+Collections.sort(list);
+
+System.out.println(list);
+```
+
+### Output
+
+```java
+[10, 20, 30]
+```
+
+### Time Complexity
+
+```text
+O(n log n)
+```
+
+### Common Uses
+
+- Sorting arrays/lists
+- Binary Search preparation
+- Greedy algorithms
+
+---
+
+## 2. `Collections.reverse(list)`
+
+Reverses the order of elements.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+list.add(30);
+
+Collections.reverse(list);
+
+System.out.println(list);
+```
+
+### Output
+
+```java
+[30, 20, 10]
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+### Common Uses
+
+- Reverse traversal
+- String/List manipulation
+- Two-pointer problems
+
+---
+
+## 3. `Collections.max(list)`
+
+Returns the largest element.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(50);
+list.add(20);
+
+System.out.println(Collections.max(list));
+```
+
+### Output
+
+```java
+50
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+### Common Uses
+
+- Finding maximum value
+- Competitive programming
+
+---
+
+## 4. `Collections.min(list)`
+
+Returns the smallest element.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(50);
+list.add(20);
+
+System.out.println(Collections.min(list));
+```
+
+### Output
+
+```java
+10
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+### Common Uses
+
+- Finding minimum value
+- Optimization problems
+
+---
+
+## 5. `Collections.frequency(list, obj)`
+
+Counts how many times an object appears.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+list.add(10);
+list.add(30);
+list.add(10);
+
+System.out.println(Collections.frequency(list, 10));
+```
+
+### Output
+
+```java
+3
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+### Common Uses
+
+- Counting occurrences
+- Frequency-based problems
+
+---
+
+## 6. `Collections.shuffle(list)`
+
+Randomly rearranges elements.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(1);
+list.add(2);
+list.add(3);
+list.add(4);
+
+Collections.shuffle(list);
+
+System.out.println(list);
+```
+
+### Possible Outputs
+
+```java
+[3, 1, 4, 2]
+```
+
+```java
+[2, 4, 1, 3]
+```
+
+```java
+[4, 3, 2, 1]
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+### Common Uses
+
+- Randomization
+- Games
+- Test data generation
+
+---
+
+# Interview Quick Sheet
+
+| Method | Purpose | Complexity |
+|----------|----------|----------|
+| `Collections.sort(list)` | Sort ascending | O(n log n) |
+| `Collections.reverse(list)` | Reverse list | O(n) |
+| `Collections.max(list)` | Largest element | O(n) |
+| `Collections.min(list)` | Smallest element | O(n) |
+| `Collections.frequency(list,obj)` | Count occurrences | O(n) |
+| `Collections.shuffle(list)` | Random shuffle | O(n) |
+
+---
+
+# Most Asked DSA Uses
+
+```java
+Collections.sort(list);        // Sorting
+Collections.reverse(list);     // Reverse order
+Collections.max(list);         // Maximum element
+Collections.min(list);         // Minimum element
+Collections.frequency(list,x); // Count occurrences
+Collections.shuffle(list);     // Random ordering
+```
+
+---
+
+# Important Interview Tip
+
+### Sort in Descending Order
+
+```java
+Collections.sort(list, Collections.reverseOrder());
+```
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(30);
+list.add(10);
+list.add(20);
+
+Collections.sort(list, Collections.reverseOrder());
+
+System.out.println(list);
+```
+
+### Output
+
+```java
+[30, 20, 10]
+```
+
+### Complexity
+
+```text
+O(n log n)
+```
+
+---
+
+# Key Takeaways
+
+- `sort()` → Arrange elements in ascending order.
+- `reverse()` → Reverse existing order.
+- `max()` → Largest element.
+- `min()` → Smallest element.
+- `frequency()` → Count occurrences.
+- `shuffle()` → Random arrangement.
+- Most methods are **O(n)** except `sort()`, which is **O(n log n)**.
+
+
+
+
+# Java ArrayList Methods – Quick Revision Notes
+
+`ArrayList` is a dynamic array in Java that can grow and shrink automatically.
+
+```java
+import java.util.ArrayList;
+```
+
+---
+
+## 1. `add()`
+
+Adds an element to the list.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+
+System.out.println(list);
+```
+
+### Output
+
+```java
+[10, 20]
+```
+
+### Time Complexity
+
+```text
+O(1) Average
+```
+
+---
+
+## 2. `remove()`
+
+Removes an element by index.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+list.add(30);
+
+list.remove(1);
+
+System.out.println(list);
+```
+
+### Output
+
+```java
+[10, 30]
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+Because elements may need to shift.
+
+---
+
+## 3. `get()`
+
+Returns the element at a specified index.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+
+System.out.println(list.get(1));
+```
+
+### Output
+
+```java
+20
+```
+
+### Time Complexity
+
+```text
+O(1)
+```
+
+---
+
+## 4. `set()`
+
+Updates the element at a specified index.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+
+list.set(1, 50);
+
+System.out.println(list);
+```
+
+### Output
+
+```java
+[10, 50]
+```
+
+### Time Complexity
+
+```text
+O(1)
+```
+
+---
+
+## 5. `size()`
+
+Returns the number of elements.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+list.add(30);
+
+System.out.println(list.size());
+```
+
+### Output
+
+```java
+3
+```
+
+### Time Complexity
+
+```text
+O(1)
+```
+
+---
+
+## 6. `contains()`
+
+Checks whether an element exists.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+
+System.out.println(list.contains(20));
+```
+
+### Output
+
+```java
+true
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+---
+
+## 7. `indexOf()`
+
+Returns the index of the first occurrence.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+list.add(30);
+
+System.out.println(list.indexOf(20));
+```
+
+### Output
+
+```java
+1
+```
+
+### If Not Found
+
+```java
+System.out.println(list.indexOf(100));
+```
+
+Output:
+
+```java
+-1
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+---
+
+## 8. `isEmpty()`
+
+Checks whether the list is empty.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+System.out.println(list.isEmpty());
+```
+
+### Output
+
+```java
+true
+```
+
+### Time Complexity
+
+```text
+O(1)
+```
+
+---
+
+## 9. `clear()`
+
+Removes all elements.
+
+### Example
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+
+list.add(10);
+list.add(20);
+
+list.clear();
+
+System.out.println(list);
+```
+
+### Output
+
+```java
+[]
+```
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+---
+
+# Interview Quick Sheet
+
+| Method | Purpose | Complexity |
+|----------|----------|----------|
+| `add()` | Add element | O(1) Avg |
+| `remove()` | Remove element | O(n) |
+| `get()` | Access element | O(1) |
+| `set()` | Update element | O(1) |
+| `size()` | Number of elements | O(1) |
+| `contains()` | Check existence | O(n) |
+| `indexOf()` | Find index | O(n) |
+| `isEmpty()` | Check empty list | O(1) |
+| `clear()` | Remove all elements | O(n) |
+
+---
+
+# Most Asked DSA Uses
+
+```java
+list.add(x);          // Insert element
+list.remove(i);       // Delete element
+list.get(i);          // Access element
+list.set(i, x);       // Update element
+list.size();          // Length of list
+list.contains(x);     // Search element
+list.indexOf(x);      // Find index
+list.isEmpty();       // Empty check
+list.clear();         // Delete all elements
+```
+
+---
+
+# Key Takeaways
+
+- `add()` → Insert element.
+- `remove()` → Delete element.
+- `get()` → Access by index.
+- `set()` → Update by index.
+- `size()` → Current number of elements.
+- `contains()` → Check if element exists.
+- `indexOf()` → Get first occurrence index.
+- `isEmpty()` → Check whether list has elements.
+- `clear()` → Remove all elements.
+- `ArrayList` provides **O(1)** random access using indexes.
+
+
+# Java DSA Important Methods – Quick Revision Notes
+
+---
+
+# 1. Stack Methods (`Stack<E>`)
+
+```java
+import java.util.Stack;
+```
+
+## `push()`
+
+Adds element to the top.
+
+```java
+stack.push(10);
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `pop()`
+
+Removes and returns top element.
+
+```java
+stack.pop();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `peek()`
+
+Returns top element without removing.
+
+```java
+stack.peek();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `isEmpty()`
+
+Checks if stack is empty.
+
+```java
+stack.isEmpty();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `search()`
+
+Returns position from top.
+
+```java
+stack.search(20);
+```
+
+**Time Complexity:** O(n)
+
+---
+
+# Stack Quick Sheet
+
+| Method | Purpose | Complexity |
+|----------|----------|----------|
+| push() | Insert | O(1) |
+| pop() | Remove Top | O(1) |
+| peek() | View Top | O(1) |
+| isEmpty() | Empty Check | O(1) |
+| search() | Find Position | O(n) |
+
+---
+
+# 2. Queue Methods (`Queue<E>`)
+
+```java
+import java.util.Queue;
+import java.util.LinkedList;
+```
+
+## `offer()`
+
+Insert element.
+
+```java
+queue.offer(10);
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `poll()`
+
+Removes front element.
+
+```java
+queue.poll();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `peek()`
+
+Returns front element.
+
+```java
+queue.peek();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `isEmpty()`
+
+Checks if queue is empty.
+
+```java
+queue.isEmpty();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `size()`
+
+Returns number of elements.
+
+```java
+queue.size();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+# Queue Quick Sheet
+
+| Method | Purpose | Complexity |
+|----------|----------|----------|
+| offer() | Insert | O(1) |
+| poll() | Remove Front | O(1) |
+| peek() | View Front | O(1) |
+| size() | Count Elements | O(1) |
+| isEmpty() | Empty Check | O(1) |
+
+---
+
+# 3. HashSet Methods (`HashSet<E>`)
+
+```java
+import java.util.HashSet;
+```
+
+## `add()`
+
+Adds element.
+
+```java
+set.add(10);
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `remove()`
+
+Removes element.
+
+```java
+set.remove(10);
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `contains()`
+
+Checks existence.
+
+```java
+set.contains(10);
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `size()`
+
+Returns number of elements.
+
+```java
+set.size();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `isEmpty()`
+
+Checks if set is empty.
+
+```java
+set.isEmpty();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `clear()`
+
+Removes all elements.
+
+```java
+set.clear();
+```
+
+**Time Complexity:** O(n)
+
+---
+
+# HashSet Quick Sheet
+
+| Method | Purpose | Complexity |
+|----------|----------|----------|
+| add() | Insert | O(1) |
+| remove() | Delete | O(1) |
+| contains() | Search | O(1) |
+| size() | Count | O(1) |
+| isEmpty() | Empty Check | O(1) |
+| clear() | Remove All | O(n) |
+
+---
+
+# 4. HashMap Methods (`HashMap<K,V>`)
+
+```java
+import java.util.HashMap;
+```
+
+## `put()`
+
+Insert key-value pair.
+
+```java
+map.put("A", 10);
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `get()`
+
+Returns value using key.
+
+```java
+map.get("A");
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `remove()`
+
+Removes key-value pair.
+
+```java
+map.remove("A");
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `containsKey()`
+
+Checks key existence.
+
+```java
+map.containsKey("A");
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `containsValue()`
+
+Checks value existence.
+
+```java
+map.containsValue(10);
+```
+
+**Time Complexity:** O(n)
+
+---
+
+## `keySet()`
+
+Returns all keys.
+
+```java
+map.keySet();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `values()`
+
+Returns all values.
+
+```java
+map.values();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `entrySet()`
+
+Returns key-value entries.
+
+```java
+map.entrySet();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `size()`
+
+Returns number of entries.
+
+```java
+map.size();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `isEmpty()`
+
+Checks empty map.
+
+```java
+map.isEmpty();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+# HashMap Quick Sheet
+
+| Method | Purpose | Complexity |
+|----------|----------|----------|
+| put() | Insert | O(1) |
+| get() | Access Value | O(1) |
+| remove() | Delete | O(1) |
+| containsKey() | Search Key | O(1) |
+| containsValue() | Search Value | O(n) |
+| keySet() | Get Keys | O(1) |
+| values() | Get Values | O(1) |
+| entrySet() | Get Entries | O(1) |
+| size() | Count Entries | O(1) |
+| isEmpty() | Empty Check | O(1) |
+
+---
+
+# 5. Character Class Methods
+
+```java
+Character
+```
+
+## `Character.isDigit(ch)`
+
+Checks digit.
+
+```java
+Character.isDigit('5');
+```
+
+Returns:
+
+```java
+true
+```
+
+---
+
+## `Character.isLetter(ch)`
+
+Checks alphabet.
+
+```java
+Character.isLetter('A');
+```
+
+---
+
+## `Character.isUpperCase(ch)`
+
+Checks uppercase.
+
+```java
+Character.isUpperCase('A');
+```
+
+---
+
+## `Character.isLowerCase(ch)`
+
+Checks lowercase.
+
+```java
+Character.isLowerCase('a');
+```
+
+---
+
+## `Character.toUpperCase(ch)`
+
+Converts to uppercase.
+
+```java
+Character.toUpperCase('a');
+```
+
+Returns:
+
+```java
+A
+```
+
+---
+
+## `Character.toLowerCase(ch)`
+
+Converts to lowercase.
+
+```java
+Character.toLowerCase('A');
+```
+
+Returns:
+
+```java
+a
+```
+
+---
+
+# Character Quick Sheet
+
+| Method | Purpose |
+|----------|----------|
+| isDigit() | Digit Check |
+| isLetter() | Alphabet Check |
+| isUpperCase() | Uppercase Check |
+| isLowerCase() | Lowercase Check |
+| toUpperCase() | Convert Upper |
+| toLowerCase() | Convert Lower |
+
+---
+
+# 6. StringBuilder Methods
+
+```java
+StringBuilder sb = new StringBuilder();
+```
+
+## `append()`
+
+Adds text.
+
+```java
+sb.append("Java");
+```
+
+---
+
+## `insert()`
+
+Insert at index.
+
+```java
+sb.insert(0, "Hi ");
+```
+
+---
+
+## `delete()`
+
+Delete range.
+
+```java
+sb.delete(0, 2);
+```
+
+---
+
+## `deleteCharAt()`
+
+Delete one character.
+
+```java
+sb.deleteCharAt(0);
+```
+
+---
+
+## `reverse()`
+
+Reverse string.
+
+```java
+sb.reverse();
+```
+
+---
+
+## `charAt()`
+
+Access character.
+
+```java
+sb.charAt(0);
+```
+
+---
+
+## `setCharAt()`
+
+Update character.
+
+```java
+sb.setCharAt(0, 'A');
+```
+
+---
+
+## `length()`
+
+Returns length.
+
+```java
+sb.length();
+```
+
+---
+
+## `toString()`
+
+Convert to String.
+
+```java
+sb.toString();
+```
+
+---
+
+# StringBuilder Quick Sheet
+
+| Method | Purpose |
+|----------|----------|
+| append() | Add Text |
+| insert() | Insert Text |
+| delete() | Delete Range |
+| deleteCharAt() | Delete Character |
+| reverse() | Reverse String |
+| charAt() | Access Character |
+| setCharAt() | Update Character |
+| length() | Length |
+| toString() | Convert to String |
+
+---
+
+# 7. PriorityQueue Methods
+
+```java
+import java.util.PriorityQueue;
+```
+
+## `offer()`
+
+Insert element.
+
+```java
+pq.offer(10);
+```
+
+**Time Complexity:** O(log n)
+
+---
+
+## `poll()`
+
+Remove smallest element.
+
+```java
+pq.poll();
+```
+
+**Time Complexity:** O(log n)
+
+---
+
+## `peek()`
+
+View smallest element.
+
+```java
+pq.peek();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `size()`
+
+Returns count.
+
+```java
+pq.size();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+## `isEmpty()`
+
+Checks empty queue.
+
+```java
+pq.isEmpty();
+```
+
+**Time Complexity:** O(1)
+
+---
+
+# PriorityQueue Quick Sheet
+
+| Method | Purpose | Complexity |
+|----------|----------|----------|
+| offer() | Insert | O(log n) |
+| poll() | Remove Min | O(log n) |
+| peek() | View Min | O(1) |
+| size() | Count | O(1) |
+| isEmpty() | Empty Check | O(1) |
+
+---
+
+# Most Important for DSA Interviews
+
+```java
+stack.push()
+stack.pop()
+
+queue.offer()
+queue.poll()
+
+set.contains()
+
+map.put()
+map.get()
+
+Character.isDigit()
+Character.isLetter()
+
+sb.append()
+sb.reverse()
+
+pq.offer()
+pq.poll()
+```
+
+These are the methods used most frequently in LeetCode, coding interviews, and competitive programming.
+
+
+The 25 Most Important Java Methods for DSA
+
+Arrays.sort()
+Arrays.binarySearch()
+
+Math.max()
+Math.min()
+Math.abs()
+
+str.length()
+str.charAt()
+str.substring()
+str.indexOf()
+
+list.add()
+list.remove()
+list.get()
+list.set()
+
+stack.push()
+stack.pop()
+stack.peek()
+
+queue.offer()
+queue.poll()
+queue.peek()
+
+set.add()
+set.contains()
+
+map.put()
+map.get()
+map.containsKey()
+
+Collections.sort()
+Collections.reverse()
