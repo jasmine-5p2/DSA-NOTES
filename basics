@@ -1,0 +1,773 @@
+Data structures are ways of organizing and storing data so that it can be accessed and modified efficiently. There isn’t a single “complete” list (since new or hybrid structures can be created), but here’s a broad and commonly accepted classification:
+
+1. Primitive Data Structures
+
+These are basic, built-in types:
+
+Integer
+Float (real numbers)
+Character
+Boolean
+Pointer (in low-level languages)
+2. Non-Primitive Data Structures
+A. Linear Data Structures
+
+Elements are arranged sequentially.
+
+Array – fixed-size, indexed collection
+Linked List
+Singly Linked List
+Doubly Linked List
+Circular Linked List
+Stack (LIFO – Last In, First Out)
+Queue (FIFO – First In, First Out)
+Simple Queue
+Circular Queue
+Priority Queue
+Deque (Double-ended queue)
+B. Non-Linear Data Structures
+
+Elements are arranged hierarchically or graph-like.
+
+1. Trees
+Binary Tree
+Binary Search Tree (BST)
+AVL Tree (self-balancing BST)
+Red-Black Tree
+Heap (Min Heap / Max Heap)
+B-Tree
+B+ Tree
+Trie (Prefix Tree)
+Segment Tree
+Fenwick Tree (Binary Indexed Tree)
+2. Graphs
+Directed Graph
+Undirected Graph
+Weighted Graph
+Unweighted Graph
+Cyclic / Acyclic Graph (DAG)
+C. Hash-Based Structures
+Hash Table (Hash Map)
+Hash Set
+D. Advanced / Specialized Data Structures
+Disjoint Set (Union-Find)
+Skip List
+Bloom Filter
+Suffix Tree
+Suffix Array
+K-D Tree (for spatial data)
+Quad Tree / Octree
+3. Abstract Data Types (ADTs)
+
+These define behavior rather than implementation:
+
+List
+Stack
+Queue
+Set
+Map (Dictionary)
+Priority Queue
+4. File/Data Storage Structures (High-level)
+Files
+Databases (Relational, NoSQL structures)
+
+Data Structure: A way of organizing, storing, and managing data in memory so that it can be accessed and modified efficiently.
+
+Primitive Data Structure: A basic built-in data type that stores a single value (e.g., int, char, float, boolean).
+Non-Primitive Data Structure: A data structure that stores and organizes multiple values using primitive data types (e.g., array, linked list, stack, queue, tree).
+Abstract Data Type (ADT): A logical model that defines what operations can be performed on data without specifying how they are implemented (e.g., stack, queue, list, set).
+
+
+Primitive Data Types (Single-Line Definitions)
+Integer (int): Stores whole numbers without decimal points.
+Float (float): Stores numbers with decimal points.
+Double (double): Stores decimal numbers with higher precision than float.
+Character (char): Stores a single character such as a letter, digit, or symbol.
+Boolean (bool): Stores one of two values: true or false.
+Pointer: Stores the memory address of another variable.
+Byte: Stores a small integer value, typically 8 bits in size.
+Short: Stores an integer value using less memory than a standard integer.
+Long: Stores larger integer values than a standard integer.
+
+Simple one-line summary:
+Primitive data types are the basic built-in types used to store single values directly in memory.
+
+
+The size of primitive data types depends on the programming language and system architecture. For most interview and academic purposes (especially C/C++), you can use the following:
+
+Primitive Data Type	Typical Size
+Boolean (bool)	1 byte
+Character (char)	1 byte
+Byte	1 byte (8 bits)
+Short (short int)	2 bytes
+Integer (int)	4 bytes
+Float (float)	4 bytes
+Long (long int)	4 bytes (32-bit) or 8 bytes (64-bit)
+Double (double)	8 bytes
+Long Double	10, 12, or 16 bytes (compiler-dependent)
+Pointer	4 bytes (32-bit system) or 8 bytes (64-bit system)
+Quick Memory Trick
+char → 1 byte
+short → 2 bytes
+int → 4 bytes
+float → 4 bytes
+double → 8 bytes
+pointer → 4/8 bytes
+
+Note: Non-primitive data structures such as arrays, linked lists, stacks, queues, trees, and graphs do not have a fixed size. Their size depends on the number of elements they contain and the memory used by their nodes or elements.
+
+BUILT-IN FUNCTIONS
+
+Most Commonly Used Java Built-in Methods
+1. Math Class (Math)
+Math.abs(x)
+Math.max(a, b)
+Math.min(a, b)
+Math.sqrt(x)
+Math.pow(a, b)
+Math.ceil(x)
+Math.floor(x)
+Math.round(x)
+Math.random()
+2. String Class
+str.length()
+str.charAt(i)
+str.substring(start)
+str.substring(start, end)
+str.indexOf("text")
+str.contains("text")
+str.equals(str2)
+str.equalsIgnoreCase(str2)
+str.toLowerCase()
+str.toUpperCase()
+str.trim()
+str.replace()
+str.split()
+str.isEmpty()
+3. Arrays Class (java.util.Arrays)
+Arrays.sort(arr)
+Arrays.binarySearch(arr, key)
+Arrays.fill(arr, value)
+Arrays.copyOf(arr, size)
+Arrays.equals(arr1, arr2)
+Arrays.toString(arr)
+4. Collections Class (java.util.Collections)
+Collections.sort(list)
+Collections.reverse(list)
+Collections.max(list)
+Collections.min(list)
+Collections.frequency(list, obj)
+Collections.shuffle(list)
+5. ArrayList Methods
+add()
+remove()
+get()
+set()
+size()
+contains()
+indexOf()
+isEmpty()
+clear()
+6. Stack Methods
+push()
+pop()
+peek()
+isEmpty()
+search()
+7. Queue Methods
+offer()
+poll()
+peek()
+isEmpty()
+size()
+8. HashSet Methods
+add()
+remove()
+contains()
+size()
+isEmpty()
+clear()
+9. HashMap Methods
+put()
+get()
+remove()
+containsKey()
+containsValue()
+keySet()
+values()
+entrySet()
+size()
+isEmpty()
+10. Character Class
+Character.isDigit(ch)
+Character.isLetter(ch)
+Character.isUpperCase(ch)
+Character.isLowerCase(ch)
+Character.toUpperCase(ch)
+Character.toLowerCase(ch)
+11. StringBuilder Methods
+append()
+insert()
+delete()
+deleteCharAt()
+reverse()
+charAt()
+setCharAt()
+length()
+toString()
+12. PriorityQueue Methods
+offer()
+poll()
+peek()
+size()
+isEmpty()
+The 25 Most Important Java Methods for DSA
+Arrays.sort()
+Arrays.binarySearch()
+
+Math.max()
+Math.min()
+Math.abs()
+
+str.length()
+str.charAt()
+str.substring()
+str.indexOf()
+
+list.add()
+list.remove()
+list.get()
+list.set()
+
+stack.push()
+stack.pop()
+stack.peek()
+
+queue.offer()
+queue.poll()
+queue.peek()
+
+set.add()
+set.contains()
+
+map.put()
+map.get()
+map.containsKey()
+
+Collections.sort()
+Collections.reverse()
+
+Time Complexity – Complete Notes (DSA Basics)
+1. What is Time Complexity?
+
+Time complexity measures how the running time of an algorithm grows as the input size increases.
+
+It does not measure exact execution time in seconds. Instead, it describes the algorithm’s growth trend.
+
+Definition
+
+Time Complexity: The amount of time an algorithm takes to complete as a function of input size n.
+
+2. Why is Time Complexity Important?
+
+Time complexity helps us:
+
+Compare algorithms efficiently
+
+Predict performance for large inputs
+
+Choose the best solution in coding interviews and real-world applications
+
+3. Big O Notation (Most Important)
+
+Big O notation represents the worst-case time complexity of an algorithm.
+# Time Complexity Cheat Sheet
+
+A quick overview of common time complexities and their performance.
+
+| Complexity | Name         | Performance Description |
+|------------|--------------|--------------------------|
+| O(1)       | Constant     | Excellent               |
+| O(log n)   | Logarithmic  | Very Fast               |
+| O(n)       | Linear       | Good                    |
+| O(n log n) | Linearithmic | Efficient               |
+| O(n²)      | Quadratic    | Slow for large inputs   |
+| O(n³)      | Cubic        | Very Slow               |
+| O(2ⁿ)      | Exponential  | Extremely Slow          |
+| O(n!)      | Factorial    | Worst (Not practical)   |
+4. Understanding Each Complexity
+O(1) – Constant Time
+
+Execution time does not depend on input size.
+
+Example (Java)
+O(log n) – Logarithmic Time
+
+Input size is reduced by half in each step.
+
+Example
+
+Binary Search
+
+Operations in balanced trees (BST, AVL, Red-Black)
+
+O(n) – Linear Time
+
+Execution time grows proportionally with input size.
+
+Example
+O(n log n) – Linearithmic Time
+
+Efficient sorting algorithms usually have this complexity.
+
+Examples
+
+Merge Sort
+
+Quick Sort (average case)
+
+Heap Sort
+
+O(n²) – Quadratic Time
+
+Nested loops over the same input.
+
+Example
+O(2ⁿ) – Exponential Time
+
+Each step branches into two possibilities.
+
+Example
+
+Recursive Fibonacci without optimization
+
+O(n!) – Factorial Time
+
+All permutations are generated.
+
+Example
+
+Traveling Salesman brute force
+
+Generating all permutations
+
+5. Best, Average, and Worst Case
+
+# Time Complexity Cases
+
+## Types of Cases in Time Complexity
+
+| Case         | Meaning                                  |
+|--------------|-------------------------------------------|
+| Best Case    | Minimum time an algorithm can take        |
+| Average Case | Expected time for typical inputs          |
+| Worst Case   | Maximum time an algorithm can take        |
+
+Example: Linear Search
+
+Best Case: Element found at first position → O(1)
+
+Average Case: Element found in middle → O(n)
+
+Worst Case: Element found at last position or not present → O(n)
+
+# 6. Important Time Complexity Rules
+
+## Rule 1: Ignore Constants
+O(2n) = O(n)
+
+Constants do not matter for large inputs.
+
+---
+
+## Rule 2: Keep the Dominant Term
+O(n² + n + 1) = O(n²)
+
+The highest-growth term dominates.
+
+---
+
+## Rule 3: Nested Loops Multiply
+If one loop runs inside another:
+
+O(n) × O(n) = O(n²)
+
+---
+
+## Rule 4: Consecutive Loops Add
+O(n) + O(n) = O(n)
+
+The larger complexity dominates.
+
+---
+
+# 7. Space Complexity (Also Important)
+
+Space complexity measures the extra memory used by an algorithm.
+
+## Examples
+
+- **O(1)** → Uses fixed extra memory  
+- **O(n)** → Uses memory proportional to input size  
+- **O(log n)** → Recursion stack in balanced recursive algorithms  
+
+---
+
+# 8. Common DSA Operations and Complexities
+
+## Arrays
+
+| Operation              | Complexity |
+|------------------------|------------|
+| Access by index        | O(1)       |
+| Search                 | O(n)       |
+| Insert/Delete at end   | O(1) (amortized for ArrayList) |
+| Insert/Delete in middle| O(n)       |
+
+---
+
+## Linked List
+
+| Operation              | Complexity |
+|------------------------|------------|
+| Access by index        | O(n)       |
+| Insert/Delete at head  | O(1)       |
+| Search                 | O(n)       |
+
+---
+
+## Stack / Queue
+
+| Operation              | Complexity |
+|------------------------|------------|
+| Push/Pop              | O(1)       |
+| Enqueue/Dequeue       | O(1)       |
+
+---
+
+## HashMap / HashSet
+
+| Operation | Average Complexity |
+|-----------|--------------------|
+| Insert    | O(1)               |
+| Delete    | O(1)               |
+| Search    | O(1)               |
+
+---
+
+## Trees (Balanced BST)
+
+| Operation | Complexity |
+|-----------|------------|
+| Search    | O(log n)   |
+| Insert    | O(log n)   |
+| Delete    | O(log n)   |
+
+---
+
+# 9. How to Analyze Time Complexity
+
+## Step-by-Step Method
+
+1. Count loops → Determine how many times they run  
+2. Check nesting → Nested loops multiply  
+3. Look for recursion → Form recurrence relations  
+4. Keep dominant term only → Ignore constants and smaller terms  
+
+---
+
+## Example
+
+Outer loop → n  
+Inner loop → n  
+
+Total operations → n × n = n²  
+
+**Time Complexity = O(n²)**
+
+---
+
+# 10. Amortized Complexity
+
+Sometimes an operation is expensive occasionally but cheap on average.
+
+## Example: ArrayList add()
+
+- Most additions are O(1)  
+- Occasionally resizing occurs → O(n)  
+- Average over many operations → O(1) amortized  
+
+---
+
+# 11. Recursion and Time Complexity
+
+For recursive functions, use recurrence relations.
+
+## Example: Binary Search
+
+Each call halves the input size:
+
+T(n) = T(n/2) + O(1)  
+T(n) = O(log n)
+
+---
+
+# 12. Quick Comparison Chart
+
+| Complexity | Input Size Growth | Practical Use |
+|------------|------------------|---------------|
+| O(1)       | Constant         | Ideal         |
+| O(log n)   | Very slow growth | Excellent     |
+| O(n)       | Linear growth    | Acceptable    |
+| O(n log n) | Slightly above linear | Efficient sorting |
+| O(n²)      | Rapid growth     | Avoid for large n |
+| O(2ⁿ)      | Explosive growth | Rarely practical |
+
+---
+
+# 13. Key Takeaways
+
+- Big O describes worst-case growth  
+- Focus on dominant terms, not exact counts  
+- Nested loops multiply; consecutive loops add  
+- Efficient algorithms usually aim for O(log n), O(n), or O(n log n)  
+- Understanding time complexity is essential for optimizing DSA solutions and cracking interviews  
+
+---
+
+# 14. Memory Trick for Growth Order
+
+## Best to Worst
+
+O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)
+
+Think of it as:
+
+**“Constant → Log → Linear → Linearithmic → Quadratic → Cubic → Exponential → Factorial”**
+
+---
+
+These are the core concepts of time complexity you need before moving into non-primitive data structures and algorithms.
+
+Step 1: Count Loops
+One Loop
+for(int i = 0; i < n; i++)
+
+Runs n times.
+
+➡️ O(n)
+
+
+Two Nested Loops
+for(int i = 0; i < n; i++)
+{
+    for(int j = 0; j < n; j++)
+    {
+    }
+}
+
+Runs:
+
+n × n
+
+➡️ O(n²)
+
+Step 2: Look for Division
+
+Whenever you see:
+
+i = i / 2
+
+or
+
+i = i * 2
+
+or
+
+low = mid + 1;
+high = mid - 1;
+
+The input is being halved.
+
+➡️ O(log n)
+
+Example
+while(n > 1)
+{
+    n = n / 2;
+}
+
+➡️ O(log n)
+
+Step 3: Consecutive Loops Add
+for(int i = 0; i < n; i++)
+{
+}
+
+for(int i = 0; i < n; i++)
+{
+}
+
+Total:
+
+O(n) + O(n)
+
+Remove constants:
+
+➡️ O(n)
+
+Step 4: Keep the Largest Term
+
+Suppose:
+
+O(n² + n + 100)
+
+Keep only the fastest-growing term.
+
+➡️ O(n²)
+
+
+# 📌 The Golden Rule – Time Complexity Patterns
+
+## Whenever you see:
+
+| Pattern                         | Complexity   |
+|---------------------------------|--------------|
+| Single loop                     | O(n)         |
+| Nested loops                    | O(n²), O(n³) |
+| Divide by 2                     | O(log n)     |
+| Loop + Binary Search           | O(n log n)   |
+| Recursion branching twice      | O(2ⁿ)        |
+| Permutations                   | O(n!)        |
+
+---
+
+## 🧠 Quick Interpretation Rule
+
+- Single loop → Linear growth  
+- Nested loops → Multiply complexity  
+- Division by 2 → Logarithmic growth  
+- Separate loops → Add complexity  
+- Recursive branching → Exponential growth  
+
+---
+
+## 🚀 Interview Shortcut
+
+> **Count loops → Multiply if nested → Add if separate → Ignore constants → Keep dominant term**
+
+---
+
+Interview Shortcut
+
+You can calculate 90% of DSA time complexities using:
+
+Count loops → Multiply if nested → Add if separate → Ignore constants → Keep largest term.
+
+Examples
+for(int i = 0; i < n; i++)
+
+➡️ O(n)
+
+for(int i = 0; i < n; i++)
+{
+    for(int j = 0; j < n; j++)
+    {
+    }
+}
+
+➡️ O(n²)
+
+while(n > 1)
+{
+    n /= 2;
+}
+
+➡️ O(log n)
+
+Arrays.sort(arr);
+
+➡️ O(n log n)
+
+
+Recursion — Complete Notes for Beginners (Java)
+1. What is Recursion?
+Definition
+
+Recursion is a technique in which a method calls itself to solve a smaller version of the same problem.
+
+Real-Life Example
+
+Imagine standing between two mirrors facing each other.
+
+You see:
+
+Mirror
+ └── Mirror
+      └── Mirror
+           └── Mirror
+                ...
+
+The same image repeats again and again.
+
+That's the idea behind recursion: a function keeps calling itself until a stopping condition is reached.
+
+2. Why Do We Need Recursion?
+
+Some problems are naturally recursive:
+
+Factorial
+Fibonacci
+Tree Traversal
+Graph DFS
+Backtracking
+Dynamic Programming
+Merge Sort
+Quick Sort
+
+Instead of solving the entire problem at once:
+
+Solve one small part and let recursion solve the rest.
+
+3. Anatomy of Recursion
+
+Every recursive function must have:
+
+1. Base Case
+
+The condition that stops recursion.
+
+2. Recursive Call
+
+The function calls itself on a smaller problem.
+
+Example
+public static void printNumbers(int n) {
+
+    if(n == 0) {     // Base Case
+        return;
+    }
+
+    System.out.println(n);
+
+    printNumbers(n - 1); // Recursive Call
+}
+4. The Golden Rule
+
+A recursive function must always move toward the base case.
+
+Otherwise:
+
+public static void infinite(int n) {
+    infinite(n);
+}
+
+Result:
+
+StackOverflowError
+
+because recursion never stops.
+
+
+
+
