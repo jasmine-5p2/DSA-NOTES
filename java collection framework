@@ -1,0 +1,1742 @@
+# ☕ Java Collection Framework — Complete Revision Notes
+### Beginner to Advanced | Interviews | DSA | Placements | College Exams
+
+---
+
+> 📌 **How to use this document:**
+> - First-time learner? Read from Section 1 to Section 10.
+> - Interview prep? Jump to Section 18 (Cheat Sheet) → Section 20 (Top Questions) → Section 22 (Cheat Codes).
+> - Quick 10-min revision? Go to Section 21.
+
+---
+
+# SECTION 1: INTRODUCTION TO JAVA COLLECTION FRAMEWORK
+
+## 1.1 What is Java Collection Framework (JCF)?
+
+**Simple Explanation:**
+Think of JCF as a **ready-made toolkit** for storing and managing groups of objects. Instead of building your own storage structures from scratch, Java gives you pre-built, optimized, and tested classes.
+
+**Technical Explanation:**
+JCF is a **unified architecture** in `java.util` package that provides:
+- Interfaces (blueprint/contract)
+- Implementations (actual classes like ArrayList, HashMap)
+- Algorithms (utility methods like Collections.sort())
+
+---
+
+## 1.2 Why Was JCF Introduced?
+
+Before JCF (before Java 1.2), developers used:
+- Arrays (fixed size, no built-in methods)
+- Vector (thread-safe but slow)
+- Hashtable (legacy, limited)
+
+**Problems with Arrays:**
+
+| Problem | Explanation |
+|--------|-------------|
+| Fixed Size | Cannot grow or shrink dynamically |
+| No Built-in Methods | No sort(), search(), add(), remove() |
+| Type Safety (pre-generics) | Could store any object, runtime errors |
+| Primitive only or Object[] | No flexibility |
+| No Data Structure variety | Only sequential storage |
+
+**Benefits of Collections:**
+
+| Benefit | Explanation |
+|---------|-------------|
+| Dynamic Size | Grows/shrinks automatically |
+| Rich API | sort, search, add, remove, iterate |
+| Type Safety | Generics prevent wrong type insertions |
+| Multiple DS | List, Set, Map, Queue all available |
+| Interoperability | All collections implement common interfaces |
+| Reusability | No need to write your own LinkedList/HashMap |
+
+---
+
+## 1.3 Real-World Applications
+
+| Use Case | Collection Used |
+|----------|----------------|
+| Shopping cart items | `ArrayList` |
+| Unique usernames | `HashSet` |
+| Word frequency count | `HashMap` |
+| Browser history (ordered) | `LinkedHashMap` |
+| Task scheduler (priority) | `PriorityQueue` |
+| Undo/Redo feature | `ArrayDeque` (Stack) |
+| Student roll list (sorted) | `TreeMap` |
+| Chat message queue | `LinkedList` (Queue) |
+
+---
+
+## 1.4 Importance in DSA and Interviews
+
+- **DSA:** Almost every algorithm uses one of: List, Queue, Stack, Map, Set
+- **Interviews:** 80%+ of coding questions involve JCF classes
+- **Placement:** Every Java interview has 5–15 JCF questions
+- **Projects:** Real-world Java apps heavily use JCF
+
+---
+
+# SECTION 2: COLLECTION FRAMEWORK HIERARCHY
+
+## 2.1 Complete Hierarchy Tree
+
+```
+java.lang.Iterable
+    └── java.util.Collection (Interface)
+            ├── List (Interface)
+            │     ├── ArrayList (Class)
+            │     ├── LinkedList (Class)
+            │     ├── Vector (Class)  ← Legacy
+            │     │     └── Stack (Class)  ← Legacy
+            │     └── CopyOnWriteArrayList (Class) ← Concurrent
+            │
+            ├── Set (Interface)
+            │     ├── HashSet (Class)
+            │     │     └── LinkedHashSet (Class)
+            │     ├── TreeSet (Class)
+            │     ├── EnumSet (Class)
+            │     └── CopyOnWriteArraySet (Class) ← Concurrent
+            │
+            ├── Queue (Interface)
+            │     ├── PriorityQueue (Class)
+            │     ├── LinkedList (Class) ← also implements List
+            │     └── ArrayDeque (Class)
+            │
+            └── Deque (Interface) ← extends Queue
+                    ├── ArrayDeque (Class)
+                    └── LinkedList (Class)
+
+java.util.Map (Interface)  ← NOT part of Collection
+        ├── HashMap (Class)
+        │     ├── LinkedHashMap (Class)
+        │     └── WeakHashMap (Class)
+        ├── TreeMap (Class)
+        ├── Hashtable (Class)  ← Legacy
+        │     └── Properties (Class)
+        ├── EnumMap (Class)
+        └── ConcurrentHashMap (Class) ← Concurrent
+```
+
+---
+
+## 2.2 Why Map is NOT Part of Collection?
+
+| Reason | Explanation |
+|--------|-------------|
+| Different data model | Collection stores single objects; Map stores key-value pairs |
+| No common behavior | Collection has `add(element)`; Map has `put(key, value)` — incompatible |
+| Different iteration | Collection iterates elements; Map iterates keys, values, or entries |
+| Design decision | Java designers kept them separate for clarity |
+
+> 💡 **Interview Tip:** "Map doesn't extend Collection because it stores key-value pairs, not single elements. The interfaces are fundamentally different."
+
+---
+
+## 2.3 Interface Relationships
+
+```
+Iterable
+    └── Collection
+            ├── List
+            ├── Set
+            │     └── SortedSet
+            │             └── NavigableSet
+            └── Queue
+                    └── Deque
+
+Map
+    └── SortedMap
+            └── NavigableMap
+```
+
+---
+
+# SECTION 3: CORE INTERFACES
+
+## 3.1 Collection Interface
+
+```java
+public interface Collection<E> extends Iterable<E> {
+    int size();
+    boolean isEmpty();
+    boolean add(E e);
+    boolean remove(Object o);
+    boolean contains(Object o);
+    Iterator<E> iterator();
+    Object[] toArray();
+    void clear();
+    boolean addAll(Collection<? extends E> c);
+    // ... more
+}
+```
+
+**Key characteristics:**
+- Root interface for List, Set, Queue
+- Does NOT define ordering
+- Does NOT define duplicate policy (subinterfaces do)
+- Does NOT allow direct instantiation
+
+---
+
+## 3.2 Interface Summary Table
+
+| Interface | Ordered? | Sorted? | Duplicates? | Null? | Common Class |
+|-----------|----------|---------|-------------|-------|--------------|
+| List | ✅ Yes (index) | ❌ No | ✅ Yes | ✅ Yes | ArrayList |
+| Set | ❌ No* | ❌ No* | ❌ No | 1 null* | HashSet |
+| Queue | ✅ FIFO/Priority | ❌ No* | ✅ Yes | ❌ No* | PriorityQueue |
+| Deque | ✅ Both ends | ❌ No | ✅ Yes | ❌ No* | ArrayDeque |
+| Map | ❌ No* | ❌ No* | Keys: ❌ Values: ✅ | Key: 1* | HashMap |
+
+*Varies by implementation (e.g., TreeSet is sorted, LinkedHashSet is ordered)
+
+---
+
+## 3.3 List Interface
+
+- **Definition:** Ordered collection (sequence). Elements accessed by index.
+- **Duplicates:** Allowed
+- **Null:** Allowed (multiple)
+- **Ordering:** Insertion order maintained
+- **Index-based:** Yes (`get(0)`, `get(1)`)
+
+```java
+List<String> list = new ArrayList<>();
+list.add("A");  // index 0
+list.add("B");  // index 1
+list.add("A");  // duplicate allowed, index 2
+list.get(1);    // "B"
+```
+
+---
+
+## 3.4 Set Interface
+
+- **Definition:** Collection with NO duplicates.
+- **Duplicates:** NOT allowed
+- **Null:** Depends on implementation
+- **Ordering:** Depends on implementation
+
+```java
+Set<String> set = new HashSet<>();
+set.add("A");
+set.add("B");
+set.add("A");  // ignored — duplicate!
+System.out.println(set.size()); // 2
+```
+
+---
+
+## 3.5 Queue Interface
+
+- **Definition:** Collection designed for holding elements prior to processing. Typically FIFO.
+- **Key methods:** `offer()`, `poll()`, `peek()`
+- **Throws exceptions:** `add()`, `remove()`, `element()`
+- **Returns null/false:** `offer()`, `poll()`, `peek()`
+
+| Method | Throws Exception | Returns Special Value |
+|--------|------------------|-----------------------|
+| Insert | `add(e)` | `offer(e)` |
+| Remove | `remove()` | `poll()` |
+| Examine | `element()` | `peek()` |
+
+---
+
+## 3.6 Deque Interface (Double-Ended Queue)
+
+- Can add/remove from **both ends**
+- Can work as both **Queue (FIFO)** and **Stack (LIFO)**
+- `ArrayDeque` is preferred over `Stack` class
+
+```java
+Deque<Integer> deque = new ArrayDeque<>();
+deque.addFirst(1);  // front
+deque.addLast(2);   // back
+deque.peekFirst();  // 1
+deque.peekLast();   // 2
+```
+
+---
+
+## 3.7 Map Interface
+
+- **Definition:** Object that maps keys to values. Each key is unique.
+- **No duplicate keys** (duplicate key overwrites old value)
+- **Duplicate values** allowed
+- Does NOT extend Collection
+
+```java
+Map<String, Integer> map = new HashMap<>();
+map.put("a", 1);
+map.put("b", 2);
+map.put("a", 3);  // key "a" now maps to 3 (overwrites)
+System.out.println(map.get("a")); // 3
+```
+
+---
+
+# SECTION 4: LIST INTERFACE
+
+## 4.1 ArrayList
+
+### Internal Working
+
+ArrayList is backed by a **dynamic array** (`Object[]`).
+
+```
+ArrayList (default capacity = 10)
+
+[  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  ]
+  "A"   "B"   "C"   null  null  null  null  null  null  null
+   ↑     ↑     ↑
+ size=3, capacity=10
+```
+
+### Resizing (Growing)
+
+When size == capacity:
+1. New array of size = **`oldCapacity * 1.5`** (Java 8+) is created
+2. Old elements are **copied** to new array
+3. Old array is garbage collected
+
+```
+Old:  [ A | B | C | D | E | F | G | H | I | J ]   capacity=10
+                                                      size=10 → FULL!
+
+New:  [ A | B | C | D | E | F | G | H | I | J | _ | _ | _ | _ | _ ]
+                                                    capacity=15
+```
+
+> Formula: `newCapacity = oldCapacity + (oldCapacity >> 1)` = `10 + 5 = 15`
+
+---
+
+### ArrayList Time Complexity
+
+| Operation | Time Complexity | Reason |
+|-----------|----------------|--------|
+| `add(E e)` at end | **O(1)** amortized | Direct array append |
+| `add(int i, E e)` at index | **O(n)** | Shift elements right |
+| `get(int i)` | **O(1)** | Direct index access |
+| `set(int i, E e)` | **O(1)** | Direct index access |
+| `remove(int i)` | **O(n)** | Shift elements left |
+| `remove(Object o)` | **O(n)** | Linear search + shift |
+| `contains(Object o)` | **O(n)** | Linear search |
+| `size()` | **O(1)** | Stored as field |
+| `clear()` | **O(n)** | Set all to null |
+| `iterator()` traversal | **O(n)** | Visit each element |
+
+---
+
+### ArrayList Code Examples
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+
+ArrayList<String> list = new ArrayList<>();       // default capacity 10
+ArrayList<String> list2 = new ArrayList<>(50);   // initial capacity 50
+
+// Adding
+list.add("Apple");              // add at end
+list.add(0, "Banana");          // add at index 0
+list.addAll(anotherList);       // add all elements
+
+// Accessing
+String s = list.get(0);         // get by index
+int idx = list.indexOf("Apple");// find index
+
+// Updating
+list.set(0, "Mango");           // replace at index
+
+// Removing
+list.remove(0);                 // remove by index
+list.remove("Apple");           // remove by value
+
+// Searching
+boolean b = list.contains("Mango"); // O(n)
+
+// Sorting
+Collections.sort(list);              // ascending
+Collections.sort(list, Collections.reverseOrder()); // descending
+
+// Size
+int size = list.size();
+boolean empty = list.isEmpty();
+
+// Conversion
+String[] arr = list.toArray(new String[0]);
+List<String> fromArr = Arrays.asList("A", "B", "C");
+
+// Iteration
+for (String item : list) { System.out.println(item); }
+list.forEach(System.out::println);
+
+// SubList
+List<String> sub = list.subList(1, 3); // index 1 to 2 (exclusive 3)
+```
+
+---
+
+### ArrayList: Advantages vs Disadvantages
+
+| Advantages | Disadvantages |
+|------------|---------------|
+| Fast random access O(1) | Slow insert/delete in middle O(n) |
+| Cache-friendly (contiguous memory) | Resizing is expensive (copy all) |
+| Lots of built-in methods | Wastes memory (pre-allocated capacity) |
+| Implements RandomAccess | Not thread-safe |
+| Best for read-heavy workloads | |
+
+---
+
+### ArrayList Interview Questions
+
+> ❓ **Q: What is the default initial capacity of ArrayList?**
+> ✅ **A:** 10
+
+> ❓ **Q: By how much does ArrayList grow when full?**
+> ✅ **A:** 1.5x (newCapacity = oldCapacity + oldCapacity/2)
+
+> ❓ **Q: Is ArrayList thread-safe?**
+> ✅ **A:** No. Use `Collections.synchronizedList()` or `CopyOnWriteArrayList`.
+
+> ❓ **Q: Difference between size() and capacity in ArrayList?**
+> ✅ **A:** `size()` = number of actual elements. Capacity = total allocated space in internal array.
+
+> ❓ **Q: What is ensureCapacity()?**
+> ✅ **A:** Pre-allocates capacity to avoid multiple resize operations. Call before bulk adds.
+
+---
+
+## 4.2 LinkedList
+
+### Internal Structure (Doubly Linked List)
+
+```
+null ← [prev|"A"|next] ↔ [prev|"B"|next] ↔ [prev|"C"|next] → null
+         ↑head                                      ↑tail
+```
+
+Each **Node** contains:
+```java
+private static class Node<E> {
+    E item;
+    Node<E> next;
+    Node<E> prev;
+}
+```
+
+LinkedList maintains references to:
+- `first` → head node
+- `last` → tail node
+- `size` → count
+
+---
+
+### LinkedList Time Complexity
+
+| Operation | Time Complexity | Reason |
+|-----------|----------------|--------|
+| `add(E e)` at end | **O(1)** | Direct tail reference |
+| `add(int i, E e)` | **O(n)** | Traverse to index i |
+| `get(int i)` | **O(n)** | No index → must traverse |
+| `remove(int i)` | **O(n)** | Traverse + pointer update |
+| `addFirst()` / `addLast()` | **O(1)** | Direct head/tail access |
+| `removeFirst()` / `removeLast()` | **O(1)** | Direct head/tail access |
+| `contains(Object o)` | **O(n)** | Linear search |
+
+---
+
+### LinkedList Code Examples
+
+```java
+import java.util.LinkedList;
+
+LinkedList<String> ll = new LinkedList<>();
+
+// Adding
+ll.add("B");            // add at end
+ll.addFirst("A");       // add at head → [A, B]
+ll.addLast("C");        // add at tail → [A, B, C]
+ll.add(1, "X");         // add at index → [A, X, B, C]
+
+// Accessing
+ll.get(0);              // "A" — O(n)!
+ll.getFirst();          // "A" — O(1)
+ll.getLast();           // "C" — O(1)
+ll.peek();              // peeks at head (same as getFirst)
+ll.peekFirst();
+ll.peekLast();
+
+// Removing
+ll.remove();            // removes head
+ll.removeFirst();       // removes head
+ll.removeLast();        // removes tail
+ll.remove(1);           // removes at index 1
+ll.remove("X");         // removes by value
+ll.poll();              // removes head, returns null if empty
+
+// Queue operations
+ll.offer("D");          // enqueue at tail
+ll.poll();              // dequeue from head
+
+// Stack operations
+ll.push("Z");           // pushes at head
+ll.pop();               // pops from head
+```
+
+---
+
+### LinkedList: Advantages vs Disadvantages
+
+| Advantages | Disadvantages |
+|------------|---------------|
+| O(1) insert/delete at head/tail | O(n) random access |
+| No resizing needed | Extra memory per node (prev + next) |
+| Efficient as Queue and Stack | Poor cache performance |
+| No shifting of elements | |
+
+---
+
+### LinkedList Interview Questions
+
+> ❓ **Q: When should you use LinkedList over ArrayList?**
+> ✅ **A:** When you frequently add/remove at the beginning or middle. For random access, ArrayList is better.
+
+> ❓ **Q: LinkedList implements which interfaces?**
+> ✅ **A:** List, Deque, Queue, Cloneable, Serializable
+
+> ❓ **Q: Is LinkedList thread-safe?**
+> ✅ **A:** No. Use `Collections.synchronizedList()`.
+
+> ❓ **Q: Does LinkedList allow null?**
+> ✅ **A:** Yes, multiple nulls allowed.
+
+---
+
+## 4.3 Vector
+
+```java
+Vector<String> v = new Vector<>();         // default capacity 10, increment doubles
+Vector<String> v2 = new Vector<>(20, 5);  // capacity 20, increment by 5
+```
+
+| Feature | Vector | ArrayList |
+|---------|--------|-----------|
+| Thread Safety | ✅ Synchronized | ❌ Not synchronized |
+| Performance | ❌ Slower (lock overhead) | ✅ Faster |
+| Growth | Doubles (2x) | 1.5x |
+| Legacy | ✅ Since Java 1.0 | ❌ Java 1.2 |
+| Recommended? | ❌ No | ✅ Yes |
+
+> 💡 **Interview Tip:** "Vector is a legacy class. In modern Java, use `ArrayList` with `Collections.synchronizedList()` or `CopyOnWriteArrayList` for thread safety."
+
+---
+
+## 4.4 Stack
+
+Stack is a **LIFO** (Last In First Out) data structure. It extends Vector.
+
+```
+push("A") → push("B") → push("C")
+
+     TOP
+  ┌─────┐
+  │  C  │ ← peek() returns C; pop() removes C
+  ├─────┤
+  │  B  │
+  ├─────┤
+  │  A  │
+  └─────┘
+  BOTTOM
+```
+
+### Stack Methods
+
+```java
+import java.util.Stack;
+
+Stack<Integer> stack = new Stack<>();
+
+stack.push(1);        // pushes 1
+stack.push(2);        // pushes 2
+stack.push(3);        // pushes 3
+
+stack.peek();         // 3 — view top without removing
+stack.pop();          // 3 — removes and returns top
+stack.empty();        // false — is stack empty?
+stack.search(1);      // 2 — returns 1-based position from top (or -1)
+stack.size();         // 2
+```
+
+### Stack Time Complexity
+
+| Operation | Time |
+|-----------|------|
+| `push()` | O(1) |
+| `pop()` | O(1) |
+| `peek()` | O(1) |
+| `search()` | O(n) |
+| `empty()` | O(1) |
+
+> ⚠️ **Interview Tip:** "Prefer `ArrayDeque` over `Stack`. Stack extends Vector (legacy, synchronized). ArrayDeque is faster and not thread-safe, which is fine for single-threaded use."
+
+```java
+// Preferred modern approach:
+Deque<Integer> stack = new ArrayDeque<>();
+stack.push(1);    // addFirst
+stack.pop();      // removeFirst
+stack.peek();     // peekFirst
+```
+
+---
+
+# SECTION 5: SET INTERFACE
+
+## 5.1 HashSet
+
+### Internal Working
+
+HashSet is backed by a **HashMap** internally!
+
+```java
+// Internally, HashSet is:
+private transient HashMap<E,Object> map;
+private static final Object PRESENT = new Object();
+
+public boolean add(E e) {
+    return map.put(e, PRESENT) == null;
+}
+```
+
+So when you add "Apple" to a HashSet, it does:
+`hashMap.put("Apple", PRESENT)`
+
+### How Hashing Works
+
+```
+add("Apple")
+    ↓
+hash("Apple") → hashCode = 63476538
+    ↓
+bucket = hashCode % capacity → bucket 3
+    ↓
+[bucket 3] → [Apple → PRESENT]
+```
+
+```
+add("Banana")
+    ↓
+hash("Banana") → hashCode = 1982479668
+    ↓
+bucket = hashCode % capacity → bucket 7
+    ↓
+[bucket 7] → [Banana → PRESENT]
+```
+
+If another element hashes to same bucket = **Collision** (handled by chaining/tree)
+
+---
+
+### HashSet Time Complexity
+
+| Operation | Average | Worst Case |
+|-----------|---------|------------|
+| `add(E e)` | O(1) | O(n) — many collisions |
+| `remove(Object o)` | O(1) | O(n) |
+| `contains(Object o)` | O(1) | O(n) |
+| `size()` | O(1) | O(1) |
+
+---
+
+### HashSet Code Examples
+
+```java
+HashSet<String> set = new HashSet<>();
+
+set.add("Apple");
+set.add("Banana");
+set.add("Apple");    // duplicate — ignored
+set.add(null);       // null allowed (once)
+
+System.out.println(set.size());           // 3
+System.out.println(set.contains("Apple")); // true
+
+set.remove("Banana");
+
+// Iteration (no guaranteed order)
+for (String s : set) {
+    System.out.println(s);
+}
+
+// Set operations
+Set<String> set2 = new HashSet<>(Arrays.asList("Apple", "Cherry"));
+
+// Union
+set.addAll(set2);
+
+// Intersection
+set.retainAll(set2);
+
+// Difference
+set.removeAll(set2);
+```
+
+| Feature | HashSet |
+|---------|---------|
+| Ordering | ❌ No order |
+| Sorted | ❌ No |
+| Duplicates | ❌ Not allowed |
+| Null | ✅ One null allowed |
+| Thread-safe | ❌ No |
+
+---
+
+## 5.2 LinkedHashSet
+
+- Extends HashSet
+- Maintains **insertion order** using a doubly linked list + hash table
+
+```java
+LinkedHashSet<String> lhs = new LinkedHashSet<>();
+lhs.add("Banana");
+lhs.add("Apple");
+lhs.add("Cherry");
+lhs.add("Apple"); // duplicate, ignored
+
+// Prints in insertion order: Banana, Apple, Cherry
+for (String s : lhs) System.out.println(s);
+```
+
+| Feature | HashSet | LinkedHashSet |
+|---------|---------|---------------|
+| Ordering | ❌ Random | ✅ Insertion order |
+| Performance | ✅ Slightly faster | ❌ Slightly slower (linked list overhead) |
+| Memory | ✅ Less | ❌ More |
+
+---
+
+## 5.3 TreeSet
+
+### Internal Working
+TreeSet is backed by a **TreeMap**, which uses a **Red-Black Tree** (self-balancing BST).
+
+```
+TreeSet<Integer>: add(5), add(3), add(7), add(1), add(4)
+
+        5
+       / \
+      3   7
+     / \
+    1   4
+
+Inorder traversal: 1, 3, 4, 5, 7  → SORTED!
+```
+
+### TreeSet Code Examples
+
+```java
+TreeSet<Integer> ts = new TreeSet<>();
+ts.add(5);
+ts.add(3);
+ts.add(7);
+ts.add(1);
+
+// Always sorted ascending
+System.out.println(ts);     // [1, 3, 5, 7]
+
+// Navigation methods (TreeSet specific)
+ts.first();                 // 1 — smallest
+ts.last();                  // 7 — largest
+ts.higher(3);               // 5 — strictly greater than 3
+ts.lower(5);                // 3 — strictly less than 5
+ts.ceiling(4);              // 5 — >= 4
+ts.floor(4);                // 3 — <= 4
+ts.headSet(5);              // [1, 3] — less than 5
+ts.tailSet(5);              // [5, 7] — >= 5
+ts.subSet(3, 7);            // [3, 5] — from 3 (incl) to 7 (excl)
+
+// Descending
+TreeSet<Integer> desc = new TreeSet<>(Collections.reverseOrder());
+```
+
+### TreeSet Time Complexity
+
+| Operation | Time |
+|-----------|------|
+| `add(E e)` | O(log n) |
+| `remove(Object o)` | O(log n) |
+| `contains(Object o)` | O(log n) |
+| `first()` / `last()` | O(log n) |
+| Iteration | O(n) |
+
+> ⚠️ TreeSet does NOT allow null (throws NullPointerException)
+
+> ⚠️ TreeSet elements must be Comparable, or you must provide a Comparator
+
+---
+
+# SECTION 6: QUEUE INTERFACE
+
+## 6.1 PriorityQueue
+
+### Internal Working: Min-Heap
+
+PriorityQueue uses a **Binary Min-Heap** internally (backed by array).
+
+```
+PriorityQueue (Min-Heap):
+add(5), add(1), add(3), add(7), add(2)
+
+          1          ← always the smallest at top
+         / \
+        2   3
+       / \
+      7   5
+
+Array: [1, 2, 3, 7, 5]
+```
+
+- **poll()** always removes the **smallest** element (min-heap by default)
+- For max-heap, use `Comparator.reverseOrder()`
+
+### PriorityQueue Code Examples
+
+```java
+// Min Heap (default)
+PriorityQueue<Integer> minPQ = new PriorityQueue<>();
+minPQ.offer(5);
+minPQ.offer(1);
+minPQ.offer(3);
+
+minPQ.peek();   // 1 — smallest, does not remove
+minPQ.poll();   // 1 — removes smallest
+minPQ.poll();   // 3
+minPQ.poll();   // 5
+
+// Max Heap
+PriorityQueue<Integer> maxPQ = new PriorityQueue<>(Collections.reverseOrder());
+maxPQ.offer(5);
+maxPQ.offer(1);
+maxPQ.offer(3);
+maxPQ.poll();   // 5 — largest first
+
+// Custom objects with Comparator
+PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]); // sort by 2nd element
+
+// PriorityQueue does NOT guarantee order during iteration!
+// Use poll() to get sorted order
+while (!minPQ.isEmpty()) {
+    System.out.print(minPQ.poll() + " ");  // 1 3 5
+}
+```
+
+### PriorityQueue Time Complexity
+
+| Operation | Time |
+|-----------|------|
+| `offer(E e)` | O(log n) |
+| `poll()` | O(log n) |
+| `peek()` | O(1) |
+| `contains(Object o)` | O(n) |
+| `size()` | O(1) |
+
+---
+
+## 6.2 ArrayDeque
+
+ArrayDeque is a **resizable array** that works as both Queue and Stack. It is the **preferred** implementation.
+
+```
+ArrayDeque as Queue (FIFO):
+  offerLast("A") → offerLast("B") → offerLast("C")
+
+  [head] A ← B ← C [tail]
+  pollFirst() → "A"
+
+ArrayDeque as Stack (LIFO):
+  push("A") → push("B") → push("C")
+
+  [top] C → B → A
+  pop() → "C"
+```
+
+### ArrayDeque Code Examples
+
+```java
+ArrayDeque<String> deque = new ArrayDeque<>();
+
+// Queue operations (FIFO)
+deque.offerLast("A");   // enqueue
+deque.offerLast("B");
+deque.offerLast("C");
+deque.peekFirst();      // "A" — front
+deque.pollFirst();      // "A" — dequeue
+
+// Stack operations (LIFO)
+deque.push("X");        // addFirst
+deque.push("Y");
+deque.peek();           // "Y" — top
+deque.pop();            // "Y" — removeFirst
+
+// Deque operations
+deque.addFirst("Z");
+deque.addLast("W");
+deque.peekFirst();
+deque.peekLast();
+deque.pollFirst();
+deque.pollLast();
+```
+
+### Why ArrayDeque over Stack?
+
+| Feature | Stack | ArrayDeque |
+|---------|-------|------------|
+| Thread-safe | ✅ Yes (synchronized) | ❌ No |
+| Performance | ❌ Slower | ✅ Faster (no lock) |
+| Memory | ❌ More | ✅ Less |
+| Legacy | ✅ Old | ✅ Modern |
+| Null allowed | ✅ Yes | ❌ No |
+| Recommended | ❌ No | ✅ Yes |
+
+---
+
+# SECTION 7: MAP INTERFACE
+
+## 7.1 HashMap
+
+### Internal Working (The Most Asked Interview Topic!)
+
+#### Java 7 (Before Java 8)
+- **Array of LinkedLists** (buckets)
+- Each bucket is a linked list of entries
+- Collision → add to linked list of that bucket
+
+#### Java 8+ (Current)
+- **Array of LinkedLists + Red-Black Trees**
+- When a bucket has ≥ **8 entries** → LinkedList converts to **Tree** (O(n) → O(log n))
+- When tree shrinks to ≤ **6 entries** → Tree converts back to LinkedList
+- Default initial capacity: **16**, Load factor: **0.75**
+
+```
+HashMap Internal Structure (Java 8):
+
+Buckets:
+[0]  → null
+[1]  → Node("apple" → 1) → Node("grape" → 5)
+[2]  → null
+[3]  → Node("banana" → 2)
+...
+[15] → Node("cherry" → 3)
+
+If bucket[1] grows > 8 entries:
+[1]  → TreeNode (Red-Black Tree instead of linked list)
+```
+
+#### Step-by-step: put("apple", 1)
+```
+1. hash("apple") → hashCode = 93029210
+2. index = hashCode & (capacity - 1) = 93029210 & 15 = bucket 10
+3. If bucket 10 is empty → create new Node("apple", 1) there
+4. If bucket 10 has entries → check each entry's key with equals()
+   - If key found → update value
+   - If key not found → add new node (collision handling)
+```
+
+#### Load Factor and Rehashing
+```
+Load Factor = 0.75 (default)
+Initial Capacity = 16
+
+Rehashing threshold = 16 * 0.75 = 12
+
+When 12 entries are inserted → rehash!
+→ New capacity = 32
+→ All entries are rehashed into new buckets
+→ Expensive operation: O(n)
+```
+
+---
+
+### HashMap Time Complexity
+
+| Operation | Average | Worst (many collisions) |
+|-----------|---------|------------------------|
+| `put(k,v)` | **O(1)** | O(n) Java7 / O(log n) Java8 |
+| `get(k)` | **O(1)** | O(n) Java7 / O(log n) Java8 |
+| `remove(k)` | **O(1)** | O(n) Java7 / O(log n) Java8 |
+| `containsKey(k)` | **O(1)** | O(n) Java7 / O(log n) Java8 |
+| Iteration | **O(n+capacity)** | O(n+capacity) |
+
+---
+
+### HashMap Code Examples
+
+```java
+HashMap<String, Integer> map = new HashMap<>();
+
+// Adding
+map.put("apple", 1);
+map.put("banana", 2);
+map.put("cherry", 3);
+map.put("apple", 10);  // overwrites key "apple" → value 10
+
+// Getting
+int val = map.get("apple");         // 10
+int val2 = map.getOrDefault("xyz", 0); // 0 if key not found
+
+// Checking
+map.containsKey("banana");          // true
+map.containsValue(2);               // true
+map.isEmpty();                      // false
+map.size();                         // 3
+
+// Removing
+map.remove("cherry");               // removes entry
+map.remove("apple", 10);           // removes only if value matches
+
+// Iterating
+for (Map.Entry<String, Integer> entry : map.entrySet()) {
+    System.out.println(entry.getKey() + " = " + entry.getValue());
+}
+map.forEach((k, v) -> System.out.println(k + "=" + v));
+for (String key : map.keySet()) { ... }
+for (int val3 : map.values()) { ... }
+
+// Useful methods
+map.putIfAbsent("mango", 5);        // only puts if key absent
+map.replace("banana", 20);         // replace value
+map.computeIfAbsent("grape", k -> k.length()); // compute if key missing
+map.merge("apple", 1, Integer::sum); // merge values
+
+// Frequency counting (common pattern!)
+String[] words = {"a", "b", "a", "c", "b", "a"};
+Map<String, Integer> freq = new HashMap<>();
+for (String word : words) {
+    freq.put(word, freq.getOrDefault(word, 0) + 1);
+}
+// or:
+for (String word : words) {
+    freq.merge(word, 1, Integer::sum);
+}
+```
+
+---
+
+### HashMap: Key Rules
+
+| Rule | Detail |
+|------|--------|
+| Null key | ✅ ONE null key allowed |
+| Null value | ✅ Multiple null values allowed |
+| Thread-safe | ❌ No |
+| Ordering | ❌ No guaranteed order |
+| Duplicate keys | ❌ Not allowed (overwrites) |
+
+---
+
+### HashMap Interview Questions
+
+> ❓ **Q: How does HashMap handle collisions?**
+> ✅ **A:** Chaining — multiple entries in same bucket stored as LinkedList (Java 7) or Red-Black Tree when bucket size ≥ 8 (Java 8).
+
+> ❓ **Q: What is the default capacity and load factor?**
+> ✅ **A:** Capacity = 16, Load Factor = 0.75. Rehash when size > 16 × 0.75 = 12.
+
+> ❓ **Q: Why do we override equals() and hashCode() together?**
+> ✅ **A:** hashCode() finds the bucket. equals() finds the exact key within the bucket. If you override only one, the contract breaks.
+
+> ❓ **Q: What happens if two keys have same hashCode?**
+> ✅ **A:** They land in the same bucket (collision). equals() is used to distinguish them.
+
+> ❓ **Q: Can HashMap have null key?**
+> ✅ **A:** Yes, exactly one null key (stored at bucket index 0).
+
+---
+
+## 7.2 LinkedHashMap
+
+- Extends HashMap
+- Maintains **insertion order** (default) or **access order** (LRU)
+- Uses doubly linked list to maintain order
+
+```java
+// Insertion order (default)
+LinkedHashMap<String, Integer> lhm = new LinkedHashMap<>();
+lhm.put("banana", 2);
+lhm.put("apple", 1);
+lhm.put("cherry", 3);
+// Iterates in insertion order: banana, apple, cherry
+
+// Access order (LRU cache pattern)
+LinkedHashMap<String, Integer> lru = new LinkedHashMap<>(16, 0.75f, true);
+lru.put("a", 1);
+lru.put("b", 2);
+lru.put("c", 3);
+lru.get("a");       // accessing "a" moves it to end
+// Order is now: b, c, a (least recently used to most)
+
+// LRU Cache implementation using LinkedHashMap:
+class LRUCache extends LinkedHashMap<Integer, Integer> {
+    int capacity;
+    public LRUCache(int capacity) {
+        super(capacity, 0.75f, true);
+        this.capacity = capacity;
+    }
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+        return size() > capacity;  // remove oldest when full
+    }
+}
+```
+
+---
+
+## 7.3 TreeMap
+
+- Backed by **Red-Black Tree**
+- Keys are **sorted** (natural order or custom Comparator)
+- Does NOT allow null keys (throws NullPointerException)
+
+```java
+TreeMap<String, Integer> tm = new TreeMap<>();
+tm.put("banana", 2);
+tm.put("apple", 1);
+tm.put("cherry", 3);
+
+// Iterates in sorted key order: apple, banana, cherry
+tm.firstKey();              // "apple"
+tm.lastKey();               // "cherry"
+tm.higherKey("apple");      // "banana"
+tm.lowerKey("cherry");      // "banana"
+tm.floorKey("b");           // "banana"
+tm.ceilingKey("b");         // "banana"
+tm.headMap("cherry");       // {apple=1, banana=2}
+tm.tailMap("banana");       // {banana=2, cherry=3}
+tm.subMap("apple","cherry");// {apple=1, banana=2}
+tm.descendingMap();         // reversed
+
+// Custom sort
+TreeMap<String, Integer> rev = new TreeMap<>(Comparator.reverseOrder());
+```
+
+### TreeMap Time Complexity
+
+| Operation | Time |
+|-----------|------|
+| `put(k,v)` | O(log n) |
+| `get(k)` | O(log n) |
+| `remove(k)` | O(log n) |
+| `containsKey(k)` | O(log n) |
+| Iteration | O(n) |
+
+---
+
+## 7.4 Hashtable
+
+- **Legacy class** from Java 1.0
+- **Synchronized** (thread-safe but slow)
+- Does NOT allow null keys or null values
+
+```java
+Hashtable<String, Integer> ht = new Hashtable<>();
+ht.put("a", 1);
+// ht.put(null, 1);   // throws NullPointerException
+// ht.put("a", null); // throws NullPointerException
+```
+
+| Feature | HashMap | Hashtable |
+|---------|---------|-----------|
+| Thread-safe | ❌ No | ✅ Yes (synchronized) |
+| Null key | ✅ Yes (1) | ❌ No |
+| Null value | ✅ Yes (many) | ❌ No |
+| Performance | ✅ Faster | ❌ Slower |
+| Legacy | ❌ Modern | ✅ Java 1.0 |
+| Recommended | ✅ Yes | ❌ No |
+
+> 💡 **Modern alternative:** Use `ConcurrentHashMap` for thread-safe map.
+
+---
+
+## 7.5 ConcurrentHashMap
+
+- Thread-safe alternative to HashMap
+- Uses **segment locking** (Java 7) → **node-level locking** (Java 8)
+- Much better performance than Hashtable
+
+```
+Java 7: 16 segments, each independently locked
+
+[Seg 0][Seg 1][Seg 2]...[Seg 15]
+  ↕        ↕                ↕
+ lock     lock             lock
+
+Multiple threads can operate on different segments simultaneously!
+
+Java 8+: Lock only the specific bucket (node-level)
+```
+
+```java
+ConcurrentHashMap<String, Integer> chm = new ConcurrentHashMap<>();
+chm.put("a", 1);        // thread-safe
+chm.putIfAbsent("b", 2);
+
+// null NOT allowed
+// chm.put(null, 1);    // throws NullPointerException
+```
+
+| Feature | HashMap | ConcurrentHashMap | Hashtable |
+|---------|---------|-------------------|-----------|
+| Thread-safe | ❌ | ✅ | ✅ |
+| Null key | ✅ | ❌ | ❌ |
+| Performance | ✅✅✅ | ✅✅ | ✅ |
+| Use case | Single thread | Multi thread | Avoid |
+
+---
+
+# SECTION 8: HASHING — COMPLETE CONCEPT
+
+## 8.1 What is Hashing?
+
+Hashing is the process of **converting an object to an integer** (hashCode) to determine where to store/find it.
+
+**Real-world Analogy:**
+> Think of a large hotel with 100 rooms (buckets). When a guest (object) arrives, the receptionist uses a formula (hashCode) to assign a room number. When you want to find the guest, you use the same formula to directly go to the room instead of checking all 100 rooms.
+
+## 8.2 hashCode() and equals() Contract
+
+```
+THE CONTRACT:
+If a.equals(b) == true   →   a.hashCode() == b.hashCode()   (MUST be true)
+If a.hashCode() == b.hashCode()   →   a.equals(b) may or may not be true
+```
+
+**Critical Rule:**
+- If you override `equals()`, you MUST override `hashCode()`
+- If two objects are equal, they MUST have the same hashCode
+
+```java
+class Student {
+    String name;
+    int age;
+
+    // Without this, hashMap won't find your Student correctly!
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student s = (Student) o;
+        return age == s.age && Objects.equals(name, s.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);  // use all fields used in equals
+    }
+}
+```
+
+---
+
+## 8.3 Collision
+
+**Collision** = Two different objects hash to the **same bucket**.
+
+```
+"apple".hashCode() % 16 = bucket 5
+"grape".hashCode() % 16 = bucket 5   → COLLISION!
+
+Bucket 5: ["apple"→1] → ["grape"→5]  (linked list / tree)
+```
+
+**Collision Resolution in HashMap:**
+- **Chaining:** Multiple entries in same bucket (Java uses this)
+- **Open Addressing:** Find next empty bucket (Java does NOT use this)
+
+---
+
+## 8.4 Load Factor
+
+```
+Load Factor = n / capacity
+Where n = number of entries, capacity = number of buckets
+
+Default Load Factor = 0.75
+
+Example:
+  Initial capacity = 16
+  Rehash threshold = 16 × 0.75 = 12
+
+  After 12 entries → REHASH!
+  → New capacity = 32 (doubled)
+  → All entries rehashed into new buckets
+  → Old array garbage collected
+```
+
+**Why 0.75?**
+- Too low (e.g., 0.5) → frequent rehashing → bad performance
+- Too high (e.g., 1.0) → too many collisions → bad performance
+- 0.75 is a **balanced trade-off** between time and space
+
+---
+
+## 8.5 Rehashing
+
+```
+Before Rehash (capacity=16, load=0.75, threshold=12):
+  buckets: [0..15], 12 entries spread across buckets
+
+After Rehash (capacity=32):
+  New array with 32 buckets
+  Each entry's bucket recalculated: index = hash & (32-1)
+  Old entries redistributed → fewer collisions
+```
+
+---
+
+## 8.6 Hashing Interview Questions
+
+> ❓ **Q: What is the hashCode of null?**
+> ✅ **A:** 0 (Java maps null keys to bucket 0 in HashMap)
+
+> ❓ **Q: Can two objects have same hashCode but not be equal?**
+> ✅ **A:** Yes! This is a collision. hashCode equality doesn't imply object equality.
+
+> ❓ **Q: What happens if hashCode always returns 1 for all objects?**
+> ✅ **A:** All objects go to the same bucket. Effectively a linked list. O(n) for all operations. Very bad.
+
+> ❓ **Q: Why does Java 8 convert to Tree when bucket size ≥ 8?**
+> ✅ **A:** To prevent O(n) worst case. With a tree, worst case becomes O(log n).
+
+---
+
+# SECTION 9: COMPARABLE VS COMPARATOR
+
+## 9.1 Comparable Interface
+
+- Package: `java.lang`
+- Method: `int compareTo(T o)`
+- Defines the **natural ordering** of objects
+- The class itself implements Comparable ("this" vs "other")
+
+```java
+class Student implements Comparable<Student> {
+    String name;
+    int marks;
+
+    public Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    @Override
+    public int compareTo(Student other) {
+        return this.marks - other.marks;  // ascending by marks
+        // negative → this comes first
+        // zero     → equal
+        // positive → other comes first
+    }
+}
+
+List<Student> students = new ArrayList<>();
+students.add(new Student("Alice", 85));
+students.add(new Student("Bob", 92));
+students.add(new Student("Charlie", 78));
+
+Collections.sort(students);  // uses compareTo
+// Charlie(78), Alice(85), Bob(92)
+```
+
+---
+
+## 9.2 Comparator Interface
+
+- Package: `java.util`
+- Method: `int compare(T o1, T o2)`
+- Defines **external/custom ordering** — class doesn't need to change
+- Can create multiple different ordering strategies
+
+```java
+// Sort by name
+Comparator<Student> byName = new Comparator<Student>() {
+    public int compare(Student a, Student b) {
+        return a.name.compareTo(b.name);
+    }
+};
+
+// Sort by marks descending (lambda)
+Comparator<Student> byMarksDesc = (a, b) -> b.marks - a.marks;
+
+// Sort by marks, then by name
+Comparator<Student> byMarksThenName = Comparator
+    .comparingInt((Student s) -> s.marks)
+    .thenComparing(s -> s.name);
+
+Collections.sort(students, byName);
+Collections.sort(students, byMarksDesc);
+students.sort(byMarksThenName);
+
+// TreeSet with custom Comparator
+TreeSet<Student> ts = new TreeSet<>(byName);
+
+// PriorityQueue with custom Comparator
+PriorityQueue<Student> pq = new PriorityQueue<>(byMarksDesc);
+```
+
+---
+
+## 9.3 Comparable vs Comparator — Master Comparison
+
+| Feature | Comparable | Comparator |
+|---------|------------|------------|
+| Package | `java.lang` | `java.util` |
+| Method | `compareTo(T o)` | `compare(T o1, T o2)` |
+| Modify class? | ✅ Yes (class must implement it) | ❌ No (external class) |
+| Multiple orderings? | ❌ No (one natural order) | ✅ Yes (many strategies) |
+| Modifies original class | ✅ Yes | ❌ No |
+| Usage | `Collections.sort(list)` | `Collections.sort(list, comparator)` |
+| Used in TreeSet/TreeMap | ✅ Default ordering | ✅ Custom ordering |
+| Lambda friendly? | ❌ Not directly | ✅ Yes (functional interface) |
+
+---
+
+## 9.4 Interview Questions
+
+> ❓ **Q: When to use Comparable vs Comparator?**
+> ✅ **A:** Use Comparable when there's one natural ordering (e.g., Student by marks). Use Comparator when you need multiple orderings or can't modify the class.
+
+> ❓ **Q: What does compareTo return?**
+> ✅ **A:** Negative if `this < other`, 0 if equal, positive if `this > other`.
+
+> ❓ **Q: Can we use lambda for Comparator?**
+> ✅ **A:** Yes! Comparator is a functional interface. `(a, b) -> a.marks - b.marks`
+
+---
+
+# SECTION 10: ITERATION METHODS
+
+## 10.1 All Ways to Iterate Collections
+
+### 1. Traditional for loop (only for List/index-based)
+```java
+for (int i = 0; i < list.size(); i++) {
+    System.out.println(list.get(i));
+}
+// Use when: you need index, or modifying during iteration (with care)
+```
+
+### 2. Enhanced for loop (for-each)
+```java
+for (String s : list) {
+    System.out.println(s);
+}
+// Use when: simple read-only iteration
+// Cannot remove during iteration → ConcurrentModificationException!
+```
+
+### 3. Iterator
+```java
+Iterator<String> it = list.iterator();
+while (it.hasNext()) {
+    String s = it.next();
+    if (s.equals("Apple")) {
+        it.remove();  // SAFE removal during iteration
+    }
+}
+// Use when: you need to remove elements during iteration
+```
+
+### 4. ListIterator (List only — bidirectional)
+```java
+ListIterator<String> lit = list.listIterator();
+while (lit.hasNext()) {
+    String s = lit.next();
+    lit.set("Modified");    // can modify current element
+    lit.add("New");         // can add element
+}
+// Backwards:
+while (lit.hasPrevious()) {
+    System.out.println(lit.previous());
+}
+// Use when: you need to modify or traverse backwards
+```
+
+### 5. forEach() with lambda
+```java
+list.forEach(s -> System.out.println(s));
+list.forEach(System.out::println);
+
+map.forEach((k, v) -> System.out.println(k + "=" + v));
+// Use when: clean read-only operation
+// Cannot use break/continue (use return to skip)
+```
+
+### 6. Stream API
+```java
+list.stream()
+    .filter(s -> s.startsWith("A"))
+    .map(String::toUpperCase)
+    .sorted()
+    .forEach(System.out::println);
+// Use when: functional pipeline, filtering, mapping, collecting
+```
+
+---
+
+## 10.2 Comparison Table
+
+| Method | Modify During? | Bidirectional? | Index Access? | Use When |
+|--------|---------------|----------------|--------------|----------|
+| for (index) | ✅ | ❌ | ✅ | Index needed |
+| for-each | ❌ (CME!) | ❌ | ❌ | Simple read |
+| Iterator | ✅ (it.remove()) | ❌ | ❌ | Safe removal |
+| ListIterator | ✅ (full) | ✅ | ✅ | Full control |
+| forEach() | ❌ | ❌ | ❌ | Functional |
+| Stream | ❌ | ❌ | ❌ | Pipeline |
+
+> ⚠️ **ConcurrentModificationException:** Thrown when you modify a collection (add/remove) during for-each iteration without using Iterator.remove().
+
+---
+
+# SECTION 11: COLLECTIONS UTILITY CLASS
+
+## 11.1 java.util.Collections
+
+Note: `Collections` (with 's') is a utility class. `Collection` (without 's') is an interface.
+
+```java
+List<Integer> nums = new ArrayList<>(Arrays.asList(3, 1, 4, 1, 5, 9, 2, 6));
+
+// Sorting
+Collections.sort(nums);                          // [1, 1, 2, 3, 4, 5, 6, 9]
+Collections.sort(nums, Comparator.reverseOrder()); // [9, 6, 5, 4, 3, 2, 1, 1]
+
+// Reversing
+Collections.reverse(nums);                       // reverses current order
+
+// Shuffling
+Collections.shuffle(nums);                       // random order
+Collections.shuffle(nums, new Random(42));       // seeded random
+
+// Min/Max
+Collections.min(nums);                           // 1
+Collections.max(nums);                           // 9
+
+// Frequency
+Collections.frequency(nums, 1);                 // 2 (appears twice)
+
+// Binary Search (list must be sorted first!)
+Collections.sort(nums);
+int idx = Collections.binarySearch(nums, 5);     // index of 5 → O(log n)
+
+// Fill and Copy
+Collections.fill(nums, 0);                       // all elements = 0
+List<Integer> dest = new ArrayList<>(Collections.nCopies(nums.size(), 0));
+Collections.copy(dest, nums);                    // copy nums to dest
+
+// Disjoint
+List<Integer> a = Arrays.asList(1, 2, 3);
+List<Integer> b = Arrays.asList(4, 5, 6);
+Collections.disjoint(a, b);    // true — no common elements
+
+// Unmodifiable (read-only)
+List<String> readOnly = Collections.unmodifiableList(new ArrayList<>(Arrays.asList("A","B")));
+// readOnly.add("C");  // throws UnsupportedOperationException
+
+// Synchronized (thread-safe wrapper)
+List<String> syncList = Collections.synchronizedList(new ArrayList<>());
+
+// Swap
+Collections.swap(nums, 0, 3);                    // swap elements at index 0 and 3
+
+// Rotate
+Collections.rotate(nums, 2);                     // rotate right by 2
+
+// Singleton (immutable collection with one element)
+List<String> single = Collections.singletonList("Only");
+Set<String> singleSet = Collections.singleton("Only");
+Map<String, Integer> singleMap = Collections.singletonMap("key", 1);
+
+// Empty collections
+List<String> empty = Collections.emptyList();    // immutable empty list
+```
+
+---
+
+# SECTION 12: ARRAYS VS COLLECTIONS
+
+## 12.1 Comparison Table
+
+| Feature | Arrays | Collections |
+|---------|--------|-------------|
+| Size | Fixed at creation | Dynamic (grows/shrinks) |
+| Flexibility | Low | High |
+| Primitives | ✅ Yes (`int[]`, `double[]`) | ❌ Only wrappers (`Integer`, `Double`) |
+| Type Safety | Limited (Object[]) | ✅ Full (Generics) |
+| Performance | ✅ Faster (no overhead) | Slightly slower |
+| Methods | Minimal (Arrays.sort, Arrays.fill) | ✅ Rich API |
+| Memory | Less (compact) | More (object overhead) |
+| Multidimensional | ✅ Yes (`int[][]`) | Complex nesting needed |
+| Null handling | ✅ Yes | Depends on class |
+| Sorting | `Arrays.sort()` | `Collections.sort()` |
+| Search | `Arrays.binarySearch()` | `Collections.binarySearch()` |
+| Thread safety | N/A | Some classes are thread-safe |
+| Use when | Fixed size, primitives, performance | Dynamic, complex operations |
+
+---
+
+# SECTION 13: ARRAYLIST VS LINKEDLIST
+
+## 13.1 Detailed Comparison
+
+| Feature | ArrayList | LinkedList |
+|---------|-----------|------------|
+| Internal Structure | Dynamic Array | Doubly Linked List |
+| Access by index | **O(1)** — direct | **O(n)** — traverse |
+| Insert at end | **O(1)** amortized | **O(1)** |
+| Insert at beginning | **O(n)** — shift all | **O(1)** |
+| Insert at middle | **O(n)** — shift | **O(n)** — traverse |
+| Delete at end | **O(1)** | **O(1)** |
+| Delete at beginning | **O(n)** — shift all | **O(1)** |
+| Delete at middle | **O(n)** — shift | **O(n)** — traverse |
+| Memory per element | Less (just data) | More (data + prev + next) |
+| Cache performance | ✅ Excellent (contiguous) | ❌ Poor (scattered) |
+| Implements | List, RandomAccess | List, Deque, Queue |
+| Use as Stack/Queue | ❌ Not ideal | ✅ Excellent |
+| Use for random access | ✅ Best | ❌ Bad |
+| Use for frequent head ops | ❌ Bad | ✅ Best |
+| Null allowed | ✅ Yes | ✅ Yes |
+
+### When to Use:
+- **ArrayList:** Read-heavy, random access, iteration over large datasets
+- **LinkedList:** Frequent insert/delete at head/tail, implementing Queue/Stack
+
+---
+
+# SECTION 14: HASHSET VS LINKEDHASHSET VS TREESET
+
+## 14.1 Comparison Table
+
+| Feature | HashSet | LinkedHashSet | TreeSet |
+|---------|---------|---------------|---------|
+| Ordering | ❌ No order | ✅ Insertion order | ✅ Sorted (natural/custom) |
+| Sorted? | ❌ No | ❌ No | ✅ Yes (ascending) |
+| Duplicate handling | ❌ Not allowed | ❌ Not allowed | ❌ Not allowed |
+| Null support | ✅ One null | ✅ One null | ❌ No null |
+| Internal | HashMap | LinkedHashMap | TreeMap (Red-Black Tree) |
+| add/remove/contains | **O(1)** avg | **O(1)** avg | **O(log n)** |
+| Memory | Less | More (linked list) | More (tree nodes) |
+| Thread-safe | ❌ No | ❌ No | ❌ No |
+| Use when | Unique, no order | Unique, insertion order | Unique, sorted |
+
+---
+
+# SECTION 15: HASHMAP VS LINKEDHASHMAP VS TREEMAP
+
+## 15.1 Comparison Table
+
+| Feature | HashMap | LinkedHashMap | TreeMap |
+|---------|---------|---------------|---------|
+| Ordering | ❌ No order | ✅ Insertion/Access order | ✅ Sorted by key |
+| Sorted? | ❌ No | ❌ No | ✅ Ascending by default |
+| Null key | ✅ One | ✅ One | ❌ No null key |
+| Null values | ✅ Multiple | ✅ Multiple | ✅ Multiple |
+| Internal | Array + LL/Tree | Array + LL/Tree + Doubly LL | Red-Black Tree |
+| put/get/remove | **O(1)** avg | **O(1)** avg | **O(log n)** |
+| Memory | Less | More | More |
+| Thread-safe | ❌ No | ❌ No | ❌ No |
+| NavigableMap? | ❌ No | ❌ No | ✅ Yes |
+| Use when | Fast key-value | Ordered key-value / LRU | Sorted key-value |
+
+---
+
+# SECTION 16: TIME COMPLEXITY MASTER TABLE
+
+## 16.1 Complete Time Complexity Reference
+
+| Collection | Add | Access | Remove | Search | Notes |
+|------------|-----|--------|--------|--------|-------|
+| **ArrayList** | O(1)* | O(1) | O(n) | O(n) | *amortized; O(n) if resize |
+| **LinkedList** | O(1) end / O(n) middle | O(n) | O(1) ends / O(n) middle | O(n) | |
+| **HashSet** | O(1) avg | N/A | O(1) avg | O(1) avg | O(n) worst |
+| **LinkedHashSet** | O(1) avg | N/A | O(1) avg | O(1) avg | |
+| **TreeSet** | O(log n) | N/A | O(log n) | O(log n) | Red-Black Tree |
+| **HashMap** | O(1) avg | O(1) avg | O(1) avg | O(1) avg | O(n) or O(log n) worst |
+| **LinkedHashMap** | O(1) avg | O(1) avg | O(1) avg | O(1) avg | |
+| **TreeMap** | O(log n) | O(log n) | O(log n) | O(log n) | |
+| **PriorityQueue** | O(log n) | O(1) peek | O(log n) | O(n) | Min-heap |
+| **ArrayDeque** | O(1) | N/A | O(1) ends | O(n) | |
+| **Stack** | O(1) | O(1) top | O(1) top | O(n) | |
+
+## 16.2 Best, Average, Worst Case
+
+| Collection | Operation | Best | Average | Worst |
+|------------|-----------|------|---------|-------|
+| ArrayList | get(i) | O(1) | O(1) | O(1) |
+| ArrayList | add(end) | O(1) | O(1) | O(n) resize |
+| ArrayList | add(mid) | O(1) | O(n) | O(n) |
+| HashMap | get(k) | O(1) | O(1) | O(n)*/O(log n)** |
+| HashMap | put(k,v) | O(1) | O(1) | O(n)*/O(log n)** |
+| TreeMap | get/put/remove | O(log n) | O(log n) | O(log n) |
+| PriorityQueue | offer | O(1) | O(log n) | O(log n) |
+| PriorityQueue | poll | O(log n) | O(log n) | O(log n) |
+
+*Java 7 worst case | **Java 8 worst case
+
+---
+
+# SECTION 17: MEMORY TRICKS
+
+## 17.1 Mnemonics for JCF
+
+```
+COLLECTION TYPES:
+"List Saves Data"  → List = Sequential, Duplicate allowed
+"Set Stands Unique"→ Set = No Duplicates
+"Queue Forms Lines"→ Queue = FIFO (First come, first served)
+"Stack Plates Up"  → Stack = LIFO (Last plate = first used)
+
+MAP TYPES:
+"H for Hash = HASH-y (fast but messy)"     → HashMap = Fast, no order
+"L for Linked = LINKS in order"            → LinkedHashMap = Ordered
+"T for Tree = TREE-sorted"                 → TreeMap = Sorted
+
+SET TYPES:
+"Hash = Haphazard"      → HashSet = No order
+"Linked = Lined up"     → LinkedHashSet = Insertion order
+"Tree = Tall & Sorted"  → TreeSet = Sorted
+```
+
+## 17.2 Quick Reference Tricks
+
+| Trick | Memory Aid |
+|-------|-----------|
+| ArrayList grows by 1.5x | "Half again more" |
+| HashMap capacity default 16, load 0.75 | "Sweet Sixteen, Seventy-Five Cents" |
+| PriorityQueue = min-heap by default | "Priority = Smallest priority number first" |
+| TreeSet/TreeMap = O(log n) all ops | "Tree operations are Logarithmic" |
+| HashSet backed by HashMap | "HashSet is a trimmed-down HashMap" |
+| ArrayDeque preferred over Stack | "Array Deque Defeats Stack" |
+| equals+hashCode always together | "They're a package deal — never separate" |
+
+## 17.3 Null Cheat Sheet
+
+| Class | Null Key | Null Value |
+|-------|----------|------------|
+| HashMap | ✅ One | ✅ Many |
+| LinkedHashMap | ✅ One | ✅ Many |
+| TreeMap | ❌ No | ✅ Many |
+| Hashtable | ❌ No | ❌ No |
+| ConcurrentHashMap | ❌ No | ❌ No |
+| HashSet | ✅ One | N/A |
+| LinkedHashSet | ✅ One | N/A |
+| TreeSet | ❌ No | N/A |
+| ArrayList | N/A | ✅ Many |
+| PriorityQueue | N/A | ❌ No null elements |
+| ArrayDeque | N/A | ❌ No null elements |
+
+---
