@@ -1,0 +1,113 @@
+# Big O Notation (Most Important)
+
+Big O notation represents the **worst-case time complexity** of an algorithm.  
+It helps us understand how the runtime of an algorithm grows as the input size increases.
+
+---
+
+## Common Big O Complexities
+
+| Complexity | Name         | Performance        |
+|------------|--------------|--------------------|
+| O(1)       | Constant     | Excellent          |
+| O(log n)   | Logarithmic  | Very Fast          |
+| O(n)       | Linear       | Good               |
+| O(n log n) | Linearithmic | Efficient          |
+| O(n²)      | Quadratic    | Slow for large n   |
+| O(n³)      | Cubic        | Very Slow          |
+| O(2ⁿ)      | Exponential  | Extremely Slow     |
+| O(n!)      | Factorial    | Worst              |
+
+---
+
+### Notes:
+- **O(1)**: Best possible complexity, independent of input size.  
+- **O(log n)**: Common in divide-and-conquer algorithms like Binary Search.  
+- **O(n)**: Typical for simple loops over input.  
+- **O(n log n)**: Efficient sorting algorithms like Merge Sort and Quick Sort.  
+- **O(n²)**: Nested loops, e.g., Bubble Sort.  
+- **O(n³)**: Triple nested loops, often impractical for large inputs.  
+- **O(2ⁿ)**: Recursive algorithms like naive Fibonacci.  
+- **O(n!)**: Permutations, brute-force solutions — infeasible for large n.  
+
+9. How to Analyze Time Complexity
+Step-by-Step Method
+
+Count loops → Determine how many times they run.
+
+Check nesting → Nested loops multiply.
+
+Look for recursion → Form recurrence relations.
+
+Keep dominant term only → Ignore constants and smaller terms.
+
+Example
+
+Outer loop → n
+
+Inner loop → n
+
+Total operations → n × n = n²
+
+Time Complexity = O(n²)
+
+14. Memory Trick for Growth Order
+
+
+# Time Complexity Growth Order
+
+Understanding how different time complexities compare is crucial in Data Structures and Algorithms (DSA) interviews. Below is the order from **best (fastest)** to **worst (slowest)**:
+
+---
+
+## Complexity Order
+
+**O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)**
+
+Think of it as:
+
+**Constant → Logarithmic → Linear → Linearithmic → Quadratic → Cubic → Exponential → Factorial**
+
+---
+
+## Explanation
+
+| Complexity | Name | Growth Behavior | Example Algorithms |
+|------------|------|-----------------|--------------------|
+| **O(1)** | Constant | Executes in the same time regardless of input size | Accessing array element, HashMap lookup |
+| **O(log n)** | Logarithmic | Grows slowly, halves input each step | Binary Search |
+| **O(n)** | Linear | Time grows directly with input size | Linear Search, Traversing an array |
+| **O(n log n)** | Linearithmic | Slightly worse than linear, common in efficient sorting | Merge Sort, Quick Sort (average case) |
+| **O(n²)** | Quadratic | Time grows with square of input size | Bubble Sort, Selection Sort |
+| **O(n³)** | Cubic | Time grows with cube of input size | Matrix multiplication (naive) |
+| **O(2ⁿ)** | Exponential | Doubles with each additional input | Recursive Fibonacci |
+| **O(n!)** | Factorial | Explodes with permutations | Traveling Salesman (brute force), generating all permutations |
+
+---
+
+## Interview Notes
+
+- **Acceptable in interviews:** O(1), O(log n), O(n), O(n log n)  
+- **Borderline:** O(n²) (only for small inputs)  
+- **Avoid:** O(n³), O(2ⁿ), O(n!) unless problem constraints are tiny  
+
+---
+
+## Quick Mnemonic
+
+👉 **Constant → Log → Linear → Linearithmic → Quadratic → Cubic → Exponential → Factorial**
+
+This sequence helps you quickly estimate whether an algorithm is practical for large inputs.
+
+---
+7. Space Complexity (Also Important)
+
+Space complexity measures the extra memory used by an algorithm.
+
+Examples
+
+O(1): Uses fixed extra memory
+
+O(n): Uses memory proportional to input size
+
+O(log n): Recursion stack in balanced recursive algorithms
