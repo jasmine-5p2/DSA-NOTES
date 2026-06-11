@@ -1,0 +1,1042 @@
+# Auxiliary Array - Complete Revision Notes (DSA Interview Guide)
+
+---
+
+# Table of Contents
+
+1. Introduction
+2. What is an Auxiliary Array?
+3. Why Auxiliary Arrays are Used?
+4. How to Identify Auxiliary Array Problems?
+5. Common Patterns
+6. Prefix-Based Auxiliary Arrays
+7. Suffix-Based Auxiliary Arrays
+8. Frequency Arrays
+9. Difference Arrays
+10. Left-Right Precomputation
+11. Cheat Codes for Interviews
+12. Tips and Tricks
+13. Time & Space Complexity
+14. Most Important Problems
+15. Interview Questions
+16. Revision Sheet
+
+---
+
+# 1. Introduction
+
+Many DSA problems become easier when we store previously computed values.
+
+Instead of recalculating information repeatedly, we store it in another array and use it later.
+
+That extra array is called an:
+
+## Auxiliary Array
+
+---
+
+# Definition
+
+An auxiliary array is an additional array used to store intermediate or precomputed results to make computations faster.
+
+---
+
+## Example
+
+Array:
+
+```java
+arr = [2, 4, 6, 8, 10]
+```
+
+Create:
+
+```java
+prefix = [2, 6, 12, 20, 30]
+```
+
+Here:
+
+```java
+prefix
+```
+
+is an auxiliary array.
+
+---
+
+# 2. What is an Auxiliary Array?
+
+An auxiliary array is:
+
+```text
+Original Array
+      ↓
+Extra Array Created
+      ↓
+Stores Helpful Information
+      ↓
+Speeds Up Future Operations
+```
+
+---
+
+## Formula
+
+```text
+Auxiliary Array = Additional Memory
+Used For Faster Computation
+```
+
+---
+
+# 3. Why Auxiliary Arrays are Used?
+
+Without auxiliary array:
+
+```java
+Repeated calculations
+```
+
+may take:
+
+```text
+O(N²)
+```
+
+With auxiliary array:
+
+```java
+Precompute Once
+Reuse Many Times
+```
+
+Time becomes:
+
+```text
+O(N)
+```
+
+---
+
+# Example
+
+Find sum from index L to R repeatedly.
+
+Without prefix sum:
+
+```text
+Each query = O(N)
+```
+
+For Q queries:
+
+```text
+O(QN)
+```
+
+---
+
+Using auxiliary array:
+
+```java
+prefix[]
+```
+
+Each query:
+
+```text
+O(1)
+```
+
+Total:
+
+```text
+O(N + Q)
+```
+
+Huge improvement.
+
+---
+
+# 4. How to Identify Auxiliary Array Problems?
+
+Look for keywords:
+
+### Keyword 1
+
+```text
+For every index
+```
+
+Examples:
+
+```text
+Product except self
+Rain water trapping
+Nearest greater element
+```
+
+---
+
+### Keyword 2
+
+```text
+Many queries
+```
+
+Examples:
+
+```text
+Range Sum Queries
+Frequency Queries
+```
+
+---
+
+### Keyword 3
+
+```text
+Repeated calculations
+```
+
+Example:
+
+```text
+Left sum
+Right sum
+```
+
+---
+
+### Keyword 4
+
+```text
+Need previous results
+```
+
+Example:
+
+```text
+DP
+Prefix Sum
+```
+
+---
+
+# 5. Common Auxiliary Array Patterns
+
+---
+
+## Pattern 1
+
+Prefix Arrays
+
+```java
+prefix[i]
+```
+
+Stores:
+
+```text
+0 → i information
+```
+
+---
+
+## Pattern 2
+
+Suffix Arrays
+
+```java
+suffix[i]
+```
+
+Stores:
+
+```text
+i → n-1 information
+```
+
+---
+
+## Pattern 3
+
+Frequency Arrays
+
+```java
+freq[]
+```
+
+Stores:
+
+```text
+Occurrences
+```
+
+---
+
+## Pattern 4
+
+Difference Arrays
+
+```java
+diff[]
+```
+
+Stores:
+
+```text
+Range Updates Efficiently
+```
+
+---
+
+## Pattern 5
+
+Left/Right Arrays
+
+```java
+left[]
+right[]
+```
+
+Stores:
+
+```text
+Information on both sides
+```
+
+---
+
+# 6. Prefix Auxiliary Array
+
+Most common interview usage.
+
+---
+
+## Construction
+
+```java
+prefix[0] = arr[0];
+
+for(int i=1;i<n;i++)
+{
+    prefix[i] = prefix[i-1] + arr[i];
+}
+```
+
+---
+
+## Example
+
+```java
+arr = [2,3,5,7]
+```
+
+Prefix:
+
+```java
+[2,5,10,17]
+```
+
+---
+
+## Range Sum Formula
+
+```java
+sum(L,R)
+=
+prefix[R] - prefix[L-1]
+```
+
+---
+
+## Complexity
+
+Build:
+
+```text
+O(N)
+```
+
+Query:
+
+```text
+O(1)
+```
+
+---
+
+# 7. Suffix Auxiliary Array
+
+Stores information from right side.
+
+---
+
+## Construction
+
+```java
+suffix[n-1] = arr[n-1];
+
+for(int i=n-2;i>=0;i--)
+{
+    suffix[i] = suffix[i+1] + arr[i];
+}
+```
+
+---
+
+## Example
+
+```java
+arr = [2,3,5,7]
+```
+
+Suffix:
+
+```java
+[17,15,12,7]
+```
+
+---
+
+# Uses
+
+### Product Except Self
+
+### Rain Water Trapping
+
+### Maximum Element Right Side
+
+---
+
+# 8. Frequency Array
+
+Stores count of elements.
+
+---
+
+## Example
+
+```java
+arr = [1,2,1,3,2,1]
+```
+
+Frequency:
+
+```java
+freq[1] = 3
+freq[2] = 2
+freq[3] = 1
+```
+
+---
+
+## Construction
+
+```java
+for(int num : arr)
+{
+    freq[num]++;
+}
+```
+
+---
+
+## Usage
+
+### Counting
+
+### Hashing
+
+### Duplicate Detection
+
+### Missing Number
+
+### Anagram Problems
+
+---
+
+# 9. Difference Array
+
+Used for:
+
+```text
+Range Updates
+```
+
+without updating entire range.
+
+---
+
+## Idea
+
+Instead of updating:
+
+```java
+L → R
+```
+
+directly.
+
+Update:
+
+```java
+diff[L] += value
+
+diff[R+1] -= value
+```
+
+---
+
+## Example
+
+Add 5 in range:
+
+```java
+[1,3]
+```
+
+Do:
+
+```java
+diff[1]+=5
+diff[4]-=5
+```
+
+---
+
+## Final Array
+
+Take Prefix Sum of diff.
+
+---
+
+# Complexity
+
+Range Update:
+
+```text
+O(1)
+```
+
+instead of:
+
+```text
+O(N)
+```
+
+---
+
+# 10. Left-Right Precomputation Arrays
+
+Very common interview pattern.
+
+---
+
+## Example
+
+Product Except Self
+
+Need:
+
+```java
+leftProduct[]
+rightProduct[]
+```
+
+---
+
+### Left Product
+
+```java
+left[i]
+=
+product of all elements before i
+```
+
+---
+
+### Right Product
+
+```java
+right[i]
+=
+product of all elements after i
+```
+
+---
+
+Final:
+
+```java
+answer[i]
+=
+left[i] * right[i]
+```
+
+---
+
+# Example
+
+```java
+arr = [1,2,3,4]
+```
+
+Left:
+
+```java
+[1,1,2,6]
+```
+
+Right:
+
+```java
+[24,12,4,1]
+```
+
+Answer:
+
+```java
+[24,12,8,6]
+```
+
+---
+
+# 11. Cheat Codes for Interviews
+
+---
+
+## Cheat Code #1
+
+Whenever you see:
+
+```text
+Many Range Queries
+```
+
+Think:
+
+```text
+Prefix Array
+```
+
+---
+
+## Cheat Code #2
+
+Whenever you see:
+
+```text
+Right Side Information
+```
+
+Think:
+
+```text
+Suffix Array
+```
+
+---
+
+## Cheat Code #3
+
+Whenever you see:
+
+```text
+Count Frequency
+```
+
+Think:
+
+```text
+Frequency Array
+```
+
+---
+
+## Cheat Code #4
+
+Whenever you see:
+
+```text
+Many Range Updates
+```
+
+Think:
+
+```text
+Difference Array
+```
+
+---
+
+## Cheat Code #5
+
+Whenever you see:
+
+```text
+Need Left + Right Information
+```
+
+Think:
+
+```text
+Auxiliary Arrays
+```
+
+---
+
+# 12. Tips and Tricks
+
+---
+
+## Tip 1
+
+Precompute once.
+
+Use many times.
+
+---
+
+## Tip 2
+
+Trade space for time.
+
+Interviewers love this optimization.
+
+---
+
+## Tip 3
+
+Auxiliary arrays often convert:
+
+```text
+O(N²)
+```
+
+into
+
+```text
+O(N)
+```
+
+---
+
+## Tip 4
+
+Always check if:
+
+```text
+Current answer depends on previous answers
+```
+
+If yes:
+
+```text
+Create auxiliary array
+```
+
+---
+
+## Tip 5
+
+Prefix and suffix arrays appear together frequently.
+
+---
+
+# 13. Time Complexity
+
+| Structure | Build | Query |
+|------------|---------|---------|
+| Prefix | O(N) | O(1) |
+| Suffix | O(N) | O(1) |
+| Frequency | O(N) | O(1) |
+| Difference | O(N) | O(1) Update |
+| Left/Right Arrays | O(N) | O(1) |
+
+---
+
+# 14. Most Important Interview Problems
+
+---
+
+## Easy
+
+### 1. Range Sum Query
+
+LeetCode 303
+
+Pattern:
+
+```text
+Prefix Array
+```
+
+---
+
+### 2. Running Sum
+
+LeetCode 1480
+
+Pattern:
+
+```text
+Prefix Sum
+```
+
+---
+
+### 3. Find Pivot Index
+
+LeetCode 724
+
+Pattern:
+
+```text
+Prefix Sum
+```
+
+---
+
+### 4. Count Frequency
+
+Pattern:
+
+```text
+Frequency Array
+```
+
+---
+
+## Medium
+
+### 5. Product of Array Except Self
+
+LeetCode 238
+
+Pattern:
+
+```text
+Left + Right Auxiliary Arrays
+```
+
+⭐ Extremely Important
+
+---
+
+### 6. Trapping Rain Water
+
+LeetCode 42
+
+Pattern:
+
+```text
+Left Max
+Right Max
+```
+
+⭐⭐⭐⭐⭐
+
+---
+
+### 7. Maximum Difference
+
+Pattern:
+
+```text
+Suffix Maximum
+```
+
+---
+
+### 8. Equilibrium Index
+
+Pattern:
+
+```text
+Prefix + Total Sum
+```
+
+---
+
+### 9. Corporate Flight Bookings
+
+LeetCode 1109
+
+Pattern:
+
+```text
+Difference Array
+```
+
+⭐⭐⭐⭐⭐
+
+---
+
+## Hard
+
+### 10. Range Addition
+
+Pattern:
+
+```text
+Difference Array
+```
+
+---
+
+### 11. Count Subarrays with Given Sum
+
+Pattern:
+
+```text
+Prefix Sum + HashMap
+```
+
+---
+
+### 12. Maximum Sum Circular Subarray
+
+Pattern:
+
+```text
+Prefix/Suffix
+```
+
+---
+
+# 15. Interview Questions
+
+---
+
+### Q1
+
+When should auxiliary arrays be used?
+
+Answer:
+
+```text
+When repeated calculations can be precomputed.
+```
+
+---
+
+### Q2
+
+Main disadvantage?
+
+Answer:
+
+```text
+Extra Space O(N)
+```
+
+---
+
+### Q3
+
+Can auxiliary arrays reduce complexity?
+
+Answer:
+
+```text
+Yes.
+
+Often O(N²) → O(N)
+```
+
+---
+
+### Q4
+
+Difference between Prefix Array and Auxiliary Array?
+
+Answer:
+
+```text
+Prefix Array is a type of Auxiliary Array.
+```
+
+---
+
+### Q5
+
+Why Product Except Self uses auxiliary arrays?
+
+Answer:
+
+```text
+To store left products and right products separately.
+```
+
+---
+
+# 16. One-Page Revision Sheet
+
+```text
+AUXILIARY ARRAY
+
+Definition:
+Extra array used for precomputation.
+
+Purpose:
+Trade Space For Time.
+
+Common Types:
+-------------
+1. Prefix Array
+2. Suffix Array
+3. Frequency Array
+4. Difference Array
+5. Left/Right Arrays
+
+Keywords:
+---------
+Range Queries
+Repeated Calculations
+Precomputation
+Frequency Counting
+Left/Right Information
+
+Complexities:
+-------------
+Prefix Build      O(N)
+Suffix Build      O(N)
+Frequency Build   O(N)
+Difference Update O(1)
+
+Most Asked:
+-----------
+Range Sum Query
+Pivot Index
+Product Except Self
+Rain Water Trapping
+Corporate Flight Bookings
+Count Subarray Sum
+Range Addition
+
+Golden Rule:
+------------
+If same calculation repeats,
+create an auxiliary array.
+```
+
+---
+
+# Final Interview Formula
+
+```text
+Repeated Work ?
+      ↓
+Precompute It
+      ↓
+Store It
+      ↓
+Reuse It
+      ↓
+Auxiliary Array
+```
+
+This single idea is behind Prefix Sum, Suffix Sum, Difference Array, Product Except Self, Rain Water Trapping, Dynamic Programming preprocessing, and many O(N) interview optimizations.
