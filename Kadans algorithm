@@ -1,0 +1,1100 @@
+# Kadane's Algorithm - Complete Interview & Revision Notes
+
+---
+
+# Table of Contents
+
+1. Introduction
+2. Why Kadane's Algorithm?
+3. Core Intuition
+4. Main Logic
+5. Standard Kadane's Algorithm
+6. Dry Run
+7. Proof of Why It Works
+8. Important Variations (Modes)
+9. Kadane Cheat Codes
+10. Identification Tricks
+11. Common Interview Patterns
+12. Real-World Production Uses
+13. Most Important Problems
+14. Advanced Extensions
+15. Interview Questions
+16. Revision Sheet
+
+---
+
+# 1. Introduction
+
+Kadane's Algorithm is one of the most famous algorithms in DSA.
+
+It is used to find:
+
+```text
+Maximum Sum Contiguous Subarray
+```
+
+in
+
+```text
+O(n)
+```
+
+time.
+
+---
+
+Example:
+
+```java
+arr = [-2,1,-3,4,-1,2,1,-5,4]
+```
+
+Maximum Sum Subarray:
+
+```text
+[4,-1,2,1]
+```
+
+Sum:
+
+```text
+6
+```
+
+---
+
+# 2. Why Kadane's Algorithm?
+
+Without Kadane:
+
+### Brute Force
+
+```text
+Generate all subarrays
+Calculate sum
+Find maximum
+```
+
+Time:
+
+```text
+O(n³)
+```
+
+---
+
+### Prefix Sum Optimization
+
+Time:
+
+```text
+O(n²)
+```
+
+---
+
+### Kadane
+
+Time:
+
+```text
+O(n)
+```
+
+Space:
+
+```text
+O(1)
+```
+
+---
+
+# 3. Core Intuition
+
+Suppose:
+
+```text
+Current Sum = -10
+```
+
+Next element:
+
+```text
+50
+```
+
+Then:
+
+```text
+-10 + 50 = 40
+```
+
+Instead:
+
+```text
+Start fresh from 50
+```
+
+Result:
+
+```text
+50
+```
+
+Better.
+
+---
+
+Key Observation:
+
+```text
+Negative running sum never helps future subarrays.
+```
+
+Therefore:
+
+```text
+Discard negative sum.
+```
+
+This is the entire foundation of Kadane.
+
+---
+
+# 4. Main Logic
+
+At every index:
+
+```text
+Either:
+
+Continue existing subarray
+
+OR
+
+Start new subarray
+```
+
+Formula:
+
+```java
+currentSum = Math.max(arr[i],
+                      currentSum + arr[i]);
+```
+
+---
+
+# 5. Standard Kadane Algorithm
+
+```java
+public static int kadane(int[] arr){
+
+    int maxSum = arr[0];
+    int currentSum = arr[0];
+
+    for(int i=1;i<arr.length;i++){
+
+        currentSum =
+                Math.max(arr[i],
+                         currentSum + arr[i]);
+
+        maxSum =
+                Math.max(maxSum,
+                         currentSum);
+    }
+
+    return maxSum;
+}
+```
+
+---
+
+# Time Complexity
+
+```text
+O(n)
+```
+
+---
+
+# Space Complexity
+
+```text
+O(1)
+```
+
+---
+
+# 6. Dry Run
+
+Array:
+
+```text
+[-2,1,-3,4,-1,2,1,-5,4]
+```
+
+| Element | Current Sum | Max Sum |
+|----------|------------|----------|
+| -2 | -2 | -2 |
+| 1 | 1 | 1 |
+| -3 | -2 | 1 |
+| 4 | 4 | 4 |
+| -1 | 3 | 4 |
+| 2 | 5 | 5 |
+| 1 | 6 | 6 |
+| -5 | 1 | 6 |
+| 4 | 5 | 6 |
+
+Answer:
+
+```text
+6
+```
+
+---
+
+# 7. Why Kadane Works
+
+At every position:
+
+```text
+Best subarray ending at i
+=
+either
+
+current element
+
+OR
+
+extend previous best
+```
+
+Formula:
+
+```java
+dp[i] =
+max(
+arr[i],
+dp[i-1] + arr[i]
+)
+```
+
+Kadane simply stores:
+
+```text
+Only previous state
+```
+
+instead of full DP array.
+
+Thus:
+
+```text
+Dynamic Programming Optimization
+```
+
+---
+
+# 8. Important Modes (Variations)
+
+---
+
+# Mode 1: Maximum Sum Subarray
+
+Classic Kadane.
+
+```java
+current =
+max(arr[i],
+current+arr[i])
+```
+
+---
+
+Problem:
+
+```text
+LeetCode 53
+Maximum Subarray
+```
+
+---
+
+# Mode 2: Minimum Sum Subarray
+
+Just reverse max logic.
+
+```java
+current =
+Math.min(arr[i],
+current+arr[i]);
+```
+
+---
+
+Problem:
+
+```text
+Minimum Sum Subarray
+```
+
+---
+
+# Mode 3: Maximum Circular Subarray
+
+Important Interview Question.
+
+Array:
+
+```text
+[5,-2,3,4]
+```
+
+Best answer:
+
+```text
+3+4+5 = 12
+```
+
+Wrap around.
+
+---
+
+Formula:
+
+```text
+Max Circular Sum
+
+=
+
+Total Sum
+
+-
+
+Minimum Subarray Sum
+```
+
+---
+
+Problem:
+
+```text
+LeetCode 918
+Maximum Sum Circular Subarray
+```
+
+---
+
+# Mode 4: Maximum Product Subarray
+
+Negative numbers change everything.
+
+Need:
+
+```java
+maxProduct
+minProduct
+```
+
+Because:
+
+```text
+Negative × Negative = Positive
+```
+
+---
+
+Problem:
+
+```text
+LeetCode 152
+Maximum Product Subarray
+```
+
+---
+
+# Mode 5: Maximum Sum with Indices
+
+Return:
+
+```text
+start index
+end index
+sum
+```
+
+Store:
+
+```java
+start
+end
+tempStart
+```
+
+---
+
+Common Interview Follow-up.
+
+---
+
+# Mode 6: 2D Kadane
+
+Find:
+
+```text
+Maximum Sum Rectangle
+```
+
+inside matrix.
+
+---
+
+Approach:
+
+```text
+Fix columns
+
+Compress rows
+
+Apply Kadane
+```
+
+---
+
+Complexity:
+
+```text
+O(cols² × rows)
+```
+
+---
+
+Problem:
+
+```text
+Maximum Sum Rectangle
+```
+
+---
+
+# Mode 7: K Concatenation Kadane
+
+Array repeated K times.
+
+Popular in:
+
+```text
+Amazon
+Google
+Microsoft
+```
+
+---
+
+Problem:
+
+```text
+LeetCode 1191
+K Concatenation Maximum Sum
+```
+
+---
+
+# Mode 8: Maximum Average Segment
+
+Used with:
+
+```text
+Binary Search + Kadane
+```
+
+Advanced.
+
+---
+
+# Mode 9: Maximum Difference Pattern
+
+Transform:
+
+```text
+prices
+```
+
+into:
+
+```text
+differences
+```
+
+Apply Kadane.
+
+---
+
+Problem:
+
+```text
+Best Time To Buy And Sell Stock
+```
+
+---
+
+# Mode 10: DP Kadane
+
+State:
+
+```java
+dp[i]
+```
+
+means:
+
+```text
+Maximum sum ending at i
+```
+
+Kadane = Space Optimized DP.
+
+---
+
+# 9. Kadane Cheat Codes
+
+---
+
+### Cheat Code 1
+
+Whenever you see:
+
+```text
+Contiguous
+Subarray
+Maximum
+Minimum
+```
+
+Think:
+
+```text
+Kadane
+```
+
+---
+
+### Cheat Code 2
+
+Maximum contiguous sum
+
+```text
+Kadane
+```
+
+---
+
+### Cheat Code 3
+
+Minimum contiguous sum
+
+```text
+Reverse Kadane
+```
+
+---
+
+### Cheat Code 4
+
+Circular Array
+
+Think:
+
+```text
+Total Sum
+-
+Minimum Subarray
+```
+
+---
+
+### Cheat Code 5
+
+Matrix Rectangle
+
+Think:
+
+```text
+2D Kadane
+```
+
+---
+
+# 10. Identification Tricks
+
+Use Kadane when question contains:
+
+```text
+Contiguous
+Subarray
+Segment
+Range
+Maximum Sum
+Minimum Sum
+Running Sum
+Profit
+Gain
+Loss
+```
+
+---
+
+# 11. Common Interview Patterns
+
+---
+
+### Pattern 1
+
+Maximum Sum
+
+```text
+Classic Kadane
+```
+
+---
+
+### Pattern 2
+
+Minimum Sum
+
+```text
+Reverse Kadane
+```
+
+---
+
+### Pattern 3
+
+Circular
+
+```text
+Circular Kadane
+```
+
+---
+
+### Pattern 4
+
+Product
+
+```text
+Max Product Kadane
+```
+
+---
+
+### Pattern 5
+
+Rectangle
+
+```text
+2D Kadane
+```
+
+---
+
+### Pattern 6
+
+Stock Market
+
+```text
+Difference Array + Kadane
+```
+
+---
+
+# 12. Real-World Production Uses
+
+Many people think Kadane is only for interviews.
+
+Not true.
+
+---
+
+## Finance
+
+Stock trend analysis.
+
+Find:
+
+```text
+Maximum profit period
+```
+
+from gain/loss sequence.
+
+Used in:
+
+- Trading systems
+- Quantitative finance
+- Risk analytics
+
+---
+
+## Sales Analytics
+
+Given daily revenue changes:
+
+```text
++20
+-10
++50
+-5
+```
+
+Find:
+
+```text
+Best performing period
+```
+
+---
+
+## Signal Processing
+
+Find strongest signal segment.
+
+Used in:
+
+- Radar systems
+- Audio processing
+- Communication systems
+
+---
+
+## Sensor Data Analytics
+
+IoT devices produce:
+
+```text
+temperature variation
+pressure variation
+```
+
+Need:
+
+```text
+highest positive trend window
+```
+
+---
+
+## Health Monitoring
+
+ECG and EEG signal analysis.
+
+Detect:
+
+```text
+strongest signal bursts
+```
+
+---
+
+## Image Processing
+
+2D Kadane used in:
+
+```text
+maximum intensity region
+```
+
+detection.
+
+---
+
+## Fraud Detection
+
+Find:
+
+```text
+unusual profitable transaction streak
+```
+
+---
+
+## User Engagement Analytics
+
+Companies like:
+
+- Google
+- Meta
+- Netflix
+- Amazon
+
+analyze:
+
+```text
+highest engagement period
+```
+
+using similar maximum segment techniques.
+
+---
+
+# 13. Most Important Problems
+
+---
+
+## Must Solve
+
+### Easy
+
+1. LeetCode 53
+   Maximum Subarray
+
+2. Maximum Sum Subarray (GFG)
+
+---
+
+### Medium
+
+3. LeetCode 918
+   Maximum Circular Subarray
+
+4. LeetCode 152
+   Maximum Product Subarray
+
+5. Best Time To Buy And Sell Stock
+
+---
+
+### Hard
+
+6. Maximum Sum Rectangle
+
+7. K Concatenation Maximum Sum
+
+8. Maximum Submatrix Sum
+
+---
+
+# 14. Advanced Extensions
+
+---
+
+## Kadane + Prefix Sum
+
+Used in:
+
+```text
+Range optimization
+```
+
+---
+
+## Kadane + DP
+
+Used in:
+
+```text
+Partition DP
+```
+
+---
+
+## Kadane + Binary Search
+
+Used in:
+
+```text
+Maximum Average Subarray
+```
+
+---
+
+## Kadane + Segment Tree
+
+Used for:
+
+```text
+Online maximum subarray queries
+```
+
+---
+
+# 15. Interview Questions
+
+---
+
+### Q1
+
+Why reset when sum becomes negative?
+
+Answer:
+
+```text
+Negative sum decreases future totals.
+```
+
+---
+
+### Q2
+
+Can Kadane handle all negatives?
+
+Yes.
+
+Initialize:
+
+```java
+current = arr[0];
+max = arr[0];
+```
+
+---
+
+### Q3
+
+Is Kadane Greedy?
+
+Partially.
+
+Actually:
+
+```text
+Dynamic Programming
++
+Greedy Observation
+```
+
+---
+
+### Q4
+
+Can Kadane work on Matrix?
+
+Yes.
+
+2D Kadane.
+
+---
+
+### Q5
+
+Can Kadane find minimum sum?
+
+Yes.
+
+Replace:
+
+```java
+Math.max
+```
+
+with:
+
+```java
+Math.min
+```
+
+---
+
+# 16. One Page Revision Sheet
+
+---
+
+### Purpose
+
+```text
+Maximum Sum Contiguous Subarray
+```
+
+---
+
+### Core Idea
+
+```text
+Negative running sum is useless.
+```
+
+---
+
+### Formula
+
+```java
+current =
+Math.max(arr[i],
+current+arr[i]);
+```
+
+---
+
+### Update Answer
+
+```java
+max =
+Math.max(max,current);
+```
+
+---
+
+### Time
+
+```text
+O(n)
+```
+
+---
+
+### Space
+
+```text
+O(1)
+```
+
+---
+
+### Variations
+
+```text
+1. Maximum Sum
+2. Minimum Sum
+3. Circular Sum
+4. Product Subarray
+5. With Indices
+6. 2D Kadane
+7. K Concatenation
+8. Maximum Average
+9. Stock Profit
+10. DP Kadane
+```
+
+---
+
+### Must Remember
+
+```text
+Contiguous + Maximum Sum
+
+=> Kadane
+```
+
+```text
+Circular Array
+
+=> Total Sum - Minimum Subarray
+```
+
+```text
+Matrix Rectangle
+
+=> 2D Kadane
+```
+
+```text
+Maximum Product
+
+=> Track max and min
+```
+
+---
+
+# Golden Interview Line
+
+Kadane's Algorithm is a space-optimized Dynamic Programming algorithm that computes the best subarray ending at every index and uses the observation that a negative running sum can never contribute to a future maximum sum.
