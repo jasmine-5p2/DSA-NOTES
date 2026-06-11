@@ -1,0 +1,1109 @@
+# Sliding Window - Complete Revision Notes (Beginner → Advanced)
+
+---
+
+# Table of Contents
+
+1. Introduction
+2. What is Sliding Window?
+3. Why Sliding Window?
+4. When to Use Sliding Window?
+5. Fixed Size Sliding Window
+6. Variable Size Sliding Window
+7. Sliding Window Template
+8. Recognition Patterns
+9. Common Problem Types
+10. Interview Tricks
+11. Cheat Sheet
+12. Time Complexity Analysis
+13. Important Formulas
+14. Dry Runs
+15. Most Asked Interview Problems
+16. Advanced Sliding Window Patterns
+17. Common Mistakes
+18. Problem Solving Framework
+19. Sliding Window Decision Tree
+20. Final Revision Notes
+
+---
+
+# 1. Introduction
+
+Sliding Window is one of the most important techniques in DSA.
+
+It is used to:
+
+- Optimize nested loops
+- Reduce time complexity
+- Process subarrays/substrings efficiently
+- Solve many interview questions
+
+Many O(n²) problems can become O(n).
+
+---
+
+# 2. What is Sliding Window?
+
+A Sliding Window is a range of consecutive elements that moves through an array or string.
+
+Instead of recalculating everything for every subarray:
+
+- Remove left element
+- Add right element
+- Update answer
+
+Window slides one step at a time.
+
+---
+
+## Visualization
+
+Array:
+
+```text
+[2, 1, 5, 1, 3, 2]
+```
+
+Window Size = 3
+
+```text
+[2 1 5] 1 3 2
+
+2 [1 5 1] 3 2
+
+2 1 [5 1 3] 2
+
+2 1 5 [1 3 2]
+```
+
+Window keeps sliding.
+
+---
+
+# 3. Why Sliding Window?
+
+Without Sliding Window:
+
+```java
+for every subarray
+    calculate answer again
+```
+
+Time Complexity:
+
+```text
+O(n²)
+```
+
+With Sliding Window:
+
+```java
+remove old
+add new
+```
+
+Time Complexity:
+
+```text
+O(n)
+```
+
+Huge improvement.
+
+---
+
+# 4. When to Use Sliding Window?
+
+Look for words like:
+
+- Subarray
+- Substring
+- Contiguous
+- Consecutive
+- Longest
+- Shortest
+- Maximum
+- Minimum
+- Fixed size K
+- At most K
+- Exactly K
+- Distinct characters
+
+---
+
+## Golden Rule
+
+If question contains:
+
+```text
+Contiguous
+```
+
+Think:
+
+```text
+Sliding Window
+```
+
+---
+
+# 5. Types of Sliding Window
+
+There are mainly two types:
+
+---
+
+## Type 1
+
+Fixed Size Window
+
+```text
+Window Size = K
+```
+
+Examples:
+
+- Maximum sum of size K
+- Average of size K
+- First negative number in every window
+
+---
+
+## Type 2
+
+Variable Size Window
+
+Window grows and shrinks.
+
+Examples:
+
+- Longest substring without repeating characters
+- Smallest subarray with sum ≥ K
+- Longest subarray with K distinct elements
+
+---
+
+# 6. Fixed Size Sliding Window
+
+---
+
+## Brute Force
+
+Find max sum of size K.
+
+```java
+for(i=0;i<=n-k;i++)
+{
+    sum = 0;
+
+    for(j=i;j<i+k;j++)
+        sum += arr[j];
+}
+```
+
+Complexity:
+
+```text
+O(n*k)
+```
+
+---
+
+## Optimized Sliding Window
+
+### Idea
+
+First Window:
+
+```text
+Calculate once
+```
+
+Then:
+
+```text
+Remove left element
+Add new right element
+```
+
+---
+
+### Example
+
+Array:
+
+```text
+[2,1,5,1,3,2]
+```
+
+K = 3
+
+First Window:
+
+```text
+2+1+5 = 8
+```
+
+Next:
+
+```text
+8 - 2 + 1 = 7
+```
+
+Next:
+
+```text
+7 - 1 + 3 = 9
+```
+
+Next:
+
+```text
+9 - 5 + 2 = 6
+```
+
+Maximum:
+
+```text
+9
+```
+
+---
+
+## Fixed Window Template
+
+```java
+int windowSum = 0;
+
+for(int i=0;i<k;i++)
+{
+    windowSum += arr[i];
+}
+
+int max = windowSum;
+
+for(int end=k;end<n;end++)
+{
+    windowSum += arr[end];
+    windowSum -= arr[end-k];
+
+    max = Math.max(max, windowSum);
+}
+```
+
+---
+
+# 7. Variable Size Sliding Window
+
+Most interview questions belong here.
+
+---
+
+## Structure
+
+```java
+start = 0
+
+for(end = 0 to n-1)
+{
+    expand window
+
+    while(condition invalid)
+    {
+        shrink window
+        start++
+    }
+
+    update answer
+}
+```
+
+---
+
+# 8. Core Idea
+
+Window has two pointers:
+
+```text
+start
+end
+```
+
+Window:
+
+```text
+[start ... end]
+```
+
+---
+
+## Expand
+
+```java
+end++
+```
+
+Add element.
+
+---
+
+## Shrink
+
+```java
+start++
+```
+
+Remove element.
+
+---
+
+# 9. General Template
+
+```java
+int start = 0;
+
+for(int end=0; end<n; end++)
+{
+    // include arr[end]
+
+    while(window invalid)
+    {
+        // remove arr[start]
+        start++;
+    }
+
+    ans = update();
+}
+```
+
+---
+
+# 10. Recognition Patterns
+
+---
+
+## Fixed Size K
+
+Keywords:
+
+```text
+Size K
+Window K
+Every K elements
+```
+
+Use:
+
+```text
+Fixed Window
+```
+
+---
+
+## Longest
+
+Keywords:
+
+```text
+Longest
+Maximum length
+Largest substring
+```
+
+Use:
+
+```text
+Expand as much as possible
+Shrink only when needed
+```
+
+---
+
+## Smallest
+
+Keywords:
+
+```text
+Minimum length
+Shortest
+Smallest window
+```
+
+Use:
+
+```text
+Shrink aggressively
+```
+
+---
+
+# 11. Most Common Sliding Window Patterns
+
+---
+
+## Pattern 1
+
+Maximum Sum Subarray of Size K
+
+```text
+Fixed Window
+```
+
+---
+
+## Pattern 2
+
+First Negative Number in Every Window
+
+```text
+Queue + Sliding Window
+```
+
+---
+
+## Pattern 3
+
+Count Occurrences of Anagrams
+
+```text
+HashMap + Sliding Window
+```
+
+---
+
+## Pattern 4
+
+Longest Substring Without Repeating Characters
+
+```text
+HashSet + Variable Window
+```
+
+---
+
+## Pattern 5
+
+Longest Repeating Character Replacement
+
+```text
+Frequency Array
+```
+
+---
+
+## Pattern 6
+
+Minimum Window Substring
+
+```text
+HashMap + Variable Window
+```
+
+---
+
+## Pattern 7
+
+Longest Subarray with Sum K
+
+```text
+Prefix Sum + Sliding Window (positive numbers)
+```
+
+---
+
+## Pattern 8
+
+Smallest Subarray with Sum ≥ K
+
+```text
+Variable Window
+```
+
+---
+
+# 12. Sliding Window Cheat Codes
+
+---
+
+## Cheat Code 1
+
+Fixed Window
+
+```java
+sum += arr[end];
+sum -= arr[end-k];
+```
+
+Remember this forever.
+
+---
+
+## Cheat Code 2
+
+Longest Window
+
+```java
+while(invalid)
+{
+    shrink();
+}
+```
+
+Then:
+
+```java
+ans = Math.max(ans, end-start+1);
+```
+
+---
+
+## Cheat Code 3
+
+Minimum Window
+
+```java
+while(valid)
+{
+    ans = Math.min(ans, end-start+1);
+    shrink();
+}
+```
+
+---
+
+## Cheat Code 4
+
+Distinct Elements
+
+Use:
+
+```java
+HashMap<Integer,Integer>
+```
+
+Store frequency.
+
+---
+
+## Cheat Code 5
+
+Characters
+
+Use:
+
+```java
+int freq[] = new int[26];
+```
+
+Faster than HashMap.
+
+---
+
+# 13. Time Complexity
+
+---
+
+## Fixed Window
+
+Each element visited once.
+
+```text
+O(n)
+```
+
+---
+
+## Variable Window
+
+Both pointers move once.
+
+```text
+O(n)
+```
+
+---
+
+## Why O(n)?
+
+Because:
+
+```text
+start moves n times
+end moves n times
+```
+
+Total:
+
+```text
+2n = O(n)
+```
+
+---
+
+# 14. Common Mistakes
+
+---
+
+## Mistake 1
+
+Using nested loops.
+
+Think:
+
+```text
+Can I slide?
+```
+
+---
+
+## Mistake 2
+
+Forgetting to remove left element.
+
+```java
+sum -= arr[start];
+```
+
+---
+
+## Mistake 3
+
+Wrong window length
+
+Correct:
+
+```java
+end-start+1
+```
+
+Not:
+
+```java
+end-start
+```
+
+---
+
+## Mistake 4
+
+Using Sliding Window on negative numbers blindly.
+
+Example:
+
+```text
+[-2,5,-1]
+```
+
+May break logic.
+
+Need Prefix Sum in many cases.
+
+---
+
+# 15. Sliding Window Decision Tree
+
+Question contains:
+
+```text
+Subarray / Substring
+```
+
+↓
+
+Is size fixed?
+
+YES
+
+↓
+
+Fixed Window
+
+---
+
+NO
+
+↓
+
+Longest?
+
+↓
+
+Variable Window
+
+---
+
+Smallest?
+
+↓
+
+Variable Window
+
+---
+
+Distinct Characters?
+
+↓
+
+HashMap + Window
+
+---
+
+Anagram?
+
+↓
+
+Frequency Count + Window
+
+---
+
+# 16. Advanced Patterns
+
+---
+
+## At Most K Distinct
+
+```java
+while(map.size() > k)
+{
+    shrink();
+}
+```
+
+---
+
+## Exactly K Distinct
+
+Formula:
+
+```java
+Exactly(K)
+=
+AtMost(K)
+-
+AtMost(K-1)
+```
+
+Very important.
+
+---
+
+## Binary Array Problems
+
+Examples:
+
+```text
+Max Consecutive Ones III
+```
+
+Use:
+
+```java
+while(zeros > k)
+{
+    shrink();
+}
+```
+
+---
+
+## Character Replacement
+
+Maintain:
+
+```java
+maxFrequency
+```
+
+Condition:
+
+```java
+windowLength - maxFrequency > k
+```
+
+Shrink.
+
+---
+
+## Minimum Window Substring
+
+Maintain:
+
+```java
+required count
+```
+
+Expand.
+
+When valid:
+
+```java
+shrink aggressively
+```
+
+---
+
+# 17. Dry Run Framework
+
+Always write:
+
+```text
+start
+end
+window
+condition
+answer
+```
+
+Example:
+
+```text
+start=0
+end=0
+window=[0,0]
+```
+
+Expand.
+
+Check condition.
+
+Shrink if needed.
+
+Update answer.
+
+Repeat.
+
+---
+
+# 18. Interview Tips
+
+---
+
+## Tip 1
+
+Contiguous ⇒ Sliding Window
+
+---
+
+## Tip 2
+
+Longest ⇒ Expand More
+
+---
+
+## Tip 3
+
+Minimum ⇒ Shrink More
+
+---
+
+## Tip 4
+
+Exactly K ⇒
+
+```text
+AtMost(K)-AtMost(K-1)
+```
+
+---
+
+## Tip 5
+
+Characters ⇒ Frequency Array
+
+```java
+int freq[] = new int[26];
+```
+
+---
+
+## Tip 6
+
+Distinct ⇒ HashMap
+
+```java
+HashMap<Character,Integer>
+```
+
+---
+
+## Tip 7
+
+Positive Numbers + Sum
+
+Sliding Window usually works.
+
+---
+
+## Tip 8
+
+Negative Numbers Present
+
+Think:
+
+```text
+Prefix Sum
+```
+
+---
+
+# 19. Most Asked LeetCode Problems
+
+Easy:
+
+- Maximum Average Subarray I
+- Contains Duplicate II
+- Max Consecutive Ones
+
+Medium:
+
+- Longest Substring Without Repeating Characters
+- Permutation in String
+- Find All Anagrams
+- Fruit Into Baskets
+- Longest Repeating Character Replacement
+- Maximum Points You Can Obtain from Cards
+
+Hard:
+
+- Minimum Window Substring
+- Sliding Window Maximum
+- Subarrays with K Distinct Integers
+
+---
+
+# 20. Ultimate Sliding Window Formula Sheet
+
+---
+
+## Fixed Window
+
+```java
+sum += arr[end];
+sum -= arr[end-k];
+```
+
+---
+
+## Window Length
+
+```java
+end-start+1
+```
+
+---
+
+## Longest Window
+
+```java
+while(invalid)
+{
+    shrink();
+}
+
+ans = Math.max(ans,end-start+1);
+```
+
+---
+
+## Minimum Window
+
+```java
+while(valid)
+{
+    ans = Math.min(ans,end-start+1);
+    shrink();
+}
+```
+
+---
+
+## At Most K Distinct
+
+```java
+while(map.size() > k)
+{
+    shrink();
+}
+```
+
+---
+
+## Exactly K Distinct
+
+```java
+AtMost(K)-AtMost(K-1)
+```
+
+---
+
+## Complexity
+
+```text
+Time  : O(n)
+Space : O(1) to O(k)
+```
+
+---
+
+# 30-Second Revision
+
+Sliding Window is used for:
+
+✓ Subarrays
+
+✓ Substrings
+
+✓ Contiguous elements
+
+Two pointers:
+
+```java
+start
+end
+```
+
+Fixed Window:
+
+```java
+Add right
+Remove left
+```
+
+Variable Window:
+
+```java
+Expand
+Shrink
+```
+
+Longest:
+
+```java
+Shrink when invalid
+```
+
+Minimum:
+
+```java
+Shrink when valid
+```
+
+Exactly K:
+
+```java
+AtMost(K)-AtMost(K-1)
+```
+
+Most Sliding Window problems are solved using:
+
+```java
+Two Pointers
++
+HashMap
++
+HashSet
++
+Frequency Array
+```
+
+Master these patterns and you can solve 80-90% of Sliding Window interview questions.
