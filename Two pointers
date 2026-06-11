@@ -1,0 +1,1058 @@
+# Two Pointers Algorithm - Complete Interview Revision Notes
+
+# Table of Contents
+
+1. Introduction
+2. What is Two Pointers?
+3. Why Two Pointers?
+4. When to Think About Two Pointers?
+5. Types of Two Pointer Patterns
+6. Core Templates
+7. Visual Understanding
+8. Time Complexity Analysis
+9. Interview Cheat Codes
+10. Recognition Tricks
+11. Common Mistakes
+12. Important Problem Patterns
+13. Most Important Interview Questions
+14. Advanced Variations
+15. Complete Revision Sheet
+16. Last-Minute Interview Notes
+
+---
+
+# 1. Introduction
+
+Two Pointers is one of the most important optimization techniques in DSA.
+
+It uses two indices (pointers) to traverse a data structure efficiently.
+
+Instead of:
+
+```java
+for(i)
+   for(j)
+```
+
+(O(N²))
+
+We use:
+
+```java
+left++;
+right--;
+```
+
+or
+
+```java
+slow++;
+fast++;
+```
+
+to achieve:
+
+```text
+O(N)
+```
+
+in many problems.
+
+---
+
+# 2. What is Two Pointers?
+
+Two Pointers means using two variables pointing to different positions and moving them according to certain conditions.
+
+Example:
+
+```java
+int left = 0;
+int right = arr.length - 1;
+```
+
+```text
+[1,2,3,4,5]
+
+ L       R
+```
+
+Pointers move based on problem requirements.
+
+---
+
+# 3. Why Two Pointers?
+
+Without Two Pointers:
+
+```java
+O(N²)
+```
+
+With Two Pointers:
+
+```java
+O(N)
+```
+
+Huge optimization.
+
+Example:
+
+Find pair with sum = target.
+
+Brute Force:
+
+```java
+for(i)
+   for(j)
+```
+
+Time:
+
+```text
+O(N²)
+```
+
+Two Pointers:
+
+```java
+left = 0
+right = n-1
+```
+
+Time:
+
+```text
+O(N)
+```
+
+---
+
+# 4. When to Think About Two Pointers?
+
+Immediately think Two Pointers when you see:
+
+### Keywords
+
+✅ Pair
+
+✅ Triplet
+
+✅ Sorted Array
+
+✅ Subarray
+
+✅ Palindrome
+
+✅ Remove Duplicates
+
+✅ Rearrange Array
+
+✅ Merge Arrays
+
+✅ Closest Sum
+
+✅ Window Expansion
+
+---
+
+# Interview Cheat Code
+
+```text
+Sorted Array + Pair
+=
+Two Pointers
+```
+
+This rule solves many interview questions.
+
+---
+
+# 5. Types of Two Pointer Patterns
+
+---
+
+# Pattern 1: Opposite Direction
+
+Most common.
+
+```java
+left = 0;
+right = n - 1;
+```
+
+Move towards each other.
+
+```text
+1 2 3 4 5 6
+
+L         R
+```
+
+Applications:
+
+- Pair Sum
+- Palindrome
+- Container With Most Water
+- 3Sum
+
+---
+
+# Pattern 2: Same Direction
+
+```java
+slow = 0;
+fast = 0;
+```
+
+Both move forward.
+
+```text
+0 1 2 3 4 5
+
+S
+F
+```
+
+Applications:
+
+- Remove Duplicates
+- Remove Elements
+- Move Zeros
+
+---
+
+# Pattern 3: Fast and Slow Pointer
+
+Used in Linked Lists.
+
+```java
+slow = head;
+fast = head;
+```
+
+```java
+slow = slow.next;
+fast = fast.next.next;
+```
+
+Applications:
+
+- Cycle Detection
+- Middle Node
+- Happy Number
+
+---
+
+# Pattern 4: Sliding Window
+
+Special case of Two Pointers.
+
+```java
+left
+right
+```
+
+Both move forward.
+
+Applications:
+
+- Longest Substring
+- Maximum Sum Subarray
+- K Distinct Characters
+
+---
+
+# Pattern 5: Partitioning
+
+Used in Quick Sort.
+
+```java
+left++;
+right--;
+```
+
+Applications:
+
+- Quick Sort
+- Dutch National Flag
+
+---
+
+# 6. Core Templates
+
+---
+
+# Template 1: Opposite Direction
+
+```java
+int left = 0;
+int right = arr.length - 1;
+
+while(left < right){
+
+    if(condition){
+        return answer;
+    }
+    else if(arr[left] + arr[right] < target){
+        left++;
+    }
+    else{
+        right--;
+    }
+}
+```
+
+---
+
+# Template 2: Same Direction
+
+```java
+int slow = 0;
+
+for(int fast = 0; fast < n; fast++){
+
+    if(condition){
+        arr[slow] = arr[fast];
+        slow++;
+    }
+}
+```
+
+---
+
+# Template 3: Fast Slow
+
+```java
+ListNode slow = head;
+ListNode fast = head;
+
+while(fast != null && fast.next != null){
+
+    slow = slow.next;
+    fast = fast.next.next;
+}
+```
+
+---
+
+# Template 4: Sliding Window
+
+```java
+int left = 0;
+
+for(int right = 0; right < n; right++){
+
+    while(windowInvalid){
+        left++;
+    }
+}
+```
+
+---
+
+# 7. Visual Understanding
+
+Pair Sum = 10
+
+```text
+1 2 3 4 6 8 9
+
+L           R
+```
+
+1+9=10
+
+Answer found.
+
+---
+
+Another Example:
+
+Target = 12
+
+```text
+1 2 3 4 6 8 9
+
+L           R
+```
+
+1+9=10
+
+Too small
+
+Move left.
+
+```text
+1 2 3 4 6 8 9
+  L         R
+```
+
+2+9=11
+
+Move left.
+
+```text
+1 2 3 4 6 8 9
+    L       R
+```
+
+3+9=12
+
+Found.
+
+---
+
+# 8. Time Complexity Analysis
+
+Why O(N)?
+
+Because each pointer moves at most N times.
+
+Example:
+
+```java
+while(left < right){
+   left++;
+   right--;
+}
+```
+
+Total movements:
+
+```text
+N
+```
+
+not
+
+```text
+N²
+```
+
+Therefore:
+
+```text
+Time = O(N)
+
+Space = O(1)
+```
+
+---
+
+# 9. Interview Cheat Codes
+
+---
+
+## Cheat Code #1
+
+```text
+Sorted Array
++
+Find Pair
+=
+Two Pointers
+```
+
+---
+
+## Cheat Code #2
+
+```text
+Palindrome
+=
+Left + Right
+```
+
+---
+
+## Cheat Code #3
+
+```text
+Remove Duplicates
+=
+Slow + Fast
+```
+
+---
+
+## Cheat Code #4
+
+```text
+Cycle Detection
+=
+Fast + Slow
+```
+
+---
+
+## Cheat Code #5
+
+```text
+Subarray
+=
+Sliding Window
+```
+
+---
+
+# 10. Recognition Tricks
+
+Question says:
+
+```text
+Find pair
+```
+
+Think:
+
+```text
+Two Pointers
+```
+
+---
+
+Question says:
+
+```text
+Sorted array
+```
+
+Think:
+
+```text
+Two Pointers before HashMap
+```
+
+---
+
+Question says:
+
+```text
+Palindrome
+```
+
+Think:
+
+```text
+Left Right
+```
+
+---
+
+Question says:
+
+```text
+Linked List Cycle
+```
+
+Think:
+
+```text
+Fast Slow
+```
+
+---
+
+# 11. Common Mistakes
+
+---
+
+## Mistake 1
+
+Wrong Loop
+
+Wrong:
+
+```java
+while(left <= right)
+```
+
+Correct:
+
+```java
+while(left < right)
+```
+
+---
+
+## Mistake 2
+
+Forgetting Sorted Condition
+
+Two Sum using Two Pointers requires:
+
+```text
+Sorted Array
+```
+
+---
+
+## Mistake 3
+
+Infinite Loop
+
+Wrong:
+
+```java
+while(left < right){
+}
+```
+
+No pointer movement.
+
+Always move pointers.
+
+---
+
+## Mistake 4
+
+Pointer Out of Bounds
+
+Always check:
+
+```java
+fast != null
+&&
+fast.next != null
+```
+
+---
+
+# 12. Important Problem Patterns
+
+---
+
+# Pattern A: Pair Sum
+
+Questions:
+
+- Two Sum II
+- Count Pairs
+
+Template:
+
+```java
+while(left < right)
+```
+
+---
+
+# Pattern B: Triplet Sum
+
+Questions:
+
+- 3Sum
+- 3Sum Closest
+
+Template:
+
+```java
+for(i)
+{
+   left=i+1;
+   right=n-1;
+}
+```
+
+---
+
+# Pattern C: Palindrome
+
+Questions:
+
+- Valid Palindrome
+- Palindrome Number
+
+Template:
+
+```java
+while(left < right)
+```
+
+---
+
+# Pattern D: Remove Duplicates
+
+Questions:
+
+- Remove Duplicates from Sorted Array
+
+Template:
+
+```java
+slow
+fast
+```
+
+---
+
+# Pattern E: Move Zeros
+
+Questions:
+
+- Move Zeroes
+
+Template:
+
+```java
+slow
+fast
+```
+
+---
+
+# Pattern F: Container With Most Water
+
+Question:
+
+Leetcode 11
+
+Template:
+
+```java
+left++
+right--
+```
+
+Move smaller height.
+
+---
+
+# Pattern G: Trapping Rain Water
+
+Question:
+
+Leetcode 42
+
+Advanced Two Pointers.
+
+---
+
+# Pattern H: Linked List Cycle
+
+Question:
+
+Leetcode 141
+
+Template:
+
+```java
+slow = slow.next;
+fast = fast.next.next;
+```
+
+---
+
+# Pattern I: Middle Node
+
+Question:
+
+Leetcode 876
+
+Fast reaches end.
+
+Slow reaches middle.
+
+---
+
+# Pattern J: Sliding Window
+
+Questions:
+
+- Longest Substring Without Repeating Characters
+- Minimum Window Substring
+- Maximum Sum Subarray
+
+---
+
+# 13. Most Important Interview Problems
+
+---
+
+## Easy
+
+### Two Sum II
+
+Leetcode 167
+
+---
+
+### Valid Palindrome
+
+Leetcode 125
+
+---
+
+### Remove Duplicates
+
+Leetcode 26
+
+---
+
+### Move Zeroes
+
+Leetcode 283
+
+---
+
+### Reverse String
+
+Leetcode 344
+
+---
+
+## Medium
+
+### Container With Most Water
+
+Leetcode 11
+
+---
+
+### 3Sum
+
+Leetcode 15
+
+---
+
+### Sort Colors
+
+Leetcode 75
+
+---
+
+### Linked List Cycle
+
+Leetcode 141
+
+---
+
+### Middle of Linked List
+
+Leetcode 876
+
+---
+
+### Longest Substring Without Repeating Characters
+
+Leetcode 3
+
+---
+
+## Hard
+
+### Trapping Rain Water
+
+Leetcode 42
+
+---
+
+### Minimum Window Substring
+
+Leetcode 76
+
+---
+
+### 4Sum
+
+Leetcode 18
+
+---
+
+# 14. Advanced Variations
+
+---
+
+# Dutch National Flag
+
+Sort:
+
+```text
+0 1 2
+```
+
+Pointers:
+
+```java
+low
+mid
+high
+```
+
+Question:
+
+Leetcode 75
+
+---
+
+# Partition Algorithm
+
+Used in:
+
+```text
+Quick Sort
+```
+
+Pointers:
+
+```java
+left
+right
+```
+
+---
+
+# Floyd Cycle Detection
+
+Also called:
+
+```text
+Tortoise and Hare Algorithm
+```
+
+Used in:
+
+- Linked List Cycle
+- Happy Number
+
+---
+
+# 15. Complete Revision Sheet
+
+---
+
+## Opposite Direction
+
+```java
+left = 0;
+right = n-1;
+```
+
+Applications:
+
+- Pair Sum
+- Palindrome
+- 3Sum
+- Container Water
+
+---
+
+## Same Direction
+
+```java
+slow
+fast
+```
+
+Applications:
+
+- Remove Duplicates
+- Move Zeroes
+
+---
+
+## Fast Slow
+
+```java
+slow+=1
+fast+=2
+```
+
+Applications:
+
+- Cycle
+- Middle Node
+
+---
+
+## Sliding Window
+
+```java
+left
+right
+```
+
+Applications:
+
+- Subarray
+- Substring
+
+---
+
+# 16. Last-Minute Interview Notes
+
+### Remember These 10 Rules
+
+1. Sorted Array → Two Pointers
+
+2. Pair Sum → Opposite Direction
+
+3. Palindrome → Left Right
+
+4. Remove Duplicates → Slow Fast
+
+5. Move Zeroes → Slow Fast
+
+6. Linked List Cycle → Floyd Algorithm
+
+7. Middle Node → Fast Slow
+
+8. Subarray Problems → Sliding Window
+
+9. 3Sum → Fix One + Two Pointers
+
+10. Every Pointer Moves At Most N Times → O(N)
+
+---
+
+# Ultimate Two Pointers Formula
+
+```text
+Brute Force O(N²)
+
+↓
+
+Can two indices move intelligently?
+
+↓
+
+YES
+
+↓
+
+Use Two Pointers
+
+↓
+
+O(N)
+```
+
+---
+
+# Interview Priority Order
+
+Must Master:
+
+⭐⭐⭐⭐⭐ Two Sum II
+
+⭐⭐⭐⭐⭐ Valid Palindrome
+
+⭐⭐⭐⭐⭐ Remove Duplicates
+
+⭐⭐⭐⭐⭐ Move Zeroes
+
+⭐⭐⭐⭐⭐ Container With Most Water
+
+⭐⭐⭐⭐⭐ 3Sum
+
+⭐⭐⭐⭐⭐ Linked List Cycle
+
+⭐⭐⭐⭐⭐ Middle Node
+
+⭐⭐⭐⭐⭐ Longest Substring Without Repeating Characters
+
+⭐⭐⭐⭐⭐ Trapping Rain Water
+
+If you can solve these 10 problems confidently, you will recognize and solve around 80–90% of Two Pointer interview questions.
