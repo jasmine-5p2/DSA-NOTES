@@ -1,0 +1,1243 @@
+# Prefix Sum - Complete Interview Revision Notes (Beginner → Advanced)
+
+---
+
+# Table of Contents
+
+1. Introduction
+2. What is Prefix Sum?
+3. Why Prefix Sum?
+4. Building Prefix Sum
+5. Range Sum Queries
+6. Prefix Sum Visualization
+7. Prefix Sum Patterns
+8. Prefix Sum with HashMap
+9. Prefix Sum with Modulo
+10. Prefix Sum in Binary Arrays
+11. Prefix XOR
+12. 2D Prefix Sum
+13. Difference Array + Prefix Sum
+14. Prefix Sum Cheat Codes
+15. Pattern Recognition Guide
+16. Interview Tips & Tricks
+17. Common Mistakes
+18. Most Important Problems
+19. Practice Roadmap
+20. Last Minute Revision Sheet
+
+---
+
+# 1. Introduction
+
+Prefix Sum is one of the most important preprocessing techniques in Data Structures and Algorithms.
+
+It allows us to answer range sum queries efficiently.
+
+Many medium and hard interview problems become easy once you identify the Prefix Sum pattern.
+
+---
+
+# Why Learn Prefix Sum?
+
+Used in:
+
+- Range Sum Queries
+- Subarray Problems
+- Continuous Sum Problems
+- Count Subarrays
+- HashMap Problems
+- Binary Array Problems
+- Matrix Sum Problems
+- Competitive Programming
+- FAANG Interviews
+
+---
+
+# 2. What is Prefix Sum?
+
+Prefix Sum stores cumulative sums.
+
+Definition:
+
+```text
+prefix[i]
+=
+sum of elements from index 0 to i
+```
+
+Example:
+
+```text
+Array:
+
+[2,4,1,6,3]
+```
+
+Prefix:
+
+```text
+Index   0  1  2  3   4
+
+Array   2  4  1  6   3
+
+Prefix  2  6  7  13  16
+```
+
+Explanation:
+
+```text
+2
+
+2+4=6
+
+2+4+1=7
+
+2+4+1+6=13
+
+2+4+1+6+3=16
+```
+
+---
+
+# 3. Why Prefix Sum?
+
+Without Prefix Sum:
+
+Finding sum from L to R:
+
+```text
+O(n)
+```
+
+for every query.
+
+If there are Q queries:
+
+```text
+O(n × q)
+```
+
+---
+
+With Prefix Sum:
+
+Build once:
+
+```text
+O(n)
+```
+
+Each Query:
+
+```text
+O(1)
+```
+
+Total:
+
+```text
+O(n + q)
+```
+
+Huge optimization.
+
+---
+
+# 4. Building Prefix Sum
+
+## Formula
+
+```java
+prefix[0] = arr[0];
+
+prefix[i] = prefix[i-1] + arr[i];
+```
+
+---
+
+## Java Code
+
+```java
+int[] prefix = new int[n];
+
+prefix[0] = arr[0];
+
+for(int i=1;i<n;i++){
+    prefix[i] = prefix[i-1] + arr[i];
+}
+```
+
+---
+
+## Example
+
+```text
+Array
+
+2 4 1 6 3
+```
+
+Build:
+
+```text
+2
+
+2+4 = 6
+
+6+1 = 7
+
+7+6 = 13
+
+13+3 = 16
+```
+
+Result:
+
+```text
+2 6 7 13 16
+```
+
+---
+
+# 5. Range Sum Query
+
+Find sum from L to R.
+
+---
+
+## Formula
+
+### Case 1
+
+```text
+L == 0
+```
+
+```java
+sum = prefix[R];
+```
+
+---
+
+### Case 2
+
+```text
+L > 0
+```
+
+```java
+sum = prefix[R] - prefix[L-1];
+```
+
+---
+
+## Example
+
+```text
+Array
+
+2 4 1 6 3
+
+Prefix
+
+2 6 7 13 16
+```
+
+Find:
+
+```text
+L = 1
+R = 3
+```
+
+Answer:
+
+```java
+13 - 2 = 11
+```
+
+Check:
+
+```text
+4+1+6=11
+```
+
+Correct.
+
+---
+
+# 6. Better Prefix Sum (Interview Version)
+
+Most interviewers prefer:
+
+```java
+int[] prefix = new int[n+1];
+
+prefix[0] = 0;
+
+for(int i=0;i<n;i++){
+    prefix[i+1] = prefix[i] + arr[i];
+}
+```
+
+---
+
+Example
+
+```text
+Array
+
+2 4 1 6 3
+```
+
+Prefix
+
+```text
+0 2 6 7 13 16
+```
+
+---
+
+Range Sum:
+
+```java
+sum = prefix[R+1] - prefix[L];
+```
+
+No edge cases.
+
+---
+
+# 7. Prefix Sum Visualization
+
+Think of Prefix Sum as:
+
+```text
+Prefix[i]
+=
+Everything before me including myself
+```
+
+Example:
+
+```text
+Array
+
+2 4 1 6 3
+```
+
+```text
+Prefix[3]
+
+=
+2+4+1+6
+
+=
+13
+```
+
+---
+
+# 8. Pattern Recognition Guide
+
+Whenever you see:
+
+```text
+Range Sum
+Subarray Sum
+Continuous Sum
+Running Sum
+Cumulative Sum
+Target Sum
+Count Subarrays
+```
+
+Immediately think:
+
+```text
+PREFIX SUM
+```
+
+---
+
+# 9. Cheat Code #1
+
+Range Sum
+
+```java
+prefix[R] - prefix[L-1]
+```
+
+or
+
+```java
+prefix[R+1] - prefix[L]
+```
+
+---
+
+# 10. Cheat Code #2
+
+Subarray Sum
+
+```text
+Sum(i,j)
+
+=
+Prefix[j]
+-
+Prefix[i-1]
+```
+
+---
+
+# 11. Cheat Code #3
+
+Count Problems
+
+Whenever question contains:
+
+```text
+Count
+Frequency
+Occurrences
+Target K
+```
+
+Think:
+
+```text
+Prefix Sum + HashMap
+```
+
+---
+
+# 12. Prefix Sum + HashMap
+
+Most Important Interview Pattern
+
+---
+
+## Problem
+
+Count subarrays whose sum equals K.
+
+Example:
+
+```text
+[1,1,1]
+
+k = 2
+```
+
+Answer:
+
+```text
+2
+```
+
+---
+
+## Observation
+
+Suppose:
+
+```text
+Current Prefix = P
+```
+
+Need:
+
+```text
+Previous Prefix = P-K
+```
+
+Then:
+
+```text
+Subarray Sum = K
+```
+
+---
+
+## Master Formula
+
+```java
+need = prefix - k;
+```
+
+---
+
+## Template
+
+```java
+HashMap<Integer,Integer> map =
+new HashMap<>();
+
+map.put(0,1);
+
+int prefix = 0;
+int count = 0;
+
+for(int num : arr){
+
+    prefix += num;
+
+    count += map.getOrDefault(
+        prefix-k,
+        0
+    );
+
+    map.put(
+        prefix,
+        map.getOrDefault(prefix,0)+1
+    );
+}
+```
+
+---
+
+# Most Important Trick
+
+Remember:
+
+```text
+Need = Current Prefix - K
+```
+
+---
+
+# 13. Prefix Sum with Negative Numbers
+
+Works perfectly.
+
+Example:
+
+```text
+[2,-3,5,-1]
+```
+
+Prefix:
+
+```text
+2 -1 4 3
+```
+
+No issues.
+
+---
+
+# 14. Prefix Sum + Modulo
+
+Very Important Pattern
+
+---
+
+Keywords:
+
+```text
+Divisible By K
+Multiple Of K
+Modulo
+Remainder
+```
+
+Think:
+
+```text
+Prefix Sum + Mod
+```
+
+---
+
+## Golden Rule
+
+If
+
+```text
+prefix1 % k
+
+=
+
+prefix2 % k
+```
+
+Then
+
+```text
+Subarray Sum divisible by k
+```
+
+---
+
+### Remember
+
+```text
+Same Remainder
+
+=
+
+Valid Subarray
+```
+
+---
+
+# Example Problem
+
+LeetCode 974
+
+Subarray Sums Divisible by K
+
+⭐⭐⭐⭐⭐
+
+---
+
+# 15. Prefix Sum in Binary Arrays
+
+Array:
+
+```text
+1 0 1 1 0 1
+```
+
+Prefix Count:
+
+```text
+0 1 1 2 3 3 4
+```
+
+---
+
+Now count ones in any range instantly.
+
+---
+
+Used in:
+
+```text
+Binary Subarrays With Sum
+
+Count Nice Subarrays
+
+Contiguous Array
+```
+
+---
+
+# 16. Prefix XOR
+
+Variation of Prefix Sum.
+
+Formula:
+
+```java
+prefixXor[i]
+=
+prefixXor[i-1] ^ arr[i];
+```
+
+---
+
+Range XOR
+
+```java
+prefixXor[R]
+^
+prefixXor[L-1]
+```
+
+---
+
+Interview Favorite.
+
+---
+
+# 17. 2D Prefix Sum
+
+Matrix:
+
+```text
+1 2 3
+
+4 5 6
+
+7 8 9
+```
+
+---
+
+Formula
+
+```java
+prefix[i][j]
+=
+matrix[i][j]
++
+prefix[i-1][j]
++
+prefix[i][j-1]
+-
+prefix[i-1][j-1];
+```
+
+---
+
+Visualization
+
+```text
+Current
+
++
+
+Top
+
++
+
+Left
+
+-
+
+Diagonal
+```
+
+---
+
+# Rectangle Query Formula
+
+```java
+sum
+=
+bottomRight
+-
+top
+-
+left
++
+topLeft
+```
+
+---
+
+Interview Favorite.
+
+---
+
+# 18. Difference Array + Prefix Sum
+
+Advanced Pattern
+
+Used for:
+
+```text
+Range Updates
+```
+
+Instead of updating every element.
+
+---
+
+Update:
+
+```java
+diff[L] += val;
+
+diff[R+1] -= val;
+```
+
+---
+
+After all updates:
+
+```java
+Take Prefix Sum
+```
+
+Recover final array.
+
+---
+
+Complexity
+
+```text
+O(1)
+```
+
+per update.
+
+---
+
+# 19. Prefix Sum Patterns Summary
+
+| Pattern | Technique |
+|----------|------------|
+| Range Sum | Prefix Sum |
+| Running Sum | Prefix Sum |
+| Sum Query | Prefix Sum |
+| Count Subarray Sum K | Prefix + HashMap |
+| Divisible By K | Prefix + Mod |
+| Binary Array | Prefix |
+| Matrix Sum | 2D Prefix |
+| Range Updates | Difference Array |
+| XOR Query | Prefix XOR |
+
+---
+
+# 20. Common Mistakes
+
+---
+
+## Mistake 1
+
+Forgetting
+
+```java
+map.put(0,1);
+```
+
+This misses subarrays starting from index 0.
+
+---
+
+## Mistake 2
+
+Wrong Formula
+
+Wrong:
+
+```java
+prefix[L] - prefix[R]
+```
+
+Correct:
+
+```java
+prefix[R] - prefix[L-1]
+```
+
+---
+
+## Mistake 3
+
+Modulo Negative Values
+
+Use:
+
+```java
+mod = ((prefix % k) + k) % k;
+```
+
+---
+
+## Mistake 4
+
+Integer Overflow
+
+Use:
+
+```java
+long prefix;
+```
+
+when constraints are large.
+
+---
+
+# 21. Interview Tips
+
+---
+
+### Tip #1
+
+Range Query
+
+→ Prefix Sum
+
+---
+
+### Tip #2
+
+Count Query
+
+→ Prefix + HashMap
+
+---
+
+### Tip #3
+
+Divisible By K
+
+→ Prefix + Mod
+
+---
+
+### Tip #4
+
+Matrix Query
+
+→ 2D Prefix
+
+---
+
+### Tip #5
+
+Range Update
+
+→ Difference Array
+
+---
+
+# 22. Most Important Interview Problems
+
+---
+
+# Easy
+
+## 1. Running Sum of 1D Array
+
+LeetCode 1480
+
+Pattern:
+
+```text
+Basic Prefix Sum
+```
+
+---
+
+## 2. Range Sum Query Immutable
+
+LeetCode 303
+
+Pattern:
+
+```text
+Range Query
+```
+
+---
+
+## 3. Find Pivot Index
+
+LeetCode 724
+
+Pattern:
+
+```text
+Left Sum Right Sum
+```
+
+---
+
+## 4. Left and Right Sum Differences
+
+LeetCode 2574
+
+Pattern:
+
+```text
+Prefix + Suffix
+```
+
+---
+
+# Medium
+
+## 5. Subarray Sum Equals K
+
+LeetCode 560
+
+⭐⭐⭐⭐⭐ MUST DO
+
+Pattern:
+
+```text
+Prefix + HashMap
+```
+
+---
+
+## 6. Continuous Subarray Sum
+
+LeetCode 523
+
+⭐⭐⭐⭐⭐ MUST DO
+
+Pattern:
+
+```text
+Prefix + Mod
+```
+
+---
+
+## 7. Binary Subarrays With Sum
+
+LeetCode 930
+
+⭐⭐⭐⭐⭐ MUST DO
+
+Pattern:
+
+```text
+Prefix + HashMap
+```
+
+---
+
+## 8. Count Number of Nice Subarrays
+
+LeetCode 1248
+
+⭐⭐⭐⭐⭐ MUST DO
+
+Pattern:
+
+```text
+Prefix + HashMap
+```
+
+---
+
+## 9. Subarray Sums Divisible by K
+
+LeetCode 974
+
+⭐⭐⭐⭐⭐ MUST DO
+
+Pattern:
+
+```text
+Prefix + Mod
+```
+
+---
+
+## 10. Contiguous Array
+
+LeetCode 525
+
+⭐⭐⭐⭐⭐ MUST DO
+
+Pattern:
+
+```text
+Convert 0 → -1
+Prefix Sum
+```
+
+---
+
+# Hard
+
+## 11. Maximum Size Subarray Sum Equals K
+
+LeetCode 325
+
+Pattern:
+
+```text
+Prefix + HashMap
+```
+
+---
+
+## 12. Count of Range Sum
+
+LeetCode 327
+
+Pattern:
+
+```text
+Advanced Prefix Sum
+```
+
+---
+
+## 13. Number of Submatrices That Sum To Target
+
+LeetCode 1074
+
+Pattern:
+
+```text
+2D Prefix Sum
+```
+
+---
+
+# 23. Prefix Sum Learning Roadmap
+
+Step 1
+
+```text
+LC 1480
+```
+
+↓
+
+Step 2
+
+```text
+LC 303
+```
+
+↓
+
+Step 3
+
+```text
+LC 724
+```
+
+↓
+
+Step 4
+
+```text
+LC 560
+```
+
+↓
+
+Step 5
+
+```text
+LC 930
+```
+
+↓
+
+Step 6
+
+```text
+LC 974
+```
+
+↓
+
+Step 7
+
+```text
+LC 523
+```
+
+↓
+
+Step 8
+
+```text
+LC 525
+```
+
+↓
+
+Step 9
+
+```text
+LC 1248
+```
+
+↓
+
+Step 10
+
+```text
+LC 1074
+```
+
+---
+
+# 24. One Page Revision Sheet
+
+```text
+PREFIX SUM CHEAT SHEET
+
+1.
+Prefix[i]
+=
+Sum(0 → i)
+
+2.
+Range Sum
+
+prefix[R]
+-
+prefix[L-1]
+
+3.
+Interview Prefix
+
+prefix[R+1]
+-
+prefix[L]
+
+4.
+Count Sum = K
+
+Need
+
+=
+prefix-k
+
+5.
+HashMap Initialization
+
+map.put(0,1)
+
+6.
+Divisible By K
+
+Same Remainder
+
+7.
+Modulo Formula
+
+((x%k)+k)%k
+
+8.
+2D Prefix
+
+Current
++
+Top
++
+Left
+-
+Diagonal
+
+9.
+Difference Array
+
+diff[L]+=val
+
+diff[R+1]-=val
+
+10.
+Prefix XOR
+
+prefixXor[R]
+^
+prefixXor[L-1]
+```
+
+---
+
+# Final Interview Rule
+
+Whenever you see:
+
+- Range Sum
+- Continuous Sum
+- Count Subarray
+- Sum Equals K
+- Divisible By K
+- Matrix Sum
+- Running Sum
+
+Ask yourself:
+
+```text
+Can I convert this into a Prefix Sum problem?
+```
+
+If the answer is YES, there is a very high chance the optimal solution involves Prefix Sum.
