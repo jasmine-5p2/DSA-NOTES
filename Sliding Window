@@ -169,6 +169,8 @@ Examples:
 
 ---
 
+
+
 ## Type 2
 
 Variable Size Window
@@ -289,7 +291,40 @@ for(int end=k;end<n;end++)
 
     max = Math.max(max, windowSum);
 }
+1. We sum up the K window size bundles.
+2. We make the window size sum as a max loop.
+3. We take a loop and just remove from the left side and from the right side we add.values, and we find the max.
 ```
+
+e sliding window technique with left and right pointers
+static int recurse(int[] a) {
+    int k = 3;
+
+    int left = 0;
+    int right = 0;
+    int sum = 0;
+    int maxSum = Integer.MIN_VALUE;
+
+    while (right < a.length) {
+        sum += a[right];
+
+        // When window size becomes k
+        if (right - left + 1 == k) {
+            maxSum = Math.max(maxSum, sum);
+
+            // Slide the window
+            sum -= a[left];
+            left++;
+        }
+
+        right++;
+    }
+
+    return maxSum;
+}
+
+In this case, what we do is we take the two pointers, left and right, and if the left minus right plus one equals k (which means if it reaches the window size), 
+then we measure whether it was maximum or not. If not, the while loop just sums up until the window size matches. 
 
 ---
 
@@ -316,6 +351,51 @@ for(end = 0 to n-1)
 
     update answer
 }
+
+Longest Subarray with Sum ≤ K
+
+int left = 0;
+int right = 0;
+int sum = 0;
+int maxLen = 0;
+
+while (right < arr.length) {
+    sum += arr[right];
+
+    while (sum > k) {
+        sum -= arr[left];
+        left++;
+    }
+
+    maxLen = Math.max(maxLen, right - left + 1);
+
+    right++;
+}
+
+
+That in the previous problem, we are finding the maximum subarray sum. Let's say if the sum is 7, 
+then we are finding the maximum sum, which means here the sum is important. When that is a reason, 
+we are using a fixed field if we want the sum to be 7, but we want the longest subarray. Here the subarray is important with sum, 
+so in that case we will use a variable window size here. 
+
+Fixed Size
+add right
+if(windowSize == k){
+    process
+    remove left
+    left++
+}
+right++
+
+Variable Size
+
+add right
+while(window invalid){
+    remove left
+    left++
+}
+process
+right++
 ```
 
 ---
