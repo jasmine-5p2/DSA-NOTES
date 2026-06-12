@@ -1,0 +1,256 @@
+# DSA Pattern Recognition Cheat Sheet
+
+## Prefix Sum
+
+### Keywords
+
+- Range Sum
+- Range Query
+- Running Sum
+- Cumulative Sum
+- Subarray Sum
+- Continuous Sum
+- Count Subarrays
+- Sum Equals K
+- Divisible by K
+- Prefix
+
+### Trigger Questions
+
+- Find sum from L to R
+- Count subarrays with sum K
+- Subarray sums divisible by K
+- Multiple sum queries
+
+### Think
+
+- Prefix Sum
+- Prefix + HashMap
+- Prefix + Modulo
+
+---
+
+## Auxiliary Arrays
+
+### Keywords
+
+- For every index
+- Left side
+- Right side
+- Before
+- After
+- Precompute
+- Previous results
+
+### Trigger Questions
+
+- Product Except Self
+- Left Maximum
+- Right Maximum
+- Nearest Greater
+- Rain Water Trapping
+
+### Think
+
+- Prefix Array
+- Suffix Array
+- Left[]
+- Right[]
+- Frequency[]
+
+---
+
+## Two Pointers
+
+### Keywords
+
+- Pair
+- Triplet
+- Sorted Array
+- Palindrome
+- Closest Sum
+- Remove Duplicates
+- Move Zeroes
+- Cycle Detection
+
+### Trigger Questions
+
+- Find pair with target sum
+- 3Sum
+- Check palindrome
+- Middle of linked list
+- Linked list cycle
+
+### Think
+
+- Left + Right
+- Slow + Fast
+- Fast + Slow
+
+### Golden Rule
+
+> Sorted Array + Pair = Two Pointers
+
+---
+
+## Sliding Window
+
+### Keywords
+
+- Contiguous
+- Subarray
+- Substring
+- Longest
+- Shortest
+- Maximum Length
+- Minimum Length
+- Window
+- At Most K
+- Exactly K
+- Distinct Characters
+
+### Trigger Questions
+
+- Longest substring
+- Smallest window
+- Maximum sum of size K
+- Find all anagrams
+- Longest repeating character replacement
+
+### Think
+
+- Expand
+- Shrink
+- Window
+
+### Golden Rule
+
+> Contiguous + Longest/Shortest = Sliding Window
+
+---
+
+## Kadane's Algorithm
+
+### Keywords
+
+- Maximum Sum
+- Minimum Sum
+- Contiguous
+- Profit
+- Gain
+- Loss
+- Best Segment
+- Maximum Subarray
+
+### Trigger Questions
+
+- Maximum subarray sum
+- Maximum profit streak
+- Maximum circular subarray
+- Maximum product subarray
+
+### Think
+
+- Kadane
+
+### Golden Rule
+
+> Contiguous + Maximum Sum = Kadane
+
+---
+
+## HashMap
+
+### Keywords
+
+- Count
+- Frequency
+- Occurrences
+- Duplicate
+- Target
+- Lookup
+
+### Think
+
+- HashMap
+
+---
+
+## Binary Search
+
+### Keywords
+
+- Sorted
+- Search
+- Minimum Possible
+- Maximum Possible
+- Optimize
+- Answer Range
+
+### Think
+
+- Binary Search
+
+---
+
+## Heap / Priority Queue
+
+### Keywords
+
+- Top K
+- Largest K
+- Smallest K
+- Median
+- Stream
+- Closest Elements
+
+### Think
+
+- Heap
+
+---
+
+## Stack
+
+### Keywords
+
+- Nearest Greater
+- Nearest Smaller
+- Next Greater
+- Previous Greater
+- Monotonic
+- Histogram
+- Parentheses
+
+### Think
+
+- Stack
+
+---
+
+# 10-Second Interview Cheat Sheet
+
+| Problem Signal | Pattern |
+|---------------|----------|
+| Range Query | Prefix Sum |
+| Count Subarray Sum | Prefix + HashMap |
+| For Every Index | Auxiliary Arrays |
+| Sorted + Pair | Two Pointers |
+| Palindrome | Two Pointers |
+| Contiguous + Longest | Sliding Window |
+| Contiguous + Shortest | Sliding Window |
+| Window Size K | Fixed Sliding Window |
+| Maximum Subarray Sum | Kadane |
+| Top K | Heap |
+| Next Greater Element | Stack |
+| Minimum Possible X | Binary Search |
+
+---
+
+# Master Recognition Formula
+
+1. Range Query → Prefix Sum
+2. Sorted + Pair → Two Pointers
+3. Contiguous + Longest/Shortest → Sliding Window
+4. Contiguous + Maximum Sum → Kadane
+5. Need Left/Right Information → Auxiliary Arrays
