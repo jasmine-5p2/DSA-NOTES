@@ -153,6 +153,645 @@ Go right:
 
 ```java
 root.right
+class TreeNode{
+  int val;
+  TreeNode left;
+  TreeNode right;
+   TreeNode(int val){
+    this.val = val;
+   }
+}
+
+class Main{
+  public static void main(String[] args) {
+    TreeNode root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.right = new TreeNode(6);
+
+    preorder(root);
+  }
+
+  public static void preorder(TreeNode root){
+    if(root == null){
+      return;
+    }
+
+    System.out.println(root.val);
+    preorder(root.left);
+    preorder(root.right);
+  }
+}
+
 ```
 
 The key idea: every subtree is itself a tree whose root is `root.left` or `root.right`.
+
+
+
+# Understanding TreeNode, Objects, References, and the Dot (`.`) Operator in Java
+
+---
+
+# 1. What is a Class?
+
+```java
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+}
+```
+
+## Explanation Box
+
+> A class is a **blueprint/template** used to create objects.
+>
+> It does not store actual data.
+>
+> It only defines:
+>
+> - What data an object should contain.
+> - What operations an object can perform.
+
+Think of it as a form:
+
+```text
+TreeNode Form
+
+Value      : ______
+Left Child : ______
+Right Child: ______
+```
+
+Every TreeNode object created from this class will have these fields.
+
+---
+
+# 2. Understanding the Fields
+
+```java
+int val;
+TreeNode left;
+TreeNode right;
+```
+
+## Explanation Box
+
+Each TreeNode object contains:
+
+| Field | Stores |
+|---------|---------|
+| val | Integer value |
+| left | Reference to left child node |
+| right | Reference to right child node |
+
+Visual:
+
+```text
++----------------+
+| val   |   ?    |
+| left  |   ?    |
+| right |   ?    |
++----------------+
+```
+
+---
+
+# 3. Understanding the Constructor
+
+```java
+TreeNode(int val) {
+    this.val = val;
+}
+```
+
+## Explanation Box
+
+A constructor runs automatically when an object is created.
+
+Example:
+
+```java
+TreeNode node = new TreeNode(10);
+```
+
+### Step 1: Allocate Memory
+
+```text
++----------------+
+| val   |   0    |
+| left  | null   |
+| right | null   |
++----------------+
+```
+
+---
+
+### Step 2: Pass Constructor Parameter
+
+```java
+TreeNode(int val)
+```
+
+Receives:
+
+```text
+val = 10
+```
+
+---
+
+### Step 3: Execute
+
+```java
+this.val = val;
+```
+
+Meaning:
+
+```text
+Object's val = Constructor Parameter
+```
+
+Equivalent to:
+
+```java
+object.val = 10;
+```
+
+Final object:
+
+```text
++----------------+
+| val   |  10    |
+| left  | null   |
+| right | null   |
++----------------+
+```
+
+---
+
+# 4. What Does `this` Mean?
+
+```java
+this.val = val;
+```
+
+## Explanation Box
+
+### Left Side
+
+```java
+this.val
+```
+
+means:
+
+> The field named `val` inside the current object.
+
+### Right Side
+
+```java
+val
+```
+
+means:
+
+> Constructor parameter.
+
+So:
+
+```java
+this.val = val;
+```
+
+becomes:
+
+```text
+Current Object's val = Parameter val
+```
+
+---
+
+# 5. Creating a TreeNode Object
+
+```java
+TreeNode root = new TreeNode(10);
+```
+
+## Explanation Box
+
+Variable:
+
+```java
+root
+```
+
+does NOT store the node itself.
+
+It stores a reference (address) to the node.
+
+Visual:
+
+```text
+root
+ |
+ V
+
++----------------+
+| val   | 10     |
+| left  | null   |
+| right | null   |
++----------------+
+```
+
+---
+
+# 6. Understanding the Dot (`.`) Operator
+
+## Rule
+
+> Dot (`.`) means:
+>
+> "Go inside this object and access one of its fields or methods."
+
+---
+
+### Example 1
+
+```java
+root.val
+```
+
+Read as:
+
+```text
+Go to object referred by root
+↓
+Access val field
+```
+
+Result:
+
+```java
+10
+```
+
+---
+
+### Example 2
+
+```java
+root.left
+```
+
+Read as:
+
+```text
+Go to root object
+↓
+Access left field
+```
+
+Current result:
+
+```java
+null
+```
+
+because no left child exists.
+
+---
+
+# 7. Adding a Left Child
+
+```java
+root.left = new TreeNode(5);
+```
+
+## Explanation Box
+
+Java creates a second object.
+
+Memory:
+
+```text
+Object A
+
++----------------+
+| val   | 10     |
+| left  | ----+  |
+| right | null   |
++----------------+
+               |
+               V
+
+Object B
+
++----------------+
+| val   | 5      |
+| left  | null   |
+| right | null   |
++----------------+
+```
+
+Now:
+
+```java
+root.left
+```
+
+points to Object B.
+
+---
+
+# 8. Why Does `root.left.val` Work?
+
+```java
+root.left.val
+```
+
+## Step-by-Step Box
+
+### Step 1
+
+```java
+root
+```
+
+points to:
+
+```text
+[10]
+```
+
+---
+
+### Step 2
+
+```java
+root.left
+```
+
+follows left reference:
+
+```text
+[5]
+```
+
+---
+
+### Step 3
+
+```java
+root.left.val
+```
+
+reads:
+
+```text
+value inside node 5
+```
+
+Result:
+
+```java
+5
+```
+
+Visual:
+
+```text
+root
+ |
+ V
+[10]
+ /
+V
+[5]
+
+root.left.val = 5
+```
+
+---
+
+# 9. Building a Bigger Tree
+
+```java
+root.right = new TreeNode(15);
+
+root.left.left = new TreeNode(2);
+root.left.right = new TreeNode(7);
+```
+
+Tree:
+
+```text
+           [10]
+          /    \
+        [5]    [15]
+       /   \
+     [2]   [7]
+```
+
+---
+
+# 10. Reading Values Using Dots
+
+## Example 1
+
+```java
+root.val
+```
+
+```text
+10
+```
+
+---
+
+## Example 2
+
+```java
+root.left.val
+```
+
+```text
+5
+```
+
+---
+
+## Example 3
+
+```java
+root.right.val
+```
+
+```text
+15
+```
+
+---
+
+## Example 4
+
+```java
+root.left.left.val
+```
+
+```text
+2
+```
+
+---
+
+## Example 5
+
+```java
+root.left.right.val
+```
+
+```text
+7
+```
+
+---
+
+# Dot Traversal Visualization
+
+```java
+root.left.right.val
+```
+
+Follow step-by-step:
+
+```text
+root
+ ↓
+[10]
+
+left
+ ↓
+[5]
+
+right
+ ↓
+[7]
+
+val
+ ↓
+7
+```
+
+---
+
+# Most Important Concept
+
+## Explanation Box
+
+```java
+TreeNode left;
+```
+
+does NOT store a number.
+
+❌ Wrong:
+
+```text
+left = 5
+```
+
+✔ Correct:
+
+```text
+left = Reference to another TreeNode
+```
+
+Visual:
+
+```text
+Node
+ ├── Value
+ ├── Reference to Left Node
+ └── Reference to Right Node
+```
+
+Example:
+
+```text
+          [10]
+          /  \
+         /    \
+       [5]   [15]
+```
+
+Node 10 stores:
+
+```text
+val = 10
+
+left  ---> Node 5
+
+right ---> Node 15
+```
+
+---
+
+# Quick Cheat Sheet
+
+| Expression | Meaning |
+|------------|----------|
+| root | Reference to root node |
+| root.val | Value stored in root |
+| root.left | Left child reference |
+| root.right | Right child reference |
+| root.left.val | Value of left child |
+| root.right.val | Value of right child |
+| root.left.left | Left child's left child |
+| root.left.right | Left child's right child |
+| root.left.right.val | Value of left-right node |
+
+---
+
+# Golden Rule
+
+> Think of the dot (`.`) operator as:
+>
+> **"Go inside this object and access something."**
+
+Examples:
+
+```java
+root.val
+```
+
+→ Go inside root and get value.
+
+```java
+root.left
+```
+
+→ Go inside root and get left reference.
+
+```java
+root.left.right
+```
+
+→ Go to left child, then go to its right child.
+
+```java
+root.left.right.val
+```
+
+→ Finally read the value stored in that node.
+
+
+
