@@ -33,7 +33,13 @@ It is used to find:
 Maximum Sum Contiguous Subarray
 ```
 
-in
+int currentSum = numbers[0];
+int maximum = numbers[0];
+
+for (int i = 1; i < numbers.length; i++) {
+    currentSum = Math.max(numbers[i], currentSum + numbers[i]);
+    maximum = Math.max(maximum, currentSum);
+}
 
 
 void kadanes(int numbers[]) {
