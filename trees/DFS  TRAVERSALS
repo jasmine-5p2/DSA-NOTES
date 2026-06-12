@@ -1,0 +1,425 @@
+# DFS Traversal Quick Revision Notes
+
+---
+
+# DFS (Depth First Search)
+
+DFS explores a tree by going as deep as possible before backtracking.
+
+**DFS Traversals:**
+
+1. Preorder (Root → Left → Right)
+2. Inorder (Left → Root → Right)
+3. Postorder (Left → Right → Root)
+
+---
+
+# Visualization
+
+Consider the tree:
+
+```text
+        1
+       / \
+      2   3
+     / \
+    4   5
+```
+
+---
+
+# 1. PREORDER TRAVERSAL
+
+## Order
+
+```text
+Root → Left → Right
+```
+
+## Output
+
+```text
+1 2 4 5 3
+```
+
+## Recursive Code
+
+```java
+static void preorder(TreeNode root) {
+    if(root == null) return;
+
+    System.out.print(root.val + " ");
+    preorder(root.left);
+    preorder(root.right);
+}
+```
+
+## Remember
+
+```text
+Visit node FIRST
+```
+
+or
+
+```text
+Print before recursion
+```
+
+---
+
+## Used In
+
+### Tree Copy / Clone
+
+Need root before children.
+
+### Serialization
+
+Store parent first.
+
+### Expression Trees
+
+Prefix notation.
+
+Example:
+
+```text
++ A B
+```
+
+---
+
+## Interview Trick
+
+```text
+Root appears first.
+```
+
+If first element matters → Think Preorder.
+
+---
+
+# 2. INORDER TRAVERSAL
+
+## Order
+
+```text
+Left → Root → Right
+```
+
+## Output
+
+```text
+4 2 5 1 3
+```
+
+## Recursive Code
+
+```java
+static void inorder(TreeNode root) {
+    if(root == null) return;
+
+    inorder(root.left);
+    System.out.print(root.val + " ");
+    inorder(root.right);
+}
+```
+
+## Remember
+
+```text
+Visit node in the MIDDLE
+```
+
+or
+
+```text
+Print between recursive calls
+```
+
+---
+
+## Used In
+
+### Binary Search Tree (BST)
+
+Produces sorted order.
+
+Example:
+
+```text
+BST Inorder = Sorted Array
+```
+
+---
+
+### Kth Smallest Element
+
+```text
+Inorder traversal
+```
+
+because elements come sorted.
+
+---
+
+### BST Validation
+
+Check if inorder sequence is sorted.
+
+---
+
+## Interview Trick
+
+Whenever you see:
+
+```text
+Sorted order
+BST
+Kth smallest
+```
+
+Think:
+
+```text
+INORDER
+```
+
+---
+
+# 3. POSTORDER TRAVERSAL
+
+## Order
+
+```text
+Left → Right → Root
+```
+
+## Output
+
+```text
+4 5 2 3 1
+```
+
+## Recursive Code
+
+```java
+static void postorder(TreeNode root) {
+    if(root == null) return;
+
+    postorder(root.left);
+    postorder(root.right);
+    System.out.print(root.val + " ");
+}
+```
+
+## Remember
+
+```text
+Visit node LAST
+```
+
+or
+
+```text
+Print after recursion
+```
+
+---
+
+## Used In
+
+### Delete Tree
+
+Delete children before parent.
+
+```text
+Child → Parent
+```
+
+---
+
+### Calculate Tree Height
+
+Need child results first.
+
+---
+
+### Diameter of Tree
+
+Need subtree information first.
+
+---
+
+### Expression Trees
+
+Postfix notation.
+
+Example:
+
+```text
+A B +
+```
+
+---
+
+## Interview Trick
+
+Whenever question says:
+
+```text
+Process children first
+Delete tree
+Bottom-up
+```
+
+Think:
+
+```text
+POSTORDER
+```
+
+---
+
+# Easy Memory Formula
+
+## Preorder
+
+```text
+NLR
+
+N = Node
+L = Left
+R = Right
+```
+
+---
+
+## Inorder
+
+```text
+LNR
+```
+
+---
+
+## Postorder
+
+```text
+LRN
+```
+
+---
+
+# One-Line Cheat Code
+
+```text
+Preorder  = Parent First
+Inorder   = Parent Middle
+Postorder = Parent Last
+```
+
+---
+
+# DFS Template
+
+```java
+static void dfs(TreeNode root) {
+
+    if(root == null)
+        return;
+
+    // Process
+
+    dfs(root.left);
+
+    dfs(root.right);
+}
+```
+
+Only change where processing happens.
+
+---
+
+# Interview Pattern Recognition
+
+| Question Clue | Traversal |
+|--------------|-----------|
+| Root first | Preorder |
+| Clone tree | Preorder |
+| Serialize tree | Preorder |
+| Sorted BST output | Inorder |
+| Kth Smallest BST | Inorder |
+| Validate BST | Inorder |
+| Delete tree | Postorder |
+| Height of tree | Postorder |
+| Diameter of tree | Postorder |
+| Bottom-up processing | Postorder |
+
+---
+
+# Complexity
+
+| Traversal | Time | Space |
+|------------|---------|---------|
+| Preorder | O(N) | O(H) |
+| Inorder | O(N) | O(H) |
+| Postorder | O(N) | O(H) |
+
+Where:
+
+```text
+N = Number of Nodes
+H = Height of Tree
+```
+
+Worst Case:
+
+```text
+O(N)
+```
+
+Balanced Tree:
+
+```text
+O(log N)
+```
+
+---
+
+# Ultimate Interview Cheat Sheet
+
+```text
+PREORDER  -> Parent First
+          -> Clone Tree
+          -> Serialization
+          -> Prefix Expression
+
+INORDER   -> BST = Sorted Order
+          -> Kth Smallest
+          -> BST Validation
+
+POSTORDER -> Children First
+          -> Delete Tree
+          -> Height
+          -> Diameter
+          -> Postfix Expression
+```
+
+---
+
+# 10 Must-Practice Problems
+
+1. Binary Tree Preorder Traversal
+2. Binary Tree Inorder Traversal
+3. Binary Tree Postorder Traversal
+4. Maximum Depth of Binary Tree
+5. Diameter of Binary Tree
+6. Validate Binary Search Tree
+7. Kth Smallest Element in BST
+8. Same Tree
+9. Symmetric Tree
+10. Serialize and Deserialize Binary Tree
+
+These cover nearly all DFS interview patterns.
