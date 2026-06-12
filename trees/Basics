@@ -1,0 +1,158 @@
+# Binary Tree Quick Revision Notes
+
+## TreeNode Structure
+
+```java
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+}
+```
+
+Each node contains:
+- `val` → stored value
+- `left` → reference to left child
+- `right` → reference to right child
+
+---
+
+## Example Tree
+
+```text
+        10
+       /  \
+      5    15
+     / \     \
+    2   7     20
+```
+
+Creation:
+
+```java
+TreeNode root = new TreeNode(10);
+
+root.left = new TreeNode(5);
+root.right = new TreeNode(15);
+
+root.left.left = new TreeNode(2);
+root.left.right = new TreeNode(7);
+
+root.right.right = new TreeNode(20);
+```
+
+---
+
+## Accessing Values
+
+```java
+root.val              // 10
+root.left.val         // 5
+root.right.val        // 15
+root.left.left.val    // 2
+root.left.right.val   // 7
+```
+
+Mental model:
+
+```text
+root.left.right.val
+10 -> 5 -> 7
+```
+
+Result: `7`
+
+---
+
+## Null Check
+
+```java
+if (root == null) {
+    return;
+}
+```
+
+Before accessing children:
+
+```java
+if (root.left != null) {
+    System.out.println(root.left.val);
+}
+```
+
+---
+
+## DFS Traversal Template
+
+```java
+void dfs(TreeNode root) {
+    if (root == null) return;
+
+    System.out.println(root.val);
+
+    dfs(root.left);
+    dfs(root.right);
+}
+```
+
+At every node, think:
+
+```java
+root.val
+root.left
+root.right
+```
+
+---
+
+## Traversal Orders
+
+### Preorder
+
+```java
+root -> left -> right
+```
+
+### Inorder
+
+```java
+left -> root -> right
+```
+
+### Postorder
+
+```java
+left -> right -> root
+```
+
+---
+
+## Interview Cheat Sheet
+
+```java
+if (root == null) return;
+```
+
+Current node:
+
+```java
+root.val
+```
+
+Go left:
+
+```java
+root.left
+```
+
+Go right:
+
+```java
+root.right
+```
+
+The key idea: every subtree is itself a tree whose root is `root.left` or `root.right`.
