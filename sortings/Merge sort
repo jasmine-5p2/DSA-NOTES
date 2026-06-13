@@ -1,0 +1,628 @@
+# Merge Sort - Complete Revision Notes (Interview + DSA)
+
+# 1. What is Merge Sort?
+
+Merge Sort is a **Divide and Conquer** algorithm.
+
+It divides the array into smaller parts, sorts them independently, and then merges them back together in sorted order.
+
+### Idea
+
+1. Divide array into two halves.
+2. Recursively sort left half.
+3. Recursively sort right half.
+4. Merge both sorted halves.
+
+---
+
+# 2. Why is Merge Sort Important?
+
+### Advantages
+
+✅ Guaranteed O(n log n) Time Complexity
+
+✅ Stable Sorting Algorithm
+
+✅ Works efficiently on Linked Lists
+
+✅ Used in External Sorting (Huge Files)
+
+✅ Predictable Performance
+
+✅ Divide and Conquer Pattern
+
+---
+
+# 3. Divide and Conquer Structure
+
+```text
+[38,27,43,3,9,82,10]
+
+            Divide
+                |
+      -------------------
+      |                 |
+ [38,27,43]      [3,9,82,10]
+
+      |                 |
+   Divide           Divide
+      |                 |
+
+Until size becomes 1
+
+[38] [27] [43] [3] [9] [82] [10]
+
+Now Merge Back
+
+[27,38]
+[27,38,43]
+
+[3,9]
+[10,82]
+
+[3,9,10,82]
+
+Final Merge
+
+[3,9,10,27,38,43,82]
+```
+
+---
+
+# 4. Merge Sort Visualization
+
+```text
+Array:
+
+8 4 2 1 7 6 3 5
+
+Split:
+
+8 4 2 1 | 7 6 3 5
+
+Split:
+
+8 4 | 2 1 | 7 6 | 3 5
+
+Split:
+
+8 | 4 | 2 | 1 | 7 | 6 | 3 | 5
+
+Merge:
+
+4 8
+1 2
+6 7
+3 5
+
+Merge:
+
+1 2 4 8
+3 5 6 7
+
+Merge:
+
+1 2 3 4 5 6 7 8
+```
+
+---
+
+# 5. Recursive Logic
+
+```java
+mergeSort(arr, low, high)
+
+1. Find middle
+
+2. Sort left half
+
+3. Sort right half
+
+4. Merge both halves
+```
+
+---
+
+# 6. Merge Sort Algorithm
+
+```text
+mergeSort(arr, low, high)
+
+if low >= high
+    return
+
+mid = (low + high) / 2
+
+mergeSort(arr, low, mid)
+
+mergeSort(arr, mid+1, high)
+
+merge(arr, low, mid, high)
+```
+
+---
+
+# 7. Dry Run
+
+## Input
+
+```text
+5 4 3 2
+```
+
+### Step 1
+
+```text
+[5,4,3,2]
+
+mid = 1
+
+Left = [5,4]
+Right = [3,2]
+```
+
+### Step 2
+
+```text
+[5,4]
+
+Split
+
+[5]
+[4]
+
+Merge
+
+[4,5]
+```
+
+### Step 3
+
+```text
+[3,2]
+
+Split
+
+[3]
+[2]
+
+Merge
+
+[2,3]
+```
+
+### Step 4
+
+```text
+Merge
+
+[4,5]
+[2,3]
+
+Result
+
+[2,3,4,5]
+```
+
+---
+
+# 8. Java Implementation
+
+```java
+import java.util.*;
+
+public class MergeSort {
+
+    static void mergeSort(int[] arr, int low, int high) {
+
+        if(low >= high)
+            return;
+
+        int mid = low + (high - low) / 2;
+
+        mergeSort(arr, low, mid);
+
+        mergeSort(arr, mid + 1, high);
+
+        merge(arr, low, mid, high);
+    }
+
+    static void merge(int[] arr, int low, int mid, int high) {
+
+        ArrayList<Integer> temp = new ArrayList<>();
+
+        int left = low;
+        int right = mid + 1;
+
+        while(left <= mid && right <= high) {
+
+            if(arr[left] <= arr[right]) {
+                temp.add(arr[left]);
+                left++;
+            }
+            else {
+                temp.add(arr[right]);
+                right++;
+            }
+        }
+
+        while(left <= mid) {
+            temp.add(arr[left]);
+            left++;
+        }
+
+        while(right <= high) {
+            temp.add(arr[right]);
+            right++;
+        }
+
+        for(int i = low; i <= high; i++) {
+            arr[i] = temp.get(i - low);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {5,4,3,2,1};
+
+        mergeSort(arr, 0, arr.length - 1);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
+
+---
+
+# 9. Most Important Merge Function Logic
+
+### Two Pointer Technique
+
+```text
+Left Array  = [1,4,8]
+
+Right Array = [2,3,9]
+
+Compare
+
+1 vs 2 → take 1
+
+4 vs 2 → take 2
+
+4 vs 3 → take 3
+
+4 vs 9 → take 4
+
+8 vs 9 → take 8
+
+Take remaining 9
+```
+
+Result
+
+```text
+1 2 3 4 8 9
+```
+
+---
+
+# 10. Time Complexity Analysis
+
+## Recurrence Relation
+
+```text
+T(n)
+
+= 2T(n/2) + O(n)
+```
+
+Explanation
+
+```text
+Divide -> log n levels
+
+Merge -> O(n) work at each level
+```
+
+Therefore
+
+```text
+O(n log n)
+```
+
+---
+
+# 11. Space Complexity
+
+### Auxiliary Array Used
+
+```text
+O(n)
+```
+
+### Recursive Stack
+
+```text
+O(log n)
+```
+
+Total
+
+```text
+O(n)
+```
+
+---
+
+# 12. Stability
+
+Merge Sort is Stable.
+
+Example
+
+```text
+2A 5 2B 8
+
+After sorting
+
+2A 2B 5 8
+```
+
+Order preserved.
+
+---
+
+# 13. When Merge Sort is Preferred
+
+### Large Data
+
+```text
+Millions of records
+```
+
+### Linked List Sorting
+
+```text
+Very efficient
+```
+
+### External Sorting
+
+```text
+Data too large for RAM
+```
+
+### Stable Sorting Needed
+
+```text
+Employee Records
+Database Sorting
+```
+
+---
+
+# 14. Merge Sort on Linked List
+
+Frequently Asked Interview Question.
+
+Reason:
+
+```text
+No random access needed.
+
+Finding middle:
+Slow Fast Pointer
+
+Merge:
+Easy using pointers
+```
+
+Time Complexity
+
+```text
+O(n log n)
+```
+
+Space Complexity
+
+```text
+O(1) Extra
+```
+
+(ignoring recursion)
+
+---
+
+# 15. Important Interview Questions
+
+## Easy
+
+### Sort an Array
+
+LeetCode 912
+
+### Merge Two Sorted Arrays
+
+LeetCode 88
+
+### Merge Sorted Array
+
+Important for merge logic.
+
+---
+
+## Medium
+
+### Count Inversions
+
+Classic Merge Sort Problem
+
+### Reverse Pairs
+
+LeetCode 493
+
+### Count Smaller Numbers After Self
+
+LeetCode 315
+
+### Sort Linked List
+
+LeetCode 148
+
+---
+
+## Hard
+
+### Count Range Sum
+
+LeetCode 327
+
+### Reverse Pair Variants
+
+Advanced Merge Sort
+
+---
+
+# 16. Cheat Code for Identifying Merge Sort Problems
+
+If question contains:
+
+```text
+Count inversions
+
+Count pairs
+
+Count reverse pairs
+
+Count smaller elements
+
+Count greater elements
+
+Sort linked list
+
+External sorting
+
+Stable sorting
+```
+
+Think:
+
+```text
+MERGE SORT
+```
+
+---
+
+# 17. Common Mistakes
+
+## Mistake 1
+
+Wrong midpoint
+
+Wrong:
+
+```java
+int mid = (low + high) / 2;
+```
+
+Better:
+
+```java
+int mid = low + (high - low) / 2;
+```
+
+---
+
+## Mistake 2
+
+Forgetting Remaining Elements
+
+Wrong:
+
+```java
+while(left <= mid && right <= high)
+```
+
+Need:
+
+```java
+while(left <= mid)
+
+while(right <= high)
+```
+
+---
+
+## Mistake 3
+
+Wrong Copy Back
+
+Correct:
+
+```java
+arr[i] = temp.get(i - low);
+```
+
+---
+
+# 18. Interview Revision Sheet
+
+### Core Idea
+
+```text
+Divide
+Sort
+Merge
+```
+
+### Paradigm
+
+```text
+Divide and Conquer
+```
+
+### Stable
+
+```text
+Yes
+```
+
+### In-place
+
+```text
+No
+```
+
+### Time Complexity
+
+```text
+Best    O(n log n)
+
+Average O(n log n)
+
+Worst   O(n log n)
+```
+
+### Space Complexity
+
+```text
+O(n)
+```
+
+### Recursive Formula
+
+```text
+T(n) = 2T(n/2) + O(n)
+```
+
+### Main Technique
+
+```text
+Two Pointers + Recursion
+```
+
+---
+
+# 19. 10-Second Interview Answer
+
+"Merge Sort is a stable Divide and Conquer sorting algorithm. It recursively divides the array into halves until single elements remain, then merges the sorted halves using two pointers. It guarantees O(n log n) time complexity in all cases but requires O(n) extra space. It is widely used in linked list sorting, inversion counting, and external sorting systems."
