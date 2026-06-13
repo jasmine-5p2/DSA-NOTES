@@ -1,0 +1,801 @@
+# Heap Sort - Complete Revision Notes (Interview + DSA)
+
+# 1. What is Heap Sort?
+
+Heap Sort is a comparison-based sorting algorithm that uses the **Binary Heap Data Structure**.
+
+It works in two phases:
+
+1. Build a Heap from the array.
+2. Repeatedly remove the root element and place it at its correct position.
+
+Heap Sort combines:
+
+```text
+Binary Heap + Selection Sort Idea
+```
+
+---
+
+# 2. Why Learn Heap Sort?
+
+### Advantages
+
+✅ Guaranteed O(n log n)
+
+✅ In-place Sorting
+
+✅ No Extra Array Required
+
+✅ Useful for Priority Queue Problems
+
+✅ Useful for Kth Largest/Smallest Problems
+
+✅ Frequently Asked in Interviews
+
+---
+
+# 3. Prerequisite: Binary Heap
+
+A Binary Heap is a Complete Binary Tree.
+
+Two Types:
+
+## Max Heap
+
+Parent is greater than children.
+
+```text
+        50
+      /    \
+    30      40
+   /  \
+ 20   10
+```
+
+### Property
+
+```text
+Parent >= Children
+```
+
+---
+
+## Min Heap
+
+Parent is smaller than children.
+
+```text
+        10
+      /    \
+    20      30
+   /  \
+ 40   50
+```
+
+### Property
+
+```text
+Parent <= Children
+```
+
+---
+
+# 4. Array Representation of Heap
+
+For index i:
+
+```text
+Parent = (i - 1) / 2
+
+Left Child = 2*i + 1
+
+Right Child = 2*i + 2
+```
+
+Example:
+
+```text
+Index: 0 1 2 3 4 5 6
+
+Array: 50 30 40 10 20 35 25
+```
+
+Tree:
+
+```text
+          50
+        /    \
+      30      40
+     /  \    /  \
+   10   20 35   25
+```
+
+---
+
+# 5. Heap Sort Idea
+
+For Ascending Order:
+
+```text
+Build Max Heap
+
+Largest element moves to root
+
+Swap root with last element
+
+Reduce heap size
+
+Heapify root again
+
+Repeat
+```
+
+---
+
+# 6. Visualization
+
+Array:
+
+```text
+4 10 3 5 1
+```
+
+Build Max Heap:
+
+```text
+10 5 3 4 1
+```
+
+Swap:
+
+```text
+1 5 3 4 | 10
+```
+
+Heapify:
+
+```text
+5 4 3 1 | 10
+```
+
+Swap:
+
+```text
+1 4 3 | 5 10
+```
+
+Heapify:
+
+```text
+4 1 3 | 5 10
+```
+
+Swap:
+
+```text
+3 1 | 4 5 10
+```
+
+Heapify:
+
+```text
+3 1 | 4 5 10
+```
+
+Final:
+
+```text
+1 3 4 5 10
+```
+
+---
+
+# 7. Main Operations
+
+## Build Heap
+
+Convert array into heap.
+
+## Heapify
+
+Fix heap property.
+
+## Extract Max
+
+Move root to sorted region.
+
+---
+
+# 8. Heapify Algorithm
+
+Most Important Function.
+
+### Goal
+
+Make subtree rooted at index i satisfy Max Heap property.
+
+---
+
+### Algorithm
+
+```text
+heapify(arr, n, i)
+
+largest = i
+
+left = 2*i + 1
+
+right = 2*i + 2
+
+If left child > largest
+    largest = left
+
+If right child > largest
+    largest = right
+
+If largest != i
+
+    swap
+
+    heapify(largest)
+```
+
+---
+
+# 9. Heapify Visualization
+
+Array:
+
+```text
+4 10 3
+```
+
+Tree:
+
+```text
+      4
+    /   \
+   10    3
+```
+
+Largest:
+
+```text
+10
+```
+
+Swap:
+
+```text
+10 4 3
+```
+
+Heap restored.
+
+---
+
+# 10. Building Max Heap
+
+Important Trick:
+
+Start from last non-leaf node.
+
+Formula:
+
+```text
+(n/2)-1
+```
+
+Example:
+
+```text
+Index
+
+0 1 2 3 4 5
+
+n = 6
+
+Last non-leaf
+
+(6/2)-1
+
+= 2
+```
+
+Start heapifying:
+
+```text
+2 → 1 → 0
+```
+
+---
+
+# 11. Heap Sort Algorithm
+
+```text
+Build Max Heap
+
+For i = n-1 to 1
+
+    Swap root and i
+
+    Reduce heap size
+
+    Heapify root
+```
+
+---
+
+# 12. Complete Java Implementation
+
+```java
+import java.util.Arrays;
+
+public class HeapSort {
+
+    static void heapSort(int[] arr) {
+
+        int n = arr.length;
+
+        // Build Max Heap
+        for(int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arr, n, i);
+        }
+
+        // Extract elements
+        for(int i = n - 1; i > 0; i--) {
+
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+
+            heapify(arr, i, 0);
+        }
+    }
+
+    static void heapify(int[] arr, int n, int i) {
+
+        int largest = i;
+
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if(left < n && arr[left] > arr[largest])
+            largest = left;
+
+        if(right < n && arr[right] > arr[largest])
+            largest = right;
+
+        if(largest != i) {
+
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+
+            heapify(arr, n, largest);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {4,10,3,5,1};
+
+        heapSort(arr);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
+
+Output:
+
+```text
+[1, 3, 4, 5, 10]
+```
+
+---
+
+# 13. Time Complexity
+
+## Building Heap
+
+```text
+O(n)
+```
+
+Not O(n log n)!
+
+Important Interview Point.
+
+---
+
+## Heapify
+
+```text
+O(log n)
+```
+
+Height of heap.
+
+---
+
+## Extraction
+
+```text
+n times
+```
+
+Each extraction:
+
+```text
+O(log n)
+```
+
+Total:
+
+```text
+O(n log n)
+```
+
+---
+
+# 14. Final Complexity Table
+
+| Case | Time |
+|--------|--------|
+| Best | O(n log n) |
+| Average | O(n log n) |
+| Worst | O(n log n) |
+
+---
+
+# 15. Space Complexity
+
+```text
+O(1)
+```
+
+In-place sorting.
+
+Recursive implementation:
+
+```text
+O(log n)
+```
+
+due to recursion stack.
+
+---
+
+# 16. Stability
+
+Heap Sort is:
+
+```text
+NOT Stable
+```
+
+Example:
+
+```text
+2A 5 2B
+```
+
+May become:
+
+```text
+2B 2A 5
+```
+
+Order changes.
+
+---
+
+# 17. Heap Sort vs Merge Sort vs Quick Sort
+
+| Feature | Heap | Merge | Quick |
+|----------|----------|----------|----------|
+| Best | O(nlogn) | O(nlogn) | O(nlogn) |
+| Average | O(nlogn) | O(nlogn) | O(nlogn) |
+| Worst | O(nlogn) | O(nlogn) | O(n²) |
+| Extra Space | O(1) | O(n) | O(logn) |
+| Stable | No | Yes | No |
+| In-place | Yes | No | Yes |
+
+---
+
+# 18. Interview Favorite Formulas
+
+### Parent
+
+```java
+(i - 1) / 2
+```
+
+### Left Child
+
+```java
+2 * i + 1
+```
+
+### Right Child
+
+```java
+2 * i + 2
+```
+
+### Last Non Leaf
+
+```java
+(n / 2) - 1
+```
+
+---
+
+# 19. Important Heap-Based Problems
+
+## Easy
+
+### Kth Largest Element
+
+LeetCode 215
+
+### Last Stone Weight
+
+LeetCode 1046
+
+### Top K Frequent Elements
+
+LeetCode 347
+
+---
+
+## Medium
+
+### K Closest Points
+
+LeetCode 973
+
+### Find Median From Data Stream
+
+LeetCode 295
+
+### Merge K Sorted Lists
+
+LeetCode 23
+
+---
+
+## Hard
+
+### Sliding Window Median
+
+LeetCode 480
+
+### IPO
+
+LeetCode 502
+
+### Smallest Range Covering K Lists
+
+LeetCode 632
+
+---
+
+# 20. Cheat Codes
+
+## If Question Says
+
+```text
+Largest Element
+
+Smallest Element
+
+Top K
+
+Priority
+
+Scheduling
+
+Task Processing
+
+Real-time Ranking
+
+Stream Data
+```
+
+Think:
+
+```text
+HEAP
+```
+
+---
+
+## If Question Says
+
+```text
+Kth Largest
+
+Kth Smallest
+```
+
+Think:
+
+```text
+Priority Queue
+Heap
+```
+
+---
+
+# 21. Common Mistakes
+
+## Mistake 1
+
+Wrong Child Formula
+
+Wrong:
+
+```java
+left = 2*i;
+right = 2*i+1;
+```
+
+Correct:
+
+```java
+left = 2*i+1;
+right = 2*i+2;
+```
+
+---
+
+## Mistake 2
+
+Building Heap from Start
+
+Wrong:
+
+```java
+for(i=0;i<n;i++)
+```
+
+Correct:
+
+```java
+for(i=n/2-1;i>=0;i--)
+```
+
+---
+
+## Mistake 3
+
+Forgetting Reduced Heap Size
+
+Wrong:
+
+```java
+heapify(arr, n, 0);
+```
+
+Correct:
+
+```java
+heapify(arr, i, 0);
+```
+
+---
+
+# 22. Real-World Uses of Heap
+
+### Operating Systems
+
+```text
+CPU Scheduling
+```
+
+### Networking
+
+```text
+Packet Prioritization
+```
+
+### Search Engines
+
+```text
+Top K Results
+```
+
+### Streaming Platforms
+
+```text
+Trending Videos
+```
+
+### Stock Market Systems
+
+```text
+Highest/Lowest Prices
+```
+
+### Event Simulation
+
+```text
+Priority Event Processing
+```
+
+---
+
+# 23. Heap Sort Revision Sheet
+
+### Data Structure Used
+
+```text
+Binary Heap
+```
+
+### Sorting Type
+
+```text
+Comparison Based
+```
+
+### Build Heap
+
+```text
+O(n)
+```
+
+### Heapify
+
+```text
+O(log n)
+```
+
+### Total
+
+```text
+O(n log n)
+```
+
+### Stable
+
+```text
+No
+```
+
+### In-place
+
+```text
+Yes
+```
+
+### Extra Space
+
+```text
+O(1)
+```
+
+### Important Formula
+
+```text
+Parent = (i-1)/2
+
+Left = 2*i+1
+
+Right = 2*i+2
+```
+
+### Last Non Leaf
+
+```text
+(n/2)-1
+```
+
+---
+
+# 24. 10-Second Interview Answer
+
+"Heap Sort is an in-place comparison-based sorting algorithm that uses a Binary Heap. For ascending order, it first builds a Max Heap, then repeatedly swaps the root with the last element, reduces the heap size, and heapifies the root. It guarantees O(n log n) time complexity in all cases and requires O(1) extra space, but it is not stable."
