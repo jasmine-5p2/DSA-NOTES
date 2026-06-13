@@ -1,0 +1,795 @@
+# Quick Sort - Complete Revision Notes (Interview + DSA)
+
+# 1. What is Quick Sort?
+
+Quick Sort is a **Divide and Conquer** sorting algorithm.
+
+It selects a **Pivot** element and partitions the array such that:
+
+- Elements smaller than pivot go to the left.
+- Elements greater than pivot go to the right.
+
+After partitioning, the pivot reaches its correct sorted position.
+
+Then recursively sort:
+
+- Left Subarray
+- Right Subarray
+
+---
+
+# 2. Core Idea
+
+```text
+Choose Pivot
+
+Partition Array
+
+Pivot reaches correct position
+
+Recursively sort left side
+
+Recursively sort right side
+```
+
+---
+
+# 3. Why Quick Sort is Important?
+
+### Advantages
+
+✅ Very fast in practice
+
+✅ Cache Friendly
+
+✅ In-place sorting
+
+✅ Most commonly asked sorting algorithm
+
+✅ Used in many standard libraries
+
+✅ Excellent average performance
+
+---
+
+# 4. Divide and Conquer Structure
+
+Example:
+
+```text
+[7,2,1,6,8,5,3,4]
+```
+
+Choose Pivot = 4
+
+```text
+Smaller   Pivot   Greater
+
+2 1 3       4     7 6 8 5
+```
+
+Now sort both sides recursively.
+
+---
+
+# 5. Visualization
+
+```text
+Array
+
+7 2 1 6 8 5 3 4
+
+Pivot = 4
+
+Partition
+
+2 1 3 | 4 | 7 6 8 5
+
+Sort Left
+
+1 2 3
+
+Sort Right
+
+5 6 7 8
+
+Final
+
+1 2 3 4 5 6 7 8
+```
+
+---
+
+# 6. How Quick Sort Works
+
+## Step 1
+
+Choose Pivot
+
+```text
+4
+```
+
+## Step 2
+
+Partition
+
+```text
+All smaller left
+
+All greater right
+```
+
+## Step 3
+
+Pivot gets correct position
+
+## Step 4
+
+Repeat on both halves
+
+---
+
+# 7. Partition Concept
+
+Most Important Part
+
+```text
+Array
+
+7 2 1 6 8 5 3 4
+
+Pivot = 4
+
+After Partition
+
+2 1 3 4 7 6 8 5
+
+Pivot Index = 3
+```
+
+Everything:
+
+```text
+Left of pivot  < pivot
+
+Right of pivot > pivot
+```
+
+---
+
+# 8. Lomuto Partition Algorithm
+
+### Steps
+
+```text
+Take last element as pivot
+
+Maintain index i
+
+Traverse j
+
+If arr[j] < pivot
+
+swap(i,j)
+
+Increase i
+
+Finally swap pivot with i
+```
+
+---
+
+# 9. Lomuto Dry Run
+
+Array
+
+```text
+4 2 7 1 3
+```
+
+Pivot
+
+```text
+3
+```
+
+Initial
+
+```text
+i = -1
+```
+
+Traverse
+
+```text
+4 > 3
+
+2 < 3
+
+swap
+
+2 4 7 1 3
+
+i = 0
+```
+
+Next
+
+```text
+1 < 3
+
+swap
+
+2 1 7 4 3
+
+i = 1
+```
+
+Final Pivot Swap
+
+```text
+2 1 3 4 7
+```
+
+Pivot Position
+
+```text
+2
+```
+
+---
+
+# 10. Java Implementation (Lomuto)
+
+```java
+import java.util.*;
+
+public class QuickSort {
+
+    static void quickSort(int[] arr, int low, int high) {
+
+        if(low < high) {
+
+            int pivotIndex = partition(arr, low, high);
+
+            quickSort(arr, low, pivotIndex - 1);
+
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    static int partition(int[] arr, int low, int high) {
+
+        int pivot = arr[high];
+
+        int i = low - 1;
+
+        for(int j = low; j < high; j++) {
+
+            if(arr[j] < pivot) {
+
+                i++;
+
+                swap(arr, i, j);
+            }
+        }
+
+        swap(arr, i + 1, high);
+
+        return i + 1;
+    }
+
+    static void swap(int[] arr, int i, int j) {
+
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {7,2,1,6,8,5,3,4};
+
+        quickSort(arr, 0, arr.length - 1);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
+
+---
+
+# 11. Hoare Partition Scheme
+
+Interview Favorite
+
+### Idea
+
+```text
+Pivot = First Element
+
+Two pointers
+
+Left Pointer
+
+Right Pointer
+
+Move towards each other
+
+Swap misplaced elements
+```
+
+Advantages
+
+```text
+Fewer swaps
+
+Faster in practice
+```
+
+---
+
+# 12. Time Complexity
+
+## Best Case
+
+Balanced Partition
+
+```text
+O(n log n)
+```
+
+Example
+
+```text
+Pivot divides array equally
+```
+
+---
+
+## Average Case
+
+```text
+O(n log n)
+```
+
+Most practical scenarios.
+
+---
+
+## Worst Case
+
+```text
+O(n²)
+```
+
+Occurs when:
+
+```text
+Already Sorted Array
+
+Pivot = First Element
+
+or
+
+Pivot = Last Element
+```
+
+Example
+
+```text
+1 2 3 4 5 6
+```
+
+Partitions become:
+
+```text
+n-1 and 0
+```
+
+---
+
+# 13. Recurrence Relation
+
+Best/Average
+
+```text
+T(n)
+
+= 2T(n/2) + O(n)
+
+= O(n log n)
+```
+
+Worst
+
+```text
+T(n)
+
+= T(n-1) + O(n)
+
+= O(n²)
+```
+
+---
+
+# 14. Space Complexity
+
+Recursive Stack
+
+Average
+
+```text
+O(log n)
+```
+
+Worst
+
+```text
+O(n)
+```
+
+Extra Array
+
+```text
+No
+```
+
+Hence Quick Sort is:
+
+```text
+In-place Sorting
+```
+
+---
+
+# 15. Stability
+
+Quick Sort is:
+
+```text
+NOT Stable
+```
+
+Example
+
+```text
+2A 5 2B
+
+May become
+
+2B 2A 5
+```
+
+Order not preserved.
+
+---
+
+# 16. Merge Sort vs Quick Sort
+
+| Feature | Merge Sort | Quick Sort |
+|----------|------------|------------|
+| Best | O(n log n) | O(n log n) |
+| Average | O(n log n) | O(n log n) |
+| Worst | O(n log n) | O(n²) |
+| Extra Space | O(n) | O(log n) |
+| Stable | Yes | No |
+| In-place | No | Yes |
+| Practical Speed | Good | Excellent |
+
+---
+
+# 17. Why Quick Sort is Fast in Real Life?
+
+Although worst case is O(n²),
+
+In practice:
+
+```text
+Cache Friendly
+
+Fewer Memory Accesses
+
+No Extra Array
+
+Smaller Constants
+```
+
+Therefore:
+
+```text
+Quick Sort often beats Merge Sort
+```
+
+for arrays.
+
+---
+
+# 18. Randomized Quick Sort
+
+Problem:
+
+```text
+Bad pivot
+```
+
+Solution:
+
+```text
+Choose Random Pivot
+```
+
+Benefits:
+
+```text
+Avoid worst-case patterns
+
+Expected O(n log n)
+```
+
+---
+
+# 19. Median of Three Pivot
+
+Choose median of:
+
+```text
+First
+
+Middle
+
+Last
+```
+
+Example
+
+```text
+9 1 5
+
+Median = 5
+```
+
+Used in production-level implementations.
+
+---
+
+# 20. Important Interview Questions
+
+## Easy
+
+### Sort an Array
+
+LeetCode 912
+
+### Quick Sort Implementation
+
+Classic Interview Question
+
+---
+
+## Medium
+
+### Kth Largest Element
+
+LeetCode 215
+
+Uses:
+
+```text
+Quick Select
+```
+
+---
+
+### K Closest Points
+
+LeetCode 973
+
+Quick Select Variation
+
+---
+
+### Top K Frequent Elements
+
+LeetCode 347
+
+Partition Logic
+
+---
+
+## Hard
+
+### Median of Unsorted Array
+
+Quick Select
+
+### Order Statistics Problems
+
+Based on Partition Concept
+
+---
+
+# 21. Quick Select (Very Important)
+
+Used for:
+
+```text
+Kth Smallest
+
+Kth Largest
+
+Median
+```
+
+Instead of sorting entire array.
+
+Average Complexity
+
+```text
+O(n)
+```
+
+Interview Favorite.
+
+---
+
+# 22. Cheat Codes for Identifying Quick Sort Problems
+
+Keywords:
+
+```text
+Kth Largest
+
+Kth Smallest
+
+Median
+
+Order Statistics
+
+Top K
+
+Partition Array
+
+Rearrange Around Pivot
+```
+
+Think:
+
+```text
+QUICK SELECT
+
+QUICK SORT PARTITION
+```
+
+---
+
+# 23. Common Mistakes
+
+## Mistake 1
+
+Wrong Base Condition
+
+Wrong
+
+```java
+if(low > high)
+```
+
+Correct
+
+```java
+if(low < high)
+```
+
+---
+
+## Mistake 2
+
+Wrong Pivot Placement
+
+Always swap pivot at end:
+
+```java
+swap(arr, i + 1, high);
+```
+
+---
+
+## Mistake 3
+
+Including Pivot Again
+
+Wrong
+
+```java
+quickSort(low, pivotIndex);
+```
+
+Correct
+
+```java
+quickSort(low, pivotIndex - 1);
+
+quickSort(pivotIndex + 1, high);
+```
+
+---
+
+# 24. Interview Revision Sheet
+
+### Algorithm Type
+
+```text
+Divide and Conquer
+```
+
+### Main Idea
+
+```text
+Partition Around Pivot
+```
+
+### Pivot Position
+
+```text
+Correct after partition
+```
+
+### Stable
+
+```text
+No
+```
+
+### In-place
+
+```text
+Yes
+```
+
+### Best Case
+
+```text
+O(n log n)
+```
+
+### Average Case
+
+```text
+O(n log n)
+```
+
+### Worst Case
+
+```text
+O(n²)
+```
+
+### Space Complexity
+
+```text
+Average O(log n)
+
+Worst O(n)
+```
+
+### Important Variants
+
+```text
+Lomuto Partition
+
+Hoare Partition
+
+Randomized Quick Sort
+
+Median of Three
+
+Quick Select
+```
+
+---
+
+# 25. 10-Second Interview Answer
+
+"Quick Sort is an in-place Divide and Conquer sorting algorithm. It selects a pivot, partitions the array so that smaller elements are on the left and larger elements are on the right, and recursively sorts the partitions. Its average time complexity is O(n log n), making it one of the fastest sorting algorithms in practice, although its worst-case complexity is O(n²)."
