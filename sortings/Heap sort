@@ -325,6 +325,14 @@ For i = n-1 to 1
     Heapify root
 ```
 
+12. Most Important Mistake to Avoid
+
+❌ Thinking Build-Max-Heap runs after every swap.
+
+✅ Build-Max-Heap runs only once.
+
+✅ After every extraction, only heapify() runs.
+
 ---
 
 # 12. Complete Java Implementation
