@@ -1,0 +1,113 @@
+# Bubble Sort - Complete Revision Notes
+
+## 1. Definition
+
+Bubble Sort is a simple comparison-based sorting algorithm.
+
+It repeatedly compares adjacent elements and swaps them if they are in the wrong order.
+
+After each pass, the largest unsorted element "bubbles up" to its correct position at the end of the array.
+
+## 3. Algorithm
+
+### Steps
+
+1. Start from the first element.
+2. Compare adjacent elements.
+3. Swap if left element is greater than right element.
+4. Continue until the end of the array.
+5. Repeat for remaining unsorted elements.
+6. Stop when no swaps occur in a pass.
+
+
+## 5. Java Implementation (Basic)
+
+```java
+import java.util.Arrays;
+
+public class BubbleSort {
+
+    public static void bubbleSort(int[] arr) {
+
+        int n = arr.length;
+
+        for (int i = 0; i < n - 1; i++) {
+
+            for (int j = 0; j < n - i - 1; j++) {
+
+                if (arr[j] > arr[j + 1]) {
+
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {5, 1, 4, 2, 8};
+
+        bubbleSort(arr);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
+## 6. Optimized Bubble Sort
+
+### Idea
+
+If no swaps occur in a pass, the array is already sorted.
+
+Use a flag variable.
+
+---
+
+### Java Implementation
+
+```java
+import java.util.Arrays;
+
+public class BubbleSort {
+
+    public static void bubbleSort(int[] arr) {
+
+        int n = arr.length;
+
+        for (int i = 0; i < n - 1; i++) {
+
+            boolean swapped = false;
+
+            for (int j = 0; j < n - i - 1; j++) {
+
+                if (arr[j] > arr[j + 1]) {
+
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+
+                    swapped = true;
+                }
+            }
+
+            if (!swapped) {
+                break;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {1, 2, 3, 4, 5};
+
+        bubbleSort(arr);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
+
+
+
