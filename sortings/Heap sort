@@ -15,6 +15,22 @@ Heap Sort combines:
 Binary Heap + Selection Sort Idea
 ```
 
+Heap Sort Definition
+
+Heap Sort is a sorting algorithm that:
+
+Builds a Max Heap.
+Repeatedly extracts the largest element.
+Places it at the end of the array.
+
+Heapify Definition
+
+Heapify is the process of making a subtree satisfy the heap property.
+
+Heap - Simple Definition
+
+A Heap is a Complete Binary Tree that follows a special rule called the Heap Property.
+
 ---
 
 # 2. Why Learn Heap Sort?
