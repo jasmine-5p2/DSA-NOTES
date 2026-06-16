@@ -1,0 +1,78 @@
+# Insertion Sort - Complete Interview Revision Notes
+
+# One-Line Definition
+
+```text
+Pick one element at a time and insert it into its correct position
+in the already sorted part of the array.
+```
+
+# Core Idea
+
+Selection Sort:
+
+```text
+Find minimum and place it.
+```
+
+Bubble Sort:
+
+```text
+Push maximum to the end.
+```
+
+Insertion Sort:
+
+```text
+Take current element and insert it into the sorted portion.
+
+
+# Algorithm
+
+## Steps
+
+1. Assume first element is sorted.
+2. Pick next element (key).
+3. Compare with previous elements.
+4. Shift larger elements right.
+5. Insert key at correct position.
+6. Repeat until end.
+
+# Java Implementation
+
+```java
+import java.util.Arrays;
+
+public class InsertionSort {
+
+    public static void insertionSort(int[] arr) {
+
+        int n = arr.length;
+
+        for (int i = 1; i < n; i++) {
+
+            int key = arr[i];
+
+            int j = i - 1;
+
+            while (j >= 0 && arr[j] > key) {
+
+                arr[j + 1] = arr[j];
+
+                j--;
+            }
+
+            arr[j + 1] = key;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {5, 3, 4, 1, 2};
+
+        insertionSort(arr);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
