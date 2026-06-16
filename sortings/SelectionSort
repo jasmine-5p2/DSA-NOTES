@@ -1,0 +1,62 @@
+# Selection Sort - Quick Revision Notes
+
+## 1. What is Selection Sort?
+
+Selection Sort is a simple sorting algorithm that repeatedly:
+
+1. Finds the smallest element from the unsorted part of the array.
+2. Places it at its correct position.
+3. Moves the boundary of the sorted portion one step forward.
+
+### Key Idea
+
+> "Select the minimum element and place it in the correct position."
+
+# 3. Algorithm
+
+For each position:
+
+1. Assume current index is minimum.
+2. Search remaining array for smaller element.
+3. Update minimum index if found.
+4. Swap minimum element with current position.
+
+
+# 5. Java Implementation
+
+```java
+import java.util.Arrays;
+
+public class SelectionSort {
+
+    public static void selectionSort(int[] arr) {
+
+        int n = arr.length;
+
+        for (int i = 0; i < n - 1; i++) {
+
+            int minIndex = i;
+
+            for (int j = i + 1; j < n; j++) {
+
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {64, 25, 12, 22, 11};
+
+        selectionSort(arr);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
